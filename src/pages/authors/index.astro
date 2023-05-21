@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import { generateSlug } from '../../utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const recipes = await getCollection('recipes');
+const authors = recipes
+  .map((recipe) => recipe.data.author)
+  .reduce<{ [key: string]: number }>(function (result, curr) {
+    let count = result[curr] || 0;
+    result[curr] = count + 1;
+    return result;
+  }, {});
+
+console.log(authors);
+---
+
+<BaseLayout>
+  <h1>All posts about: {authors.length}</h1>
+  {
+    Object.keys(authors).map((author) => (
+      <article>
+        <h2>
+          <a href={`/authors/${generateSlug(author)}`}>
+            {author} ({authors[author]})
+          </a>
+        </h2>
+      </article>
+    ))
+  }
+</BaseLayout>

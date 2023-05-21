@@ -1,0 +1,27 @@
+---
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header
+      class="text-primary-600 flex justify-between container mx-auto py-5"
+    >
+      <a href="/" rel="home">Home</a>
+      <nav>
+        <a href="/recipes">Recipes</a>
+      </nav>
+    </header>
+    <main class="container mx-auto">
+      <slot />
+    </main>
+  </body>
+</html>

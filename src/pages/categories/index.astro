@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import { generateSlug } from '../../utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const recipes = await getCollection('recipes');
+const categories = recipes
+  .map((recipe) => recipe.data.category)
+  .reduce<{ [key: string]: number }>(function (result, curr) {
+    let count = result[curr] || 0;
+    result[curr] = count + 1;
+    return result;
+  }, {});
+
+console.log(categories);
+---
+
+<BaseLayout>
+  <h1>All posts about: {categories.length}</h1>
+  {
+    Object.keys(categories).map((category) => (
+      <article>
+        <h2>
+          <a href={`/categories/${generateSlug(category)}`}>
+            {category} ({categories[category]})
+          </a>
+        </h2>
+      </article>
+    ))
+  }
+</BaseLayout>

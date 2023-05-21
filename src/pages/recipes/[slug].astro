@@ -1,0 +1,50 @@
+---
+import { getCollection, CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { generateSlug } from '../../utils';
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+
+  return recipes.map((recipe) => {
+    return {
+      params: {
+        slug: generateSlug(recipe.data.title),
+      },
+      props: {
+        recipe,
+      },
+    };
+  });
+}
+
+interface Props {
+  recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const { Content } = await recipe.render();
+console.log(generateSlug(recipe.data.category));
+---
+
+<BaseLayout>
+  <h1 class="text-3xl font-bold text-primary-600 mb-4">{recipe.data.title}</h1>
+  <p class="text-lg font-medium mb-4">Published at: {recipe.data.date}</p>
+  <article class="prose prose-headings:text-primary-600">
+    <Content />
+  </article>
+  <p class="text-primary-600">
+    <a href={`/categories/${generateSlug(recipe.data.category)}`}
+      >Category: {recipe.data.category}</a
+    >
+  </p>
+  <ul class="my-4">
+    {
+      recipe.data.tags.map((tag) => (
+        <li>
+          <a href={`/tags/${generateSlug(tag)}`}>#{tag}</a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

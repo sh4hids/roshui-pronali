@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+import { generateSlug } from '../../utils';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const recipes = await getCollection('recipes');
+const categories = recipes
+  .map((recipe) => recipe.data.category)
+  .reduce<{ [key: string]: number }>(function (result, curr) {
+    let count = result[curr] || 0;
+    result[curr] = count + 1;
+    return result;
+  }, {});
+
+console.log(categories);
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+const allRecipesWithCategories = await getCollection(
+  'recipes',
+  (recipe) => generateSlug(recipe.data.category) === slug
+);
+if (allRecipesWithCategories.length === 0) {
+  Astro.redirect('/404');
+}
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+  return [...new Set(recipes.map((recipe) => recipe.data.category))].map(
+    (category) => ({
+      params: {
+        slug: generateSlug(category),
+      },
+    })
+  );
+}
+const category = Object.keys(categories).find(
+  (category) => generateSlug(category) === slug
+);
+console.log({ slug, category });
+---
+
+<BaseLayout>
+  <h1>All posts about: {category}</h1>
+  {
+    allRecipesWithCategories.map((recipe) => (
+      <article>
+        <h2>{recipe.data.title}</h2>
+      </article>
+    ))
+  }
+</BaseLayout>
