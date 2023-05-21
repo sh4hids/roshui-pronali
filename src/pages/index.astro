@@ -21,7 +21,7 @@ const recipes = await getCollection('recipes');
             {recipe.data.title}
           </a>
         </h2>
-        <p>{recipe.data.meta.description}</p>
+        <p>{recipe.data.metaInfo.description}</p>
       </article>
     ))
   }

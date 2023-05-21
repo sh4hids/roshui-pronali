@@ -1,0 +1,8 @@
+---
+import { getCollection } from 'astro:content';
+import Search from './Search';
+
+const recipes = await getCollection('recipes');
+---
+
+<Search client:load searchList={recipes.map((recipe) => recipe.data)} />

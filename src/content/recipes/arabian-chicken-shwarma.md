@@ -9,7 +9,7 @@ tags:
 isPublished: false
 isFeatured: false
 createdAt: '2023-05-21T04:24:17.424Z'
-meta:
+metaInfo:
   title: 'Arabian chicken shwarma'
   description: 'Lorem ipsum doler somet'
   image: ''
