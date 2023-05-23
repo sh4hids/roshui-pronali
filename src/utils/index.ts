@@ -1,2 +1,3 @@
-export * from "./constants";
-export * from "./generateSlug";
+export * from './constants';
+export * from './convertToBanglaNumber';
+export * from './generateSlug';

@@ -15,38 +15,62 @@ const authorIds = authors.map((author) => author.id);
 (async () => {
   const args = process.argv;
   if (args.length < 3) {
-    const { title, description, tags, author, category } =
-      await inquirer.prompt([
-        {
-          type: 'input',
-          name: 'title',
-          message: 'Title:',
-        },
-        {
-          type: 'input',
-          name: 'description',
-          message: 'Short description:',
-        },
-        {
-          type: 'input',
-          name: 'tags',
-          message: 'Tags (comma separated):',
-        },
-        {
-          type: 'list',
-          name: 'category',
-          message: 'Category:',
-          choices: categories,
-        },
-        {
-          type: 'list',
-          name: 'author',
-          message: 'Choose an author:',
-          choices: authorIds,
-        },
-      ]);
+    const {
+      title,
+      description,
+      tags,
+      author,
+      category,
+      serving,
+      preparation,
+      cooking,
+    } = await inquirer.prompt([
+      {
+        type: 'input',
+        name: 'title',
+        message: 'Title:',
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Short description:',
+      },
+      {
+        type: 'input',
+        name: 'serving',
+        message: 'Serving (in person):',
+      },
+      {
+        type: 'input',
+        name: 'preparation',
+        message: 'Preparation time (in minutes):',
+      },
+      {
+        type: 'input',
+        name: 'cooking',
+        message: 'Cooking time (in minutes):',
+      },
+      {
+        type: 'input',
+        name: 'tags',
+        message: 'Tags (comma separated):',
+      },
+      {
+        type: 'list',
+        name: 'category',
+        message: 'Category:',
+        choices: categories,
+      },
+      {
+        type: 'list',
+        name: 'author',
+        message: 'Choose an author:',
+        choices: authorIds,
+      },
+    ]);
 
     const slug = title
+      .trim()
       .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
       .replace(/\s+/g, '-')
       .toLowerCase();
@@ -61,19 +85,25 @@ const authorIds = authors.map((author) => author.id);
     }
 
     const yaml = json2Yaml.stringify({
-      title,
+      title: title.trim(),
       author,
       slug,
       category,
       tags: tagList,
       isPublished: false,
       isFeatured: false,
-      createdAt,
-      meta: {
+      ingredients: [],
+      serving,
+      time: {
+        preparation,
+        cooking,
+      },
+      metaInfo: {
         title,
         description,
         image: '',
       },
+      createdAt,
     });
 
     const markdown = prettier.format(`---\n${yaml}\n---\n`, {
@@ -81,7 +111,7 @@ const authorIds = authors.map((author) => author.id);
       singleQuote: true,
     });
 
-    fs.writeFileSync(`${blogPostFolder}/${slug}.md`, markdown);
+    fs.writeFileSync(`${blogPostFolder}/${slug}.mdx`, markdown);
 
     log(success(`Recipe ${title} was created successfully`));
   } else {

@@ -9,6 +9,12 @@ const recipeSchema = z.object({
   tags: z.array(z.string()).optional(),
   isPublished: z.boolean().default(false),
   isFeatured: z.boolean().default(false),
+  ingredients: z.array(z.string()),
+  serving: z.number(),
+  time: z.object({
+    preparation: z.number(),
+    cooking: z.number(),
+  }),
   metaInfo: z
     .object({
       title: z.string(),
