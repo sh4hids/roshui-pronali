@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit-Bold.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit-Italic.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit-BoldItalic.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit-SemiBold.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Li Ador Noirrit';
+    src: url('/fonts/LiAdorNoirrit-SemiBoldItalic.woff2') format('woff2'),
+      url('/fonts/LiAdorNoirrit-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+  }
+}
+
+.hero-img {
+  height: calc(100vh - 384px);
+}

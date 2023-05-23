@@ -27,7 +27,7 @@ const { recipe } = Astro.props;
 const { Content } = await recipe.render();
 ---
 
-<BaseLayout>
+<BaseLayout title={recipe.data.title}>
   <div class="mb-4">
     <h1 class="text-3xl font-bold text-primary-600 mb-4">
       {recipe.data.title}

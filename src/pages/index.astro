@@ -1,21 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { generateSlug } from '../utils';
-import { RecipeCard } from '../components/RecipeCard';
+import RecipeCard from '../components/RecipeCard.astro';
+import HeroSection from '../components/HeroSection.astro';
 
 const recipes = await getCollection('recipes');
-console.log(recipes);
 ---
 
-<BaseLayout>
-  <h1 class="text-3xl font-bold mb-4">This is my awesome recipe site</h1>
-  <p class="font-medium">
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat asperiores
-    deleniti eos cum iure incidunt sapiente minus aspernatur optio vitae saepe
-    placeat, tempora sit temporibus necessitatibus enim illo at molestiae.
-  </p>
-  <div class="grid grid-cols-3 gap-8">
+<BaseLayout title="নীড়পাতা">
+  <HeroSection />
+  <div class="grid grid-cols-3 gap-8 my-8">
     {recipes.map((recipe) => <RecipeCard recipe={recipe.data} />)}
   </div>
 </BaseLayout>
