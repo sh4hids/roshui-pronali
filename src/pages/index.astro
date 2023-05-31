@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RecipeCard from '../components/RecipeCard.astro';
+import FeaturedRecipes from '../components/FeaturedRecipes.astro';
 import HeroSection from '../components/HeroSection.astro';
 
 const recipes = await getCollection('recipes');
@@ -9,7 +9,5 @@ const recipes = await getCollection('recipes');
 
 <BaseLayout title="নীড়পাতা">
   <HeroSection />
-  <div class="grid grid-cols-3 gap-8 my-8">
-    {recipes.map((recipe) => <RecipeCard recipe={recipe.data} />)}
-  </div>
+  <FeaturedRecipes recipes={recipes} />
 </BaseLayout>

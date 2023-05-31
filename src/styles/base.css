@@ -59,5 +59,12 @@
 }
 
 .hero-img {
-  height: calc(100vh - 384px);
+  height: 240px;
+}
+
+@media (min-width: 768px) {
+  .hero-img {
+    height: calc(100vh - 416px);
+    min-height: 400px;
+  }
 }

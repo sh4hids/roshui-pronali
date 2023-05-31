@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
-import { RecipeCard } from './RecipeCard';
+import RecipeCard from './RecipeCard.astro';
 import type { RecipeType } from '../content/config';
 import { generateSlug } from '../utils';
 

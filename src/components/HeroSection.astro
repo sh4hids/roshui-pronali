@@ -1,9 +1,33 @@
-<div class="rounded-3xl overflow-hidden">
-  <div aria-hidden="true">
-    <img
-      src="/hero-bg.jpg"
-      alt="hero background"
-      class="hero-img w-full object-cover"
-    />
+---
+import { BiSearchAlt2 } from 'react-icons/bi';
+---
+
+<div class="lg:rounded-3xl overflow-hidden">
+  <div class="hero-img bg-cover" style="background-image: url('/hero-bg.jpg');">
+    <div class="grid md:grid-cols-2 h-full">
+      <div class="flex flex-col items-center justify-center p-8">
+        <div class="md:w-3/4">
+          <h1 class="md:text-4xl text-3xl mb-4 leading-12">
+            দেশি-বিদেশি অসংখ্য খাবারের <br /> রেসিপি খুঁজুন বাংলায়...
+          </h1>
+        </div>
+        <div class="md:w-3/4">
+          <form action="">
+            <div class="relative rounded-3xl drop-shadow">
+              <label for="searchText" class="absolute top-5 left-3"
+                ><BiSearchAlt2 className="w-7 h-7 text-gray-400" /></label
+              >
+              <input
+                type="text"
+                name="searchText"
+                id="searchText"
+                class="w-7/10 bg-gray-50 p-4 pl-12 pr-6 outline-none rounded-3xl text-2xl font-normal"
+                placeholder="রেসিপি খুঁজুন..."
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

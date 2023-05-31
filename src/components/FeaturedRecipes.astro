@@ -1,0 +1,19 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import RecipeCard from './RecipeCard.astro';
+
+interface Props {
+  recipes: CollectionEntry<'recipes'>[];
+}
+
+const { recipes } = Astro.props;
+---
+
+<h2 class="text-center sm:hidden text-2xl font-bold mt-4 text-primary-600">
+  Featured Recipes
+</h2>
+<div
+  class="gap-5 m-5 grid lg:grid-cols-3 lg:gap-8 lg:my-8 lg:mx-0 md:grid-cols-2 md:gap-6 md:my-6"
+>
+  {recipes.map((recipe) => <RecipeCard recipe={recipe.data} />)}
+</div>
