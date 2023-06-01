@@ -35,6 +35,10 @@ module.exports = {
           900: '#0F172A',
         },
       },
+      lineHeight: {
+        11.5: '2.875rem',
+        15: '3.75rem',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

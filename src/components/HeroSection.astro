@@ -3,25 +3,30 @@ import { BiSearchAlt2 } from 'react-icons/bi';
 ---
 
 <div class="lg:rounded-3xl overflow-hidden">
-  <div class="hero-img bg-cover" style="background-image: url('/hero-bg.jpg');">
-    <div class="grid md:grid-cols-2 h-full">
+  <div
+    class="hero-img bg-cover bg-center"
+    style="background-image: url('/hero-bg.jpg');"
+  >
+    <div class="grid lg:grid-cols-2 h-full bg-gray-100/40">
       <div class="flex flex-col items-center justify-center p-8">
-        <div class="md:w-3/4">
-          <h1 class="md:text-4xl text-3xl mb-4 leading-12">
-            দেশি-বিদেশি অসংখ্য খাবারের <br /> রেসিপি খুঁজুন বাংলায়...
+        <div class="lg:w-3/4">
+          <h1
+            class="md:text-4xl md:leading-11.5 md:text-left text-3xl text-center mb-4"
+          >
+            দেশি-বিদেশি অসংখ্য খাবারের রেসিপি খুঁজুন বাংলায়...
           </h1>
         </div>
-        <div class="md:w-3/4">
+        <div class="lg:w-3/4">
           <form action="">
             <div class="relative rounded-3xl drop-shadow">
-              <label for="searchText" class="absolute top-5 left-3"
+              <label for="searchText" class="absolute md:top-5 top-2 left-3"
                 ><BiSearchAlt2 className="w-7 h-7 text-gray-400" /></label
               >
               <input
                 type="text"
                 name="searchText"
                 id="searchText"
-                class="w-7/10 bg-gray-50 p-4 pl-12 pr-6 outline-none rounded-3xl text-2xl font-normal"
+                class="w-7/10 bg-gray-50 md:p-4 p-2 md:pl-12 pl-11 md:pr-6 pr-4 outline-none rounded-3xl md:text-2xl text-xl font-normal"
                 placeholder="রেসিপি খুঁজুন..."
               />
             </div>

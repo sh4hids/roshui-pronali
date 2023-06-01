@@ -1,5 +1,9 @@
+---
+import { BiMenu } from 'react-icons/bi';
+---
+
 <div
-  class="relative py-6 md:px-6 flex text-center justify-between font-medium font-sans"
+  class="relative py-6 md:px-6 px-4 flex text-center justify-between font-medium font-sans"
 >
   <a href="/">
     <svg viewBox="0 0 132 32" fill="none" class="text-primary-600 w-auto h-8">
@@ -11,7 +15,7 @@
         fill="currentColor"></path>
     </svg>
   </a>
-  <div class="hidden md:flex items-center">
+  <div class="hidden lg:flex items-center">
     <nav>
       <ul class="flex items-center gap-x-8">
         <li>
@@ -29,5 +33,10 @@
         </li>
       </ul>
     </nav>
+  </div>
+  <div class="lg:hidden">
+    <button>
+      <BiMenu className="w-7 h-7 text-gray-900" />
+    </button>
   </div>
 </div>
