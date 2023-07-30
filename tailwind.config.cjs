@@ -10,7 +10,7 @@ module.exports = {
         sans: ['Li Ador Noirrit', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: {
+        cilli: {
           50: '#FFEAEE',
           100: '#FFD4DC',
           200: '#FFBBC7',
@@ -21,6 +21,18 @@ module.exports = {
           700: '#AC132F',
           800: '#79122B',
           900: '#521123',
+        },
+        pablo: {
+          50: '#FDFDFD',
+          100: '#F8F7EF',
+          200: '#F0EFDE',
+          300: '#E0DFC6',
+          400: '#BEBCA2',
+          500: '#767562',
+          600: '#525242',
+          700: '#3A392D',
+          800: '#28281E',
+          900: '#1C1C14',
         },
         gray: {
           50: '#F8FAFC',
