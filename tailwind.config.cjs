@@ -8,9 +8,10 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Li Ador Noirrit', ...defaultTheme.fontFamily.sans],
+        display: ['Li Sirajee Sheikh Unicode', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        cilli: {
+        chilli: {
           50: '#FFEAEE',
           100: '#FFD4DC',
           200: '#FFBBC7',
@@ -48,8 +49,21 @@ module.exports = {
         },
       },
       lineHeight: {
-        11.5: '2.875rem',
         15: '3.75rem',
+        14: '3.5rem',
+        13: '3.25rem',
+        12: '3rem',
+        11: '2.75rem',
+      },
+      fontSize: {
+        xs: ['1rem', '1.5rem'],
+        sm: ['1.125rem', '1.75rem'],
+        base: ['1.25rem', '2rem'],
+        lg: ['1.5rem', '2.25rem'],
+        xl: ['1.625rem', '2.5rem'],
+        '2xl': ['1.875rem', '2.75rem'],
+        '3xl': ['2.125rem', '3rem'],
+        '4xl': ['2.375rem', '3.25rem'],
       },
     },
   },
