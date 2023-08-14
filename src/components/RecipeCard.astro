@@ -12,23 +12,33 @@ const image =
 const { recipe } = Astro.props;
 ---
 
-<article class="rounded-3xl bg-gray-100 overflow-hidden drop-shadow">
+<article
+  class="rounded-3xl bg-pablo-50 overflow-hidden drop-shadow hover:drop-shadow-lg ease-in-out duration-300"
+>
   <a href={`/recipes/${generateSlug(recipe.title)}`}>
-    <div class="" aria-hidden="true">
+    <div class="p-6" aria-hidden="true">
       <img
         src={recipe.metaInfo.image || image}
         alt="food"
-        class="h-44 w-full object-cover"
+        class="h-44 w-full rounded-lg object-cover"
       />
     </div>
-    <div class="p-4">
-      <h2 class="font-bold text-primary-600 text-2xl leading-8 mb-2">
+    <div class="pb-4 px-6">
+      <h2
+        class="font-normal text-center text-pablo-700 text-2xl border-b pb-6 leading-8 mb-6"
+      >
         {recipe.title}
       </h2>
-      <p class="font-medium">
-        প্রস্তুতি: {convertToBanglaNumber(recipe.time.preparation)} মি | রান্নাা:
-        {convertToBanglaNumber(recipe.time.cooking)} মি
-      </p>
+      <div class="grid grid-cols-2">
+        <div>
+          <h3 class="font-light text-lg">রান্নার সময়</h3>
+          <h4 class="font-normal text-base">১ ঘ. ২৫ মি.</h4>
+        </div>
+        <div class="text-right">
+          <h3 class="font-light text-lg">খেতে পারবে</h3>
+          <h4 class="font-normal text-base">৪ জন</h4>
+        </div>
+      </div>
     </div>
   </a>
 </article>

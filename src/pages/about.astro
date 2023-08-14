@@ -1,9 +1,19 @@
 ---
 import { Text } from '../components/Text';
+import { Button } from '../components/Button';
+import { Link } from '../components/Link';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout>
+  <Button>সকল রেসিপি দেখুন</Button>
+  <Button variant="warning">সকল রেসিপি দেখুন</Button>
+  <Button variant="secondary">সকল রেসিপি দেখুন</Button>
+  <Button variant="error">সকল রেসিপি দেখুন</Button>
+
+  <Link to="/">Test</Link>
+  <Link type="button" to="/">Test</Link>
+
   <Text component="h1" variant="display">
     মহারাজ ঊষাকালে বৃহৎ ঐরাবতে রাজপথের অর্ধেক প্রদক্ষিণ করতঃ হঠাত্‍ উক্তি
     করিলেন, “এই ঢোল‌ পাখোয়াজ, শাস্ত্রীয় সঙ্গীতের ঝংকার ও সৌরভ মন্দ্রিত
