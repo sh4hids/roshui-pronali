@@ -13,4 +13,7 @@ export default defineConfig({
     react(),
     mdx(),
   ],
+  experimental: {
+    assets: true,
+  },
 });

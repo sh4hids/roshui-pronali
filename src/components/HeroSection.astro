@@ -1,21 +1,21 @@
 ---
-import { BiSearchAlt2 } from 'react-icons/bi';
+import {HiMagnifyingGlass} from 'react-icons/hi2/index'
 import { Text } from './Text';
 ---
 
 <div class="container">
   <div class="grid grid-cols-12 gap-6 my-16 px-6">
     <div class="col-span-5 grid content-center items-center">
-    <span class="text-xl mb-6">
+    <span class="text-xl font-normal mb-6">
 ঘরে বসেই বাংলা, চাইনিজ, মোঘলাই, ইন্ডিয়ান, থাইসহ বিভিন্ন ধরনের অথেন্টিক রেসিপি ট্রাই করতে চান?
     </span>
-    <Text variant="display" component="h1" color="text-chilli-600">
+    <Text variant="display" component="h1" color="text-chilli-600 dark:text-chilli-500">
 দেশী-বিদেশী অসংখ্য খাবারের
 রেসিপি খুঁজুন বাংলায়
     </Text>
-    <span class="bg-pablo-50 w-[300px] rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow">
-<BiSearchAlt2 className="inline-block h-8 w-8 text-pablo-500" />
-<input placeholder="খুঁজুন..." class="placeholder:text-base placeholder:text-pablo-500 w-full text-base text-pablo-700 py-4 pl-2 outline-none" />
+    <span class="bg-pablo-50  w-[300px] rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow">
+<HiMagnifyingGlass className="inline-block h-8 w-8 text-pablo-500 " />
+<input placeholder="খুঁজুন..." class="placeholder:text-base bg-transparent placeholder:text-pablo-500  w-full font-light text-base text-pablo-700  py-4 pl-2 outline-none" />
     </span>
     </div>
 
