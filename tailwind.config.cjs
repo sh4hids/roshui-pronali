@@ -8,9 +8,10 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Li Ador Noirrit', ...defaultTheme.fontFamily.sans],
+        display: ['Li Sirajee Sheikh Unicode', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: {
+        chilli: {
           50: '#FFEAEE',
           100: '#FFD4DC',
           200: '#FFBBC7',
@@ -21,6 +22,18 @@ module.exports = {
           700: '#AC132F',
           800: '#79122B',
           900: '#521123',
+        },
+        pablo: {
+          50: '#FDFDFD',
+          100: '#F8F7EF',
+          200: '#F0EFDE',
+          300: '#E0DFC6',
+          400: '#BEBCA2',
+          500: '#767562',
+          600: '#525242',
+          700: '#3A392D',
+          800: '#28281E',
+          900: '#1C1C14',
         },
         gray: {
           50: '#F8FAFC',
@@ -36,8 +49,21 @@ module.exports = {
         },
       },
       lineHeight: {
-        11.5: '2.875rem',
         15: '3.75rem',
+        14: '3.5rem',
+        13: '3.25rem',
+        12: '3rem',
+        11: '2.75rem',
+      },
+      fontSize: {
+        xs: ['1rem', '1.5rem'],
+        sm: ['1.125rem', '1.75rem'],
+        base: ['1.25rem', '2rem'],
+        lg: ['1.5rem', '2.25rem'],
+        xl: ['1.625rem', '2.5rem'],
+        '2xl': ['1.875rem', '2.75rem'],
+        '3xl': ['2.125rem', '3rem'],
+        '4xl': ['2.375rem', '3.25rem'],
       },
     },
   },

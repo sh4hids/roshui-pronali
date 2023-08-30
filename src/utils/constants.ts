@@ -1,1 +1,1 @@
-export { categories } from '../data/categories.mjs';
+export * from '../data/categories.mjs';

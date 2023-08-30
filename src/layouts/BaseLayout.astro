@@ -1,28 +1,27 @@
 ---
 import '../styles/base.css';
-import Navbar from '../components/Navbar.astro';
+import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
 
 const defaultTitle = 'রসুই প্রণালী';
 const { title = '' } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class="font-sans text-gray-900">
+<html lang="en" class="font-sans bg-pablo-200 text-pablo-700 font-light">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="test description" />
     <title>{title ? `${title} | ${defaultTitle}` : defaultTitle}</title>
   </head>
   <body>
-    <header class="relative">
-      <div class="container mx-auto">
-        <Navbar />
-      </div>
-    </header>
+    <Navbar />
     <main class="container mx-auto">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
