@@ -1,12 +1,8 @@
 import type { CollectionEntry } from 'astro:content';
 import Fuse from 'fuse.js';
 import { useState } from 'react';
-import RecipeCard from './RecipeCard.astro';
 import type { RecipeType } from '../content/config';
-import { generateSlug } from '../utils';
 
-// Configs fuse.js
-// https://fusejs.io/api/options.html
 const options = {
   keys: ['title', 'metaInfo.description', 'slug'],
   includeMatches: true,

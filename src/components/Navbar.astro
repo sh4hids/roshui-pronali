@@ -5,6 +5,7 @@ import {
   HiOutlineMoon,
 } from 'react-icons/hi2/index';
 import { BiLogoGithub } from 'react-icons/bi/index';
+import SiteSearch from './SiteSearch.astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
@@ -68,10 +69,7 @@ const currentPath = new URL(Astro.request.url).pathname;
         <div
           class="ml-8 pl-8 border-l-2 border-dotted border-chilli-600/40 flex items-center gap-x-8"
         >
-          <button
-            ><HiMagnifyingGlass className="text-pablo-700 w-6 h-6" /></button
-          >
-          <button><HiOutlineMoon className="text-pablo-700 w-6 h-6" /></button>
+          <SiteSearch />
           <a href="https://github.com/sh4hids/roshui-pronali" target="_blank"
             ><BiLogoGithub className="text-pablo-700 w-6 h-6" /></a
           >
