@@ -28,41 +28,47 @@ const { Content } = await recipe.render();
 ---
 
 <BaseLayout title={recipe.data.title}>
-  <div class="mb-4">
-    <h1 class="text-3xl font-bold text-primary-600 mb-4">
-      {recipe.data.title}
-    </h1>
-    <p>{recipe.data.metaInfo.description}</p>
-    <ul>
-      <li>
-        <span>প্রস্তুতিকাল</span>
-        <span>{convertToBanglaNumber(recipe.data.time.preparation)} মিনিট</span>
-      </li>
-      <li>
-        <span>রান্নার সময়</span>
-        <span>{convertToBanglaNumber(recipe.data.time.cooking)} মিনিট</span>
-      </li>
-    </ul>
-    <ul class="my-4">
-      {
-        recipe.data.tags.map((tag) => (
-          <li>
-            <a href={`/tags/${generateSlug(tag)}`}>#{tag}</a>
-          </li>
-        ))
-      }
-    </ul>
-    <p class="mb-4">
-      Published at: {format(new Date(recipe.data.createdAt), 'MMMM dd, yyyy')}
-    </p>
-    <p class="text-primary-600">
-      <a href={`/categories/${generateSlug(recipe.data.category)}`}
-        >Category: {recipe.data.category}</a
-      >
-    </p>
-  </div>
-  <article class="prose prose-headings:text-primary-600">
-    <h2>রান্নার প্রক্রিয়া</h2>
-    <Content />
+  <article data-pagefind-body>
+    <div class="mb-4">
+      <h1 class="text-3xl font-bold text-primary-600 mb-4">
+        {recipe.data.title}
+      </h1>
+      <p>{recipe.data.metaInfo.description}</p>
+      <ul>
+        <li>
+          <span>প্রস্তুতিকাল</span>
+          <span
+            >{convertToBanglaNumber(recipe.data.time.preparation)} মিনিট</span
+          >
+        </li>
+        <li>
+          <span>রান্নার সময়</span>
+          <span>{convertToBanglaNumber(recipe.data.time.cooking)} মিনিট</span>
+        </li>
+      </ul>
+      <ul class="my-4">
+        {
+          recipe.data.tags.map((tag) => (
+            <li>
+              <a href={`/tags/${generateSlug(tag)}`} data-pagefind-filter="tag">
+                #{tag}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mb-4">
+        Published at: {format(new Date(recipe.data.createdAt), 'MMMM dd, yyyy')}
+      </p>
+      <p class="text-primary-600">
+        <a href={`/categories/${generateSlug(recipe.data.category)}`}
+          >Category: {recipe.data.category}</a
+        >
+      </p>
+    </div>
+    <article class="prose prose-headings:text-primary-600">
+      <h2>রান্নার প্রক্রিয়া</h2>
+      <Content />
+    </article>
   </article>
 </BaseLayout>
