@@ -1,5 +1,9 @@
 import type React from 'react';
-import { ButtonVariant, buttonBaseClasses, buttonVariants } from './Button';
+import {
+  type ButtonVariant,
+  buttonBaseClasses,
+  buttonVariants,
+} from './Button';
 
 const linkBaseClasses = 'cursor-pointer ease-in-out duration-300';
 

@@ -6,14 +6,6 @@ import mdx from '@astrojs/mdx';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    tailwind({
-      config: { applyBaseStyles: false },
-    }),
-    react(),
-    mdx(),
-  ],
-  experimental: {
-    assets: true,
-  },
+  site: 'https://roshui-pronali.netlify.app/',
+  integrations: [tailwind(), mdx(), react()],
 });

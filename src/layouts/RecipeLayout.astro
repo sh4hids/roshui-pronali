@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const {
+  data: { title, metaInfo, createdAt, updatedAt },
+  slug,
+} = recipe;
+---
+
+<BaseLayout meta={{ title, description: metaInfo.description }}>
+  <article class="container mx-auto px-6 pb-16" data-pagefind-body>
+    <div class="prose max-w-none pt-6">
+      <h1 class="text-3xl">{title}</h1>
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

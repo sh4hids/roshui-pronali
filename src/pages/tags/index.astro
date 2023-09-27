@@ -1,32 +1,19 @@
 ---
-import { getCollection } from 'astro:content';
-import { generateSlug } from '../../utils';
+import { getUniqueTagsWithCount, getAllRecipes } from '../../data';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const recipes = await getCollection('recipes');
-const tags = recipes
-  .map((recipe) => recipe.data.tags)
-  .flat()
-  .reduce<{ [key: string]: number }>(function (result, curr) {
-    let count = result[curr] || 0;
-    result[curr] = count + 1;
-    return result;
-  }, {});
-
-console.log(tags);
+const recipes = await getAllRecipes();
+const tags = getUniqueTagsWithCount(recipes);
 ---
 
-<BaseLayout>
-  <h1>All posts about: {tags.length}</h1>
-  {
-    Object.keys(tags).map((tag) => (
-      <article>
-        <h2>
-          <a href={`/tags/${generateSlug(tag)}`}>
-            {tag} ({tags[tag]})
-          </a>
-        </h2>
-      </article>
-    ))
-  }
+<BaseLayout meta={{ title: 'All tags' }}>
+  <ul>
+    {
+      tags.map(([tag, count]) => (
+        <li>
+          {tag} ({count})
+        </li>
+      ))
+    }
+  </ul>
 </BaseLayout>
