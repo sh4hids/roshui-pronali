@@ -1,19 +1,18 @@
 ---
-import { getUniqueTagsWithCount, getAllRecipes } from '../../data';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllRecipes, getUniqueTagsWithCount } from '@/data';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+import Tags from '@/components/Tags.astro';
 
 const recipes = await getAllRecipes();
 const tags = getUniqueTagsWithCount(recipes);
+const meta = {
+  title: 'রান্নার বিষয়',
+};
 ---
 
-<BaseLayout meta={{ title: 'All tags' }}>
-  <ul>
-    {
-      tags.map(([tag, count]) => (
-        <li>
-          {tag} ({count})
-        </li>
-      ))
-    }
-  </ul>
+<BaseLayout meta={meta}>
+  <PageLayout title={meta.title}>
+    <Tags tags={tags} />
+  </PageLayout>
 </BaseLayout>
