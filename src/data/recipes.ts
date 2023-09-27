@@ -34,6 +34,15 @@ export const getUniqueTagsWithCount = (
   ];
 };
 
+export const getAllRecipesByTag = (
+  recipes: Array<CollectionEntry<'recipes'>>,
+  tagSlug: string
+) => {
+  return recipes.filter((recipe) =>
+    recipe.data.tags.some((tag) => generateSlug(tag) === tagSlug)
+  );
+};
+
 export const getAllCategories = (
   recipes: Array<CollectionEntry<'recipes'>>
 ) => {
