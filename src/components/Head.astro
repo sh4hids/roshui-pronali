@@ -1,14 +1,15 @@
 ---
-import { siteConfig, SiteMeta } from '@/config';
-import '@/styles/base.css';
+import { siteConfig, type SiteMeta } from '../config';
+import '../styles/base.css';
 
 type Props = SiteMeta;
 
 const { title, description, ogImage, articleDate } = Astro.props;
 
-const titleSeparator = '•';
+const titleSeparator = '︴';
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+console.log(Astro.url, Astro.site);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || '');
 const socialImageURL = new URL(
   ogImage ? ogImage : '/roshui-pronali-seo-image.png',
   Astro.url
@@ -72,4 +73,40 @@ const socialImageURL = new URL(
   type="application/rss+xml"
   title={siteConfig.title}
   href="/rss.xml"
+/>
+
+<link
+  rel="preload"
+  href="/fonts/LiAdorNoirrit-Italic.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/LiAdorNoirrit-Light.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/LiAdorNoirrit-LightItalic.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/LiAdorNoirrit.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/LiSirajeeSheikhUnicode.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
 />

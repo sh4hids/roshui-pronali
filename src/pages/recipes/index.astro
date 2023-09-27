@@ -1,0 +1,17 @@
+---
+import RecipeGrid from '@/components/RecipeGrid.astro';
+import { getAllRecipes } from '@/data';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+
+const recipes = await getAllRecipes();
+const meta = {
+  title: 'সকল রেসিপি',
+};
+---
+
+<BaseLayout meta={meta}>
+  <PageLayout title={meta.title}>
+    <RecipeGrid recipes={recipes} />
+  </PageLayout>
+</BaseLayout>

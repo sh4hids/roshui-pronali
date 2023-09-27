@@ -1,29 +1,18 @@
 ---
-import { getCollection } from 'astro:content';
-import { generateSlug } from '../../utils';
+import { getAllRecipes, getUniqueCategoriesWithCount } from '../../data';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageLayout from '@/layouts/PageLayout.astro';
+import Categories from '@/components/Categories.astro';
 
-const recipes = await getCollection('recipes');
-const categories = recipes
-  .map((recipe) => recipe.data.category)
-  .reduce<{ [key: string]: number }>(function (result, curr) {
-    let count = result[curr] || 0;
-    result[curr] = count + 1;
-    return result;
-  }, {});
+const recipes = await getAllRecipes();
+const categories = getUniqueCategoriesWithCount(recipes);
+const meta = {
+  title: 'রান্নার ধরন',
+};
 ---
 
-<BaseLayout>
-  <h1>All posts about: {categories.length}</h1>
-  {
-    Object.keys(categories).map((category) => (
-      <article>
-        <h2>
-          <a href={`/categories/${generateSlug(category)}`}>
-            {category} ({categories[category]})
-          </a>
-        </h2>
-      </article>
-    ))
-  }
+<BaseLayout meta={meta}>
+  <PageLayout title={meta.title}>
+    <Categories categories={categories} />
+  </PageLayout>
 </BaseLayout>

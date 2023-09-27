@@ -1,27 +1,36 @@
 ---
-import '../styles/base.css';
-import Navbar from '@/components/Navbar.astro';
-import Footer from '@/components/Footer.astro';
-import { GlobalSearch } from '../components/GlobalSearch';
+import { ViewTransitions } from 'astro:transitions';
 
-const defaultTitle = 'রসুই প্রণালী';
-const { title = '' } = Astro.props;
+import Head from '../components/Head.astro';
+import ThemeProvider from '../components/ThemeProvider.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig, type SiteMeta } from '../config';
+
+interface Props {
+  meta: SiteMeta;
+}
+
+const {
+  meta: { title, description = siteConfig.description, ogImage, articleDate },
+} = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="en" class="font-sans bg-pablo-200 text-pablo-700 font-light">
+<html lang={siteConfig.lang}>
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="test description" />
-    <title>{title ? `${title} | ${defaultTitle}` : defaultTitle}</title>
+    <Head
+      title={title}
+      description={description}
+      ogImage={ogImage}
+      articleDate={articleDate}
+    />
+    <ViewTransitions />
   </head>
-  <body>
-    <GlobalSearch client:load />
-    <Navbar />
-    <main class="container mx-auto">
+  <body class="font-sans bg-pablo-200 text-pablo-700 font-light">
+    <ThemeProvider />
+    <!-- <SkipLink /> -->
+    <Header />
+    <main id="main">
       <slot />
     </main>
     <Footer />
