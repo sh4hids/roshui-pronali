@@ -8,7 +8,6 @@ const { title, description, ogImage, articleDate } = Astro.props;
 
 const titleSeparator = '︴';
 const siteTitle = `${title} ${titleSeparator} ${siteConfig.title}`;
-console.log(Astro.url, Astro.site);
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || '');
 const socialImageURL = new URL(
   ogImage ? ogImage : '/roshui-pronali-seo-image.png',
