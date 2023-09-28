@@ -27,6 +27,7 @@
     "eslint-plugin-astro": "^0.29.0",
     "inquirer": "^9.2.11",
     "json-to-pretty-yaml": "^1.2.2",
+    "nanoid": "^5.0.1",
     "prettier": "^3.0.3",
     "prettier-plugin-astro": "^0.12.0"
   }

@@ -13,7 +13,7 @@ const recipes = limit ? allRecipes.slice(0, limit) : [...allRecipes];
 ---
 
 <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-  {recipes.map((recipe) => <RecipeCard recipe={recipe.data} />)}
+  {recipes.map((recipe) => <RecipeCard recipe={recipe} />)}
 </div>
 {
   limit && allRecipes.length > limit && (

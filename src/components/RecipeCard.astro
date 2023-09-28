@@ -1,12 +1,11 @@
 ---
 import { HiOutlineClock, HiOutlineUsers } from 'react-icons/hi2/index';
-import type { RecipeType } from '../content/config';
+import { generateSlug } from '../utils';
+import type { CollectionEntry } from 'astro:content';
 
 interface Props {
-  recipe: RecipeType;
+  recipe: CollectionEntry<'recipes'>;
 }
-
-import { generateSlug } from '../utils';
 
 const image =
   'https://images.pexels.com/photos/718742/pexels-photo-718742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
@@ -18,11 +17,11 @@ const { recipe } = Astro.props;
 >
   <a
     class="flex flex-col h-full"
-    href={`/recipes/${recipe.slug || generateSlug(recipe.title)}`}
+    href={`/recipes/${recipe.data.slug || recipe.slug}`}
   >
     <div class="p-6" aria-hidden="true">
       <img
-        src={recipe.metaInfo.image || image}
+        src={recipe.data.metaInfo.image || image}
         alt="food"
         class="h-44 w-full rounded-lg object-cover"
       />
@@ -31,7 +30,7 @@ const { recipe } = Astro.props;
       <h2
         class="font-normal text-center text-pablo-700 text-2xl pb-6 leading-8"
       >
-        {recipe.title}
+        {recipe.data.title}
       </h2>
       <div class="grid grid-cols-2 pt-6 border-t">
         <div>

@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import inquirer from 'inquirer';
 import json2Yaml from 'json-to-pretty-yaml';
 import prettier from 'prettier';
+import { nanoid } from 'nanoid';
 
 import { authors } from '../data/authors.mjs';
 import { categories } from '../data/categories.mjs';
@@ -87,7 +88,6 @@ const authorIds = authors.map((author) => author.id);
     const yaml = json2Yaml.stringify({
       title: title.trim(),
       author,
-      slug,
       category,
       tags: tagList,
       isPublished: false,
@@ -95,16 +95,17 @@ const authorIds = authors.map((author) => author.id);
       ingredients: {
         main: ['item 1', 'item 2'],
       },
-      serving,
+      serving: Number(serving),
       time: {
-        preparation,
-        cooking,
+        preparation: Number(preparation),
+        cooking: Number(cooking),
       },
       metaInfo: {
         description,
         image: '',
       },
       createdAt,
+      updatedAt: createdAt,
     });
 
     const markdown = await prettier.format(`---\n${yaml}\n---\n`, {
@@ -112,7 +113,7 @@ const authorIds = authors.map((author) => author.id);
       singleQuote: true,
     });
 
-    fs.writeFileSync(`${blogPostFolder}/${slug}.mdx`, markdown);
+    fs.writeFileSync(`${blogPostFolder}/${slug}-${nanoid(10)}.mdx`, markdown);
 
     log(success(`Recipe ${title} was created successfully`));
   } else {
