@@ -1,7 +1,6 @@
 ---
 import { getAllRecipes, getUniqueTagsWithCount } from '@/data';
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import PageLayout from '@/layouts/PageLayout.astro';
+import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
 import Tags from '@/components/Tags.astro';
 
 const recipes = await getAllRecipes();
@@ -11,8 +10,6 @@ const meta = {
 };
 ---
 
-<BaseLayout meta={meta}>
-  <PageLayout title={meta.title}>
-    <Tags tags={tags} />
-  </PageLayout>
-</BaseLayout>
+<AllRecipesPageLayout title={meta.title} description="test">
+  <Tags tags={tags} />
+</AllRecipesPageLayout>

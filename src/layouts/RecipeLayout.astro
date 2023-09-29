@@ -2,12 +2,15 @@
 import {
   HiOutlineClock,
   HiOutlineFire,
+  HiOutlineHashtag,
+  HiOutlineTag,
   HiOutlineUsers,
 } from 'react-icons/hi2/index';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
-import { convertToBanglaNumber } from '@/utils';
+import { convertToBanglaNumber, generateSlug } from '@/utils';
 import HeroImage from '@/components/HeroImage.astro';
+import { Link } from '@/components/Link';
 
 interface Props {
   recipe: CollectionEntry<'recipes'>;
@@ -55,6 +58,42 @@ const {
               {convertToBanglaNumber(recipe.data.serving)} জন
             </p>
           </div>
+        </div>
+        <div
+          class="flex justify-center text-sm border-b py-6 border-chilli-600/10 w-full"
+        >
+          <span class="border-r border-chilli-600/10 pr-6">
+            <HiOutlineTag className="inline relative -top-0.5" />
+            <span class="pl-2">
+              <Link
+                to={`/categories/${generateSlug(recipe.data.category)}`}
+                variant="primary"
+              >
+                {recipe.data.category}
+              </Link>
+            </span>
+          </span>
+          {
+            recipe.data.tags ? (
+              <span class="pl-6">
+                <HiOutlineHashtag className="inline relative -top-0.5" />
+                <ul class="inline pl-2">
+                  {recipe.data.tags.map((tag, index) => (
+                    <li class="inline-block pr-2 last:pr-0">
+                      <Link to={`/tags/${generateSlug(tag)}`} variant="primary">
+                        {tag}
+                      </Link>
+                      {recipe.data.tags && index !== recipe.data.tags.length - 1
+                        ? ','
+                        : ''}
+                    </li>
+                  ))}
+                </ul>
+              </span>
+            ) : (
+              ''
+            )
+          }
         </div>
       </div>
     </div>
