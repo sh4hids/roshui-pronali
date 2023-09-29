@@ -46,6 +46,16 @@ const currentPath = new URL(Astro.request.url).pathname;
             </li>
             <li>
               <a
+                href="/recipes"
+                class={`text-xl ${
+                  currentPath.includes('/recipes') ? 'text-chilli-600' : ''
+                }`}
+              >
+                রেসিপি</a
+              >
+            </li>
+            <li>
+              <a
                 href="/about"
                 class={`text-xl ${
                   currentPath === '/about' ? 'text-chilli-600' : ''
