@@ -3,6 +3,8 @@ import { HiOutlineClock, HiOutlineUsers } from 'react-icons/hi2/index';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 
+import foodImage from '@/assets/images/food.jpeg';
+
 interface Props {
   recipe: CollectionEntry<'recipes'>;
 }
@@ -18,11 +20,10 @@ const { recipe } = Astro.props;
   <a class="flex flex-col h-full" href={`/recipes/${recipe.slug}`}>
     <div class="p-6" aria-hidden="true">
       <Image
-        src={image}
+        src={foodImage}
         alt="food"
-        height={1260}
-        width={750}
         class="h-44 w-full rounded-lg object-cover"
+        loading="eager"
       />
     </div>
     <div class="flex flex-col flex-1 justify-between pb-4 px-6">
