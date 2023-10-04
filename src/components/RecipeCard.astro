@@ -1,7 +1,7 @@
 ---
 import { HiOutlineClock, HiOutlineUsers } from 'react-icons/hi2/index';
-import { generateSlug } from '../utils';
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 
 interface Props {
   recipe: CollectionEntry<'recipes'>;
@@ -15,14 +15,13 @@ const { recipe } = Astro.props;
 <article
   class="rounded-3xl bg-pablo-50 overflow-hidden drop-shadow hover:drop-shadow-lg ease-in-out duration-300"
 >
-  <a
-    class="flex flex-col h-full"
-    href={`/recipes/${recipe.data.slug || recipe.slug}`}
-  >
+  <a class="flex flex-col h-full" href={`/recipes/${recipe.slug}`}>
     <div class="p-6" aria-hidden="true">
-      <img
-        src={recipe.data.metaInfo.image || image}
+      <Image
+        src={image}
         alt="food"
+        height={1260}
+        width={750}
         class="h-44 w-full rounded-lg object-cover"
       />
     </div>
