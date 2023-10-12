@@ -28,7 +28,7 @@ export const siteConfig: SiteConfig = {
   // HTML lang property, found in src/layouts/Base.astro L:18
   lang: 'bn',
   // Meta property, found in src/components/BaseHead.astro L:42
-  ogLocale: 'bn',
+  ogLocale: 'bn_BD',
   // Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
   date: {
     locale: 'en-GB',

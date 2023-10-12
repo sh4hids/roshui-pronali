@@ -1,5 +1,6 @@
 ---
 import {HiMagnifyingGlass} from 'react-icons/hi2/index'
+import HeroSearch from './HeroSearch.astro'
 ---
 
 <div class="container mx-auto ">
@@ -12,10 +13,7 @@ import {HiMagnifyingGlass} from 'react-icons/hi2/index'
 দেশী-বিদেশী অসংখ্য খাবারের
 রেসিপি খুঁজুন বাংলায়
     </Text>
-    <span class="bg-pablo-50  w-[300px] rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow">
-<HiMagnifyingGlass className="inline-block h-8 w-8 text-pablo-500 " />
-<input placeholder="খুঁজুন..." class="placeholder:text-base bg-transparent placeholder:text-pablo-500  w-full font-light text-base text-pablo-700  py-4 pl-2 outline-none" />
-    </span>
+        <HeroSearch />
     </div>
 
     <div class="md:col-start-8 md:col-span-5 hidden md:block">
