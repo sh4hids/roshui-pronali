@@ -1,6 +1,7 @@
 ---
 import { HiBars3 } from 'react-icons/hi2/index';
 import { BiLogoGithub } from 'react-icons/bi/index';
+import Search from './Search.astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
 
@@ -77,6 +78,7 @@ function isActivePath(path: string) {
           class="pl-8 border-l-2 border-dotted border-chilli-600/40 flex items-center gap-x-8"
         >
           <!-- <SiteSearch /> -->
+          <Search />
           <a href="https://github.com/sh4hids/roshui-pronali" target="_blank">
             <BiLogoGithub className="text-pablo-700 w-6 h-6" />
             <span class="sr-only">Project Link</span>
