@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "postbuild": "pagefind --site dist --force-language bn && replace-in-file '/NumberFormat([^)]+)/g' 'NumberFormat(\"bn\"' dist/**/*.js --isRegex",
+    "postbuild": "pagefind && replace-in-file '/NumberFormat([^)]+)/g' 'NumberFormat(\"bn\"' dist/**/*.js --isRegex",
     "preview": "astro preview",
     "astro": "astro",
     "create": "node src/scripts/createPost.mjs"

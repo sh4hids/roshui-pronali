@@ -1,5 +1,5 @@
 ---
-import { HiMagnifyingGlass, HiOutlineXMark } from 'react-icons/hi2/index';
+import { HiMagnifyingGlass } from 'react-icons/hi2/index';
 import '@pagefind/default-ui/css/ui.css';
 ---
 
@@ -7,20 +7,20 @@ import '@pagefind/default-ui/css/ui.css';
   <button
     data-open-modal
     disabled
-    class="cursor-pointer py-4 bg-pablo-50 w-[300px] rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow"
+    class="cursor-pointer py-4 bg-pablo-50 w-[300px] rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow outline-none"
   >
     <HiMagnifyingGlass className="inline-block h-8 w-8 text-pablo-500 " />
     <p class="pl-2 text-pablo-500">খুঁজুন...</p>
   </button>
   <dialog
     aria-label="hero-search"
-    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-chilli-600/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
+    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-pablo-700/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
   >
     <button
       data-close-modal
-      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer rounded-3xl text-pablo-700"
+      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
     >
-      <HiOutlineXMark className="w-8 h-8" />
+      Esc
     </button>
 
     <div class="dialog-frame flex flex-col gap-4">
@@ -43,7 +43,7 @@ import '@pagefind/default-ui/css/ui.css';
 </hero-site-search>
 
 <script>
-  class SiteSearch extends HTMLElement {
+  class HeroSiteSearch extends HTMLElement {
     constructor() {
       super();
       const openBtn = this.querySelector<HTMLButtonElement>(
@@ -93,7 +93,7 @@ import '@pagefind/default-ui/css/ui.css';
         }
       });
 
-      window.addEventListener('DOMContentLoaded', () => {
+      function createUI() {
         if (import.meta.env.DEV) return;
         const onIdle =
           window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
@@ -103,7 +103,7 @@ import '@pagefind/default-ui/css/ui.css';
             element: '#hero-recipe__search',
             baseUrl: import.meta.env.BASE_URL,
             bundlePath:
-              import.meta.env.BASE_URL.replace(/\/$/, '') + '/_pagefind/',
+              import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
             showImages: false,
             showSubResults: true,
             translations: {
@@ -115,7 +115,15 @@ import '@pagefind/default-ui/css/ui.css';
             },
           });
         });
-      });
+      }
+
+      if (document.readyState !== 'loading') {
+        createUI();
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          createUI();
+        });
+      }
 
       // close modal and clear input on view-transtion
       document.addEventListener('astro:after-swap', () => {
@@ -131,5 +139,5 @@ import '@pagefind/default-ui/css/ui.css';
     }
   }
 
-  customElements.define('hero-site-search', SiteSearch);
+  customElements.define('hero-site-search', HeroSiteSearch);
 </script>

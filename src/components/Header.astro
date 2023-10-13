@@ -1,13 +1,10 @@
 ---
-import { HiBars3 } from 'react-icons/hi2/index';
 import { BiLogoGithub } from 'react-icons/bi/index';
 import Search from './Search.astro';
+import MobileMenu from './MobileMenu.astro';
+import { isActivePath } from '@/utils';
 
 const currentPath = new URL(Astro.request.url).pathname;
-
-function isActivePath(path: string) {
-  return currentPath.split('/')[1] === path;
-}
 ---
 
 <header
@@ -41,7 +38,9 @@ function isActivePath(path: string) {
             <li>
               <a
                 href="/"
-                class={`text-xl ${isActivePath('') ? 'text-chilli-600' : ''}`}
+                class={`text-xl ${
+                  isActivePath(currentPath, '') ? 'text-chilli-600' : ''
+                }`}
               >
                 নীড়পাতা</a
               >
@@ -50,7 +49,7 @@ function isActivePath(path: string) {
               <a
                 href="/recipes"
                 class={`text-xl ${
-                  isActivePath('recipes') ? 'text-chilli-600' : ''
+                  isActivePath(currentPath, 'recipes') ? 'text-chilli-600' : ''
                 }`}
               >
                 রেসিপি</a
@@ -60,7 +59,7 @@ function isActivePath(path: string) {
               <a
                 href="/about"
                 class={`text-xl ${
-                  isActivePath('about') ? 'text-chilli-600' : ''
+                  isActivePath(currentPath, 'about') ? 'text-chilli-600' : ''
                 }`}>পরিচিতি</a
               >
             </li>
@@ -68,7 +67,7 @@ function isActivePath(path: string) {
               <a
                 href="/contact"
                 class={`text-xl ${
-                  isActivePath('contact') ? 'text-chilli-600' : ''
+                  isActivePath(currentPath, 'contact') ? 'text-chilli-600' : ''
                 }`}>যোগাযোগ</a
               >
             </li>
@@ -85,11 +84,8 @@ function isActivePath(path: string) {
           </a>
         </div>
       </div>
-      <div class="lg:hidden grid items-center">
-        <button>
-          <HiBars3 className="w-7 h-7 text-chilli-600" />
-          <span class="sr-only">Menu</span>
-        </button>
+      <div class="lg:hidden">
+        <MobileMenu />
       </div>
     </div>
   </div>

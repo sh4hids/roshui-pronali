@@ -1,0 +1,135 @@
+---
+import { HiBars3 } from 'react-icons/hi2/index';
+import Search from './Search.astro';
+
+import { isActivePath } from '@/utils';
+
+const currentPath = new URL(Astro.request.url).pathname;
+---
+
+<mobile-menu id="mobile-menu" class="flex items-center gap-x-4 h-full">
+  <Search />
+  <button data-open-menu class="outline-none">
+    <HiBars3 className="w-7 h-7 text-chilli-600" />
+    <span class="sr-only">Menu</span>
+  </button>
+  <dialog
+    data-mobile-menu
+    aria-label="mobile-menu"
+    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-pablo-700/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
+  >
+    <button
+      data-close-menu
+      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
+    >
+      Esc
+    </button>
+
+    <div class="menu-dialog-frame flex flex-col gap-4">
+      <nav>
+        <ul class="flex items-center flex-col">
+          <li class="block w-full">
+            <a
+              href="/"
+              class={`inline-block w-full border-b border-chilli-600/10 text-xl py-3 ${
+                isActivePath(currentPath, '') ? 'text-chilli-600' : ''
+              }`}
+            >
+              নীড়পাতা</a
+            >
+          </li>
+          <li class="block w-full">
+            <a
+              href="/recipes"
+              class={`inline-block w-full border-b border-chilli-600/10 text-xl py-3 ${
+                isActivePath(currentPath, 'recipes') ? 'text-chilli-600' : ''
+              }`}
+            >
+              রেসিপি</a
+            >
+          </li>
+          <li class="block w-full">
+            <a
+              href="/about"
+              class={`inline-block w-full border-b border-chilli-600/10 text-xl py-3 ${
+                isActivePath(currentPath, 'about') ? 'text-chilli-600' : ''
+              }`}>পরিচিতি</a
+            >
+          </li>
+          <li class="block w-full">
+            <a
+              href="/contact"
+              class={`inline-block w-full border-b border-chilli-600/10 text-xl py-3 ${
+                isActivePath(currentPath, 'contact') ? 'text-chilli-600' : ''
+              }`}>যোগাযোগ</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </dialog>
+</mobile-menu>
+
+<script>
+  class MobileMenu extends HTMLElement {
+    constructor() {
+      super();
+      const openBtn = this.querySelector<HTMLButtonElement>(
+        'button[data-open-menu]'
+      )!;
+      const closeBtn = this.querySelector<HTMLButtonElement>(
+        'button[data-close-menu]'
+      )!;
+      const dialog = this.querySelector<HTMLDialogElement>(
+        'dialog[data-mobile-menu]'
+      )!;
+      const dialogFrame = this.querySelector('.menu-dialog-frame')!;
+
+      const onWindowClick = (event: MouseEvent) => {
+        // check if it's a link
+        const isLink = 'href' in (event.target || {});
+        // make sure the click is either a link or outside of the dialog
+        if (
+          isLink ||
+          (document.body.contains(event.target as Node) &&
+            !dialogFrame.contains(event.target as Node))
+        )
+          closeModal();
+      };
+
+      const openModal = (event?: MouseEvent) => {
+        dialog.showModal();
+        this.querySelector('input')?.focus();
+        event?.stopPropagation();
+        window.addEventListener('click', onWindowClick);
+      };
+
+      const closeModal = () => {
+        if (dialog.open) {
+          dialog.close();
+          window.removeEventListener('click', onWindowClick);
+        }
+      };
+
+      openBtn.addEventListener('click', openModal);
+      openBtn.disabled = false;
+      closeBtn.addEventListener('click', closeModal);
+
+      // Listen for `/` keyboard shortcut
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !dialog.open) {
+          openModal();
+          e.preventDefault();
+        }
+      });
+
+      // close modal and clear input on view-transtion
+      document.addEventListener('astro:after-swap', () => {
+        // close the modal & remove event listener on body
+        closeModal();
+      });
+    }
+  }
+
+  customElements.define('mobile-menu', MobileMenu);
+</script>

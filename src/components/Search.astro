@@ -1,9 +1,5 @@
 ---
-// Heavy inspiration taken from Astro Starlight -> https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
-import {
-  HiOutlineMagnifyingGlass,
-  HiOutlineXMark,
-} from 'react-icons/hi2/index';
+import { HiOutlineMagnifyingGlass } from 'react-icons/hi2/index';
 import '@pagefind/default-ui/css/ui.css';
 ---
 
@@ -17,13 +13,13 @@ import '@pagefind/default-ui/css/ui.css';
   </button>
   <dialog
     aria-label="search"
-    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-chilli-600/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
+    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-pablo-700/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
   >
     <button
       data-close-modal
-      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer rounded-3xl text-pablo-700"
+      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
     >
-      <HiOutlineXMark className="w-8 h-8" />
+      Esc
     </button>
 
     <div class="dialog-frame flex flex-col gap-4">
@@ -51,9 +47,6 @@ import '@pagefind/default-ui/css/ui.css';
       super();
       const openBtn = this.querySelector<HTMLButtonElement>(
         'button[data-open-modal]'
-      )!;
-      const openBtn1 = this.querySelector<HTMLButtonElement>(
-        'button[data-open-modal-hero]'
       )!;
       const closeBtn = this.querySelector<HTMLButtonElement>(
         'button[data-close-modal]'
@@ -99,17 +92,19 @@ import '@pagefind/default-ui/css/ui.css';
         }
       });
 
-      window.addEventListener('DOMContentLoaded', () => {
+      function createUI() {
         if (import.meta.env.DEV) return;
+
         const onIdle =
           window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+
         onIdle(async () => {
           const { PagefindUI } = await import('@pagefind/default-ui');
           new PagefindUI({
             element: '#recipe__search',
             baseUrl: import.meta.env.BASE_URL,
             bundlePath:
-              import.meta.env.BASE_URL.replace(/\/$/, '') + '/_pagefind/',
+              import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
             showImages: false,
             showSubResults: true,
             translations: {
@@ -121,7 +116,15 @@ import '@pagefind/default-ui/css/ui.css';
             },
           });
         });
-      });
+      }
+
+      if (document.readyState !== 'loading') {
+        createUI();
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          createUI();
+        });
+      }
 
       // close modal and clear input on view-transtion
       document.addEventListener('astro:after-swap', () => {
@@ -156,17 +159,17 @@ import '@pagefind/default-ui/css/ui.css';
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     text-align: left;
-    padding-right: theme('padding.14') !important;
+    padding-right: 6.5rem !important;
     font-weight: normal;
   }
 
   #recipe__search .pagefind-ui__search-clear,
   #hero-recipe__search .pagefind-ui__search-clear {
-    width: calc(60px * var(--pagefind-ui-scale));
+    width: 40px;
     padding: 0;
     background-color: transparent;
     overflow: hidden;
-    display: none;
+    right: 64px;
   }
 
   #recipe__search .pagefind-ui__search-clear:focus,
@@ -217,6 +220,8 @@ import '@pagefind/default-ui/css/ui.css';
   #hero-recipe__search .pagefind-ui__message {
     padding: 0;
     padding-bottom: theme('padding.2');
+    font-weight: normal;
+    height: auto;
   }
 
   #recipe__search mark,
