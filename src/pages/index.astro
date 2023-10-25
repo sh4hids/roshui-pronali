@@ -7,6 +7,7 @@ import {
   getAllRecipes,
   getUniqueCategoriesWithCount,
   getUniqueTagsWithCount,
+sortRecipeByDate,
 } from '@/data';
 import Categories from '@/components/Categories.astro';
 import Tags from '@/components/Tags.astro';
@@ -14,13 +15,14 @@ import Container from '@/components/Container.astro';
 import SectionHeader from '@/components/SectionHeader.astro';
 
 const recipes = await getAllRecipes();
+const sortedRecipes = sortRecipeByDate(recipes);
 const categories = getUniqueCategoriesWithCount(recipes);
 const tags = getUniqueTagsWithCount(recipes);
 ---
 
 <BaseLayout meta={{ title: 'নীড়পাতা' }}>
   <HeroSection />
-  <FeaturedRecipes recipes={recipes} />
+  <FeaturedRecipes recipes={sortedRecipes} />
   <Container>
     <SectionHeader>রান্নার ধরন</SectionHeader>
     <Categories categories={categories} limit={6} />

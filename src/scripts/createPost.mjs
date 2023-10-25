@@ -103,10 +103,6 @@ const authorIds = authors.map((author) => author.id);
       },
       metaInfo: {
         description,
-        coverImage: {
-          src: '',
-          alt: '',
-        },
       },
       slug,
       createdAt,
