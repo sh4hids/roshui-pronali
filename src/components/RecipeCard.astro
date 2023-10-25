@@ -1,7 +1,8 @@
 ---
-import { HiOutlineClock, HiOutlineUsers } from 'react-icons/hi2/index';
+import { HiOutlineClock, HiOutlineFire } from 'react-icons/hi2/index';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import { convertToBanglaNumber } from '@/utils';
 
 import coverImage from '@/assets/images/post-cover-image.png';
 
@@ -34,21 +35,19 @@ const { recipe } = Astro.props;
         <div>
           <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
           <h3 class="font-normal text-base">
-            <!-- <span class=""> -->
             <HiOutlineClock
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-            <!-- </span> -->
-             ১ ঘ. ২৫ মি.
+            <span>{convertToBanglaNumber(recipe.data.time.preparation)} মিনিট</span>
           </h3>
         </div>
         <div class="text-right">
           <!-- <h3 class="font-light text-lg">খেতে পারবে</h3> -->
           <h3 class="font-normal text-base">
-            <HiOutlineUsers
+            <HiOutlineFire
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-             ৪ জন
+            <span>{convertToBanglaNumber(recipe.data.time.cooking)} মিনিট</span>
           </h3>
         </div>
       </div>

@@ -145,12 +145,14 @@ import '@pagefind/default-ui/css/ui.css';
 
 <style is:global>
   #recipe__search .pagefind-ui__form::before,
+  #mobile-recipe__search .pagefind-ui__form::before,
   #hero-recipe__search .pagefind-ui__form::before {
     width: theme('width.6');
     height: theme('height.6');
   }
 
   #recipe__search .pagefind-ui__search-input,
+  #mobile-recipe__search .pagefind-ui__search-input,
   #hero-recipe__search .pagefind-ui__search-input {
     border: none;
     outline: none;
@@ -164,6 +166,7 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__search-clear,
+  #mobile-recipe__search .pagefind-ui__search-clear,
   #hero-recipe__search .pagefind-ui__search-clear {
     width: 40px;
     padding: 0;
@@ -173,11 +176,13 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__search-clear:focus,
+  #mobile-recipe__search .pagefind-ui__search-clear:focus,
   #hero-recipe__search .pagefind-ui__search-clear:focus {
     outline: 1px solid theme('colors.chilli.700');
   }
 
   #recipe__search .pagefind-ui__search-clear::before,
+  #mobile-recipe__search .pagefind-ui__search-clear::before,
   #hero-recipe__search .pagefind-ui__search-clear::before {
     content: '';
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'%3E%3C/path%3E%3C/svg%3E")
@@ -191,12 +196,14 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__results-area,
+  #mobile-recipe__search .pagefind-ui__results-area,
   #hero-recipe__search .pagefind-ui__results-area {
     padding: theme('padding.6');
     padding-top: 0;
   }
 
   #recipe__search .pagefind-ui__result,
+  #mobile-recipe__search .pagefind-ui__result,
   #hero-recipe__search .pagefind-ui__result {
     border: 0;
     padding: 0;
@@ -204,6 +211,7 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__result-link,
+  #mobile-recipe__search .pagefind-ui__result-link,
   #hero-recipe__search .pagefind-ui__result-link {
     font-weight: normal;
     color: theme('colors.chilli.600');
@@ -212,11 +220,13 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__result-link:hover,
+  #mobile-recipe__search .pagefind-ui__result-link:hover,
   #hero-recipe__search .pagefind-ui__result-link:hover {
     color: theme('colors.chilli.700');
   }
 
   #recipe__search .pagefind-ui__message,
+  #mobile-recipe__search .pagefind-ui__message,
   #hero-recipe__search .pagefind-ui__message {
     padding: 0;
     padding-bottom: theme('padding.2');
@@ -225,6 +235,7 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search mark,
+  #mobile-recipe__search mark,
   #hero-recipe__search mark {
     color: theme('colors.pablo.700');
     background-color: transparent;
@@ -232,6 +243,7 @@ import '@pagefind/default-ui/css/ui.css';
   }
 
   #recipe__search .pagefind-ui__button,
+  #mobile-recipe__search .pagefind-ui__button,
   #hero-recipe__search .pagefind-ui__button {
     font-weight: normal;
     background: theme('colors.pablo.100');
@@ -244,7 +256,14 @@ import '@pagefind/default-ui/css/ui.css';
       var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
   }
 
+  #recipe__search .pagefind-ui__result-excerpt,
+  #mobile-recipe__search .pagefind-ui__result-excerpt,
+  #hero-recipe__search .pagefind-ui__result-excerpt {
+    text-align: left;
+  }
+
   #recipe__search,
+  #mobile-recipe__search,
   #hero-recipe__search {
     --pagefind-ui-font: theme('fontFamily.sans');
     --pagefind-ui-primary: theme('colors.chilli.600');

@@ -8,8 +8,8 @@ interface Props {
 const { stepNumber, isFinalStep } = Astro.props;
 ---
 
-<h3
-  class="relative overflow-hidden w-full font-normal sm:text-xl text-lg text-chilli-600 after:inline-block after:w-full after:absolute after:top-1/2 after:border-t after:border-chilli-600/10"
+<h4
+  class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 after:inline-block after:w-full after:absolute after:top-1/2 after:border-t after:border-chilli-600/10"
 >
   <span class="pr-4">{isFinalStep ? 'সর্বশেষ ধাপ' : stepNumber ? `ধাপ ${convertToBanglaNumber(stepNumber)}` : ''}</span>
-</h3>
+</h4>
