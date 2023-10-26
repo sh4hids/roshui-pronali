@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import { convertToBanglaNumber } from '@/utils';
 
 import coverImage from '@/assets/images/post-cover-image.png';
+import { getFormattedDurationFromMinutes } from '@/utils/getDurationFromMinutes';
 
 interface Props {
   recipe: CollectionEntry<'recipes'>;
@@ -34,20 +35,20 @@ const { recipe } = Astro.props;
       <div class="grid grid-cols-2 pt-6 border-t">
         <div>
           <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
-          <h3 class="font-normal text-base">
+          <h3 class="font-normal text-base" title="প্রস্তুতির সময়">
             <HiOutlineClock
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-            <span>{convertToBanglaNumber(recipe.data.time.preparation)} মিনিট</span>
+            <span>{getFormattedDurationFromMinutes(recipe.data.time.preparation)}</span>
           </h3>
         </div>
         <div class="text-right">
           <!-- <h3 class="font-light text-lg">খেতে পারবে</h3> -->
-          <h3 class="font-normal text-base">
+          <h3 class="font-normal text-base" title="রান্নার সময়">
             <HiOutlineFire
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-            <span>{convertToBanglaNumber(recipe.data.time.cooking)} মিনিট</span>
+            <span>{getFormattedDurationFromMinutes(recipe.data.time.cooking)}</span>
           </h3>
         </div>
       </div>

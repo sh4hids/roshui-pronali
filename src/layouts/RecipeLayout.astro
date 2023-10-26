@@ -11,6 +11,7 @@ import BaseLayout from './BaseLayout.astro';
 import { convertToBanglaNumber, generateSlug } from '@/utils';
 import HeroImage from '@/components/HeroImage.astro';
 import { Link } from '@/components/Link';
+import { getFormattedDurationFromMinutes } from '@/utils/getDurationFromMinutes';
 
 interface Props {
   recipe: CollectionEntry<'recipes'>;
@@ -44,7 +45,7 @@ const {
             <HiOutlineClock className="w-8 h-8" />
             <p class="text-base font-normal pt-2">প্রস্তুতির সময়</p>
             <p class="font-light text-sm pt-2">
-              {convertToBanglaNumber(recipe.data.time.preparation)} মিনিট
+              {getFormattedDurationFromMinutes(recipe.data.time.preparation)}
             </p>
           </div>
           <div
@@ -53,7 +54,7 @@ const {
             <HiOutlineFire className="w-8 h-8" />
             <p class="text-base font-normal pt-2">রান্নার সময়</p>
             <p class="font-light text-sm pt-2">
-              {convertToBanglaNumber(recipe.data.time.cooking)} মিনিট
+              {getFormattedDurationFromMinutes(recipe.data.time.cooking)}
             </p>
           </div>
           <div class="flex justify-center items-center flex-col">

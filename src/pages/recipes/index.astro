@@ -1,14 +1,16 @@
 ---
 import RecipeGrid from '@/components/RecipeGrid.astro';
-import { getAllRecipes } from '@/data';
+import { getAllRecipes, sortRecipeByDate } from '@/data';
 import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
 
 const recipes = await getAllRecipes();
+const sortedRecipes = sortRecipeByDate(recipes);
+
 const meta = {
   title: 'সকল রেসিপি',
 };
 ---
 
 <AllRecipesPageLayout title={meta.title} description="test">
-  <RecipeGrid recipes={recipes} />
+  <RecipeGrid recipes={sortedRecipes} />
 </AllRecipesPageLayout>
