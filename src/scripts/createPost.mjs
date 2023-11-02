@@ -70,11 +70,12 @@ const authorIds = authors.map((author) => author.id);
       },
     ]);
 
-    const slug = title
+    const slug = `${title
       .trim()
       .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
       .replace(/\s+/g, '-')
-      .toLowerCase();
+      .toLowerCase()}-${nanoid(10)}`;
+
     const createdAt = new Date().toISOString();
     const blogPostFolder = `./src/content/recipes`;
     const tagList = tags.split(',').map((t) => t.trim());
@@ -102,8 +103,8 @@ const authorIds = authors.map((author) => author.id);
       },
       metaInfo: {
         description,
-        image: '',
       },
+      slug,
       createdAt,
       updatedAt: createdAt,
     });
@@ -113,7 +114,7 @@ const authorIds = authors.map((author) => author.id);
       singleQuote: true,
     });
 
-    fs.writeFileSync(`${blogPostFolder}/${slug}-${nanoid(10)}.mdx`, markdown);
+    fs.writeFileSync(`${blogPostFolder}/${slug}.mdx`, markdown);
 
     log(success(`Recipe ${title} was created successfully`));
   } else {
