@@ -1,6 +1,6 @@
 ---
 import { getAllRecipes, getUniqueCategoriesWithCount } from '../../data';
-import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 import Categories from '@/components/Categories.astro';
 
 const recipes = await getAllRecipes();
@@ -10,6 +10,6 @@ const meta = {
 };
 ---
 
-<AllRecipesPageLayout title={meta.title} description="test">
+<RecipesByTypePageLayout title={meta.title} description="test">
   <Categories categories={categories} />
-</AllRecipesPageLayout>
+</RecipesByTypePageLayout>

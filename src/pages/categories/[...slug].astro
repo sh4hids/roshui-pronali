@@ -5,8 +5,8 @@ import {
   getAllRecipesByCategory,
   getUniqueCategories,
 } from '@/data';
-import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
 import { generateSlug } from '@/utils';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 
 export const prerender = true;
 
@@ -32,11 +32,8 @@ const categories = getUniqueCategories(allRecipes);
 const currentCategory =
   categories.find((category) => generateSlug(category) === slug) || '';
 const recipes = getAllRecipesByCategory(allRecipes, slug);
-const meta = {
-  title: currentCategory,
-};
 ---
 
-<AllRecipesPageLayout title={currentCategory} description="test">
+<RecipesByTypePageLayout title={currentCategory} description="test">
   <RecipeGrid recipes={recipes} />
-</AllRecipesPageLayout>
+</RecipesByTypePageLayout>

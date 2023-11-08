@@ -1,16 +1,31 @@
 ---
-import RecipeGrid from '@/components/RecipeGrid.astro';
-import { getAllRecipes, sortRecipeByDate } from '@/data';
+import RecipeCard from '@/components/RecipeCard.astro';
+import {
+  getAllRecipes,
+  sortRecipeByDate,
+  getUniqueCategoriesWithCount,
+  getUniqueTagsWithCount,
+} from '@/data';
 import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
 
 const recipes = await getAllRecipes();
 const sortedRecipes = sortRecipeByDate(recipes);
+const categories = getUniqueCategoriesWithCount(recipes);
+const tags = getUniqueTagsWithCount(recipes);
 
 const meta = {
   title: 'সকল রেসিপি',
 };
 ---
 
-<AllRecipesPageLayout title={meta.title} description="test">
-  <RecipeGrid recipes={sortedRecipes} />
+<AllRecipesPageLayout
+  title={meta.title}
+  description="test"
+  categories={categories}
+  tags={tags}
+  totalRecipes={recipes.length}
+>
+  <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2">
+    {sortedRecipes.map((recipe) => <RecipeCard recipe={recipe} />)}
+  </div>
 </AllRecipesPageLayout>
