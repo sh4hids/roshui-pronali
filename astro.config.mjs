@@ -1,19 +1,18 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
-
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://roshui-pronali.netlify.app/',
   integrations: [
     tailwind({
-      config: { applyBaseStyles: false },
+      applyBaseStyles: false,
     }),
-    react(),
     mdx(),
+    react(),
+    sitemap(),
   ],
-  experimental: {
-    assets: true,
-  },
 });

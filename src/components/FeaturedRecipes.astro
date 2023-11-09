@@ -1,25 +1,18 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-import RecipeCard from './RecipeCard.astro';
-import { Link } from './Link';
+import { type CollectionEntry } from 'astro:content';
+
+import SectionHeader from './SectionHeader.astro';
+import RecipeGrid from './RecipeGrid.astro';
+import Container from './Container.astro';
 
 interface Props {
-  recipes: CollectionEntry<'recipes'>[];
+  recipes: Array<CollectionEntry<'recipes'>>;
 }
 
 const { recipes } = Astro.props;
 ---
 
-<section class="px-6 mb-16">
-  <h2
-    class="text-center text-2xl font-normal mb-4 sm:mb-6 lg:mb-8 text-chilli-600"
-  >
-    জনপ্রিয় রেসিপিসমূহ
-  </h2>
-  <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-    {recipes.map((recipe) => <RecipeCard recipe={recipe.data} />)}
-  </div>
-  <div class="text-center my-6">
-    <Link to="/recipes" type="button">সকল রেসিপি দেখুন</Link>
-  </div>
-</section>
+<Container>
+  <SectionHeader>জনপ্রিয় রেসিপি</SectionHeader>
+  <RecipeGrid recipes={recipes} limit={6} />
+</Container>

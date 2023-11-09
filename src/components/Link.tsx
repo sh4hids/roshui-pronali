@@ -1,7 +1,12 @@
 import type React from 'react';
-import { ButtonVariant, buttonBaseClasses, buttonVariants } from './Button';
+import {
+  type ButtonVariant,
+  buttonBaseClasses,
+  buttonVariants,
+} from './Button';
 
-const linkBaseClasses = 'cursor-pointer ease-in-out duration-300';
+const linkBaseClasses =
+  'cursor-pointer ease-in-out duration-300 underline hover:decoration-2';
 
 const linkVariants = {
   primary: 'text-chilli-600 hover:text-chilli-700',

@@ -1,0 +1,86 @@
+---
+import Container from '@/components/Container.astro';
+import BaseLayout from './BaseLayout.astro';
+import { type ItemWithCount } from '@/data';
+import { convertToBanglaNumber, generateSlug } from '@/utils';
+
+interface Props {
+  title: string;
+  description: string;
+  totalRecipes: number;
+  categories: ItemWithCount[];
+  tags: ItemWithCount[];
+}
+
+const {
+  title,
+  description,
+  totalRecipes = 0,
+  categories = [],
+  tags = [],
+} = Astro.props;
+---
+
+<BaseLayout meta={{ title, description }}>
+  <Container>
+    <h2
+      class="text-center text-2xl font-normal pb-4 pt-6 sm:pb-6 lg:pb-8 text-chilli-600"
+    >
+      {title}
+    </h2>
+
+    <div class="grid sm:grid-cols-12">
+      <div class="hidden sm:block sm:col-start-1 sm:col-span-3">
+        <div class="pb-6">
+          <h2
+            class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 pb-3"
+          >
+            রান্নার ধরন
+          </h2>
+          <ul>
+            <li class="pb-2">
+              <a href="/recipes">
+                সকল ধরন ({convertToBanglaNumber(totalRecipes)} টি)
+              </a>
+            </li>
+            {
+              categories.map(([title, count]) => (
+                <li class="pb-2">
+                  <a href={`/categories/${generateSlug(title)}`}>
+                    {title} ({convertToBanglaNumber(count)} টি)
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <h2
+            class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 pb-3"
+          >
+            রান্নার বিষয়
+          </h2>
+          <ul>
+            <li class="pb-2">
+              <a href="/recipes">
+                সকল ধরন ({convertToBanglaNumber(totalRecipes)} টি)
+              </a>
+            </li>
+            {
+              tags.map(([title, count]) => (
+                <li class="pb-2">
+                  <a href={`/tags/${generateSlug(title)}`}>
+                    {title} ({convertToBanglaNumber(count)} টি)
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="sm:col-start-4 sm:col-end-13">
+        <slot />
+      </div>
+    </div>
+  </Container>
+</BaseLayout>

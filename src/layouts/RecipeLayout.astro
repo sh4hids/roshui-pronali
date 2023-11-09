@@ -1,0 +1,137 @@
+---
+import {
+  HiOutlineClock,
+  HiOutlineFire,
+  HiOutlineHashtag,
+  HiOutlineTag,
+  HiOutlineUsers,
+} from 'react-icons/hi2/index';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import { convertToBanglaNumber, generateSlug } from '@/utils';
+import HeroImage from '@/components/HeroImage.astro';
+import { Link } from '@/components/Link';
+import { getFormattedDurationFromMinutes } from '@/utils/getDurationFromMinutes';
+
+interface Props {
+  recipe: CollectionEntry<'recipes'>;
+}
+
+const { recipe } = Astro.props;
+const {
+  data: { title, metaInfo },
+} = recipe;
+---
+
+<BaseLayout meta={{ title, description: metaInfo.description }}>
+  <article class="container mx-auto px-6 pt-6 pb-16" data-pagefind-body>
+    <div class="grid grid-cols-12 sm:gap-6 items-center">
+      <div
+        class="md:col-span-6 col-start-1 col-end-13 md:h-[512px] w-full h-auto rounded-3xl overflow-hidden"
+      >
+        <HeroImage />
+      </div>
+      <div
+        class="md:col-start-7 md:col-span-7 col-start-1 col-end-13 sm:pt-0 pt-4"
+      >
+        <h1 class="sm:text-3xl text-2xl font-normal">{title}</h1>
+        <p class="text-base pt-4 pb-6">{recipe.data.metaInfo.description}</p>
+        <div
+          class="grid grid-cols-3 md:gap-6 py-6 border-y border-chilli-600/10"
+        >
+          <div
+            class="flex justify-center items-center flex-col border-r border-chilli-600/10"
+          >
+            <HiOutlineClock className="w-8 h-8" />
+            <p class="text-base font-normal pt-2">প্রস্তুতির সময়</p>
+            <p class="font-light text-sm pt-2">
+              {getFormattedDurationFromMinutes(recipe.data.time.preparation)}
+            </p>
+          </div>
+          <div
+            class="flex justify-center items-center flex-col border-r border-chilli-600/10"
+          >
+            <HiOutlineFire className="w-8 h-8" />
+            <p class="text-base font-normal pt-2">রান্নার সময়</p>
+            <p class="font-light text-sm pt-2">
+              {getFormattedDurationFromMinutes(recipe.data.time.cooking)}
+            </p>
+          </div>
+          <div class="flex justify-center items-center flex-col">
+            <HiOutlineUsers className="w-8 h-8" />
+            <p class="text-base font-normal pt-2">খেতে পারবে</p>
+            <p class="font-light text-sm pt-2">
+              {convertToBanglaNumber(recipe.data.serving)} জন
+            </p>
+          </div>
+        </div>
+        <div
+          class="flex justify-center text-sm border-b py-6 border-chilli-600/10 w-full"
+        >
+          <span class="border-r border-chilli-600/10 pr-6">
+            <HiOutlineTag className="inline relative -top-0.5" />
+            <span class="pl-2">
+              <Link
+                to={`/categories/${generateSlug(recipe.data.category)}`}
+                variant="primary"
+              >
+                {recipe.data.category}
+              </Link>
+            </span>
+          </span>
+          {
+            recipe.data.tags ? (
+              <span class="pl-6">
+                <HiOutlineHashtag className="inline relative -top-0.5" />
+                <ul class="inline pl-2">
+                  {recipe.data.tags.map((tag, index) => (
+                    <li class="inline-block pr-2 last:pr-0">
+                      <Link to={`/tags/${generateSlug(tag)}`} variant="primary">
+                        {tag}
+                      </Link>
+                      {recipe.data.tags && index !== recipe.data.tags.length - 1
+                        ? ','
+                        : ''}
+                    </li>
+                  ))}
+                </ul>
+              </span>
+            ) : (
+              ''
+            )
+          }
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-12 gap-6 pt-6">
+      <div class="md:col-span-8 col-start-1 col-end-13">
+        <h2 class="font-normal sm:text-2xl text-xl">রান্নার প্রক্রিয়া</h2>
+        <section class="prose max-w-none pt-6 prose-p:text-base">
+          <slot />
+        </section>
+      </div>
+      <div
+        class="md:col-start-9 md:col-span-4 order-first md:order-last col-start-1 col-end-13"
+      >
+        <h2 class="font-normal sm:text-2xl text-xl">উপকরণ</h2>
+        {
+          Object.entries(recipe.data.ingredients).map(([key, valule]) => (
+            <section class="pt-6">
+              {key !== 'main' && <h3 class="sm:text-xl text-lg font-normal ">{key}</h3>}
+              <ul>
+                {valule.map((item, index) => (
+                  <li class="text-sm border-b border-chilli-600/10 pb-2 pt-4">
+                    <span class="font-normal">
+                      {convertToBanglaNumber(++index)}
+                    </span>
+                    . {item}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,19 +1,21 @@
 ---
-import { getCollection } from 'astro:content';
-import { generateSlug } from '../../utils';
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import RecipeGrid from '@/components/RecipeGrid.astro';
+import { getAllRecipes, getAllRecipesByTag, getUniqueTags } from '@/data';
+import { generateSlug } from '@/utils';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 
-const recipes = await getCollection('recipes');
-const tags = recipes
-  .map((recipe) => recipe.data.tags)
-  .flat()
-  .reduce<{ [key: string]: number }>(function (result, curr) {
-    let count = result[curr] || 0;
-    result[curr] = count + 1;
-    return result;
-  }, {});
+export const prerender = true;
 
-console.log(tags);
+export async function getStaticPaths() {
+  const allRecipes = await getAllRecipes();
+  const tags = getUniqueTags(allRecipes);
+
+  return tags.map((tag) => ({
+    params: {
+      slug: generateSlug(tag),
+    },
+  }));
+}
 
 const { slug } = Astro.params;
 
@@ -21,37 +23,12 @@ if (!slug) {
   return Astro.redirect('/404');
 }
 
-const allRecipesWithTags = await getCollection('recipes', (recipe) =>
-  recipe.data.tags.some((tag) => generateSlug(tag) === slug)
-);
-
-if (allRecipesWithTags.length === 0) {
-  Astro.redirect('/404');
-}
-
-export const prerender = true;
-
-export async function getStaticPaths() {
-  const recipes = await getCollection('recipes');
-  return [...new Set(recipes.map((recipe) => recipe.data.tags).flat())].map(
-    (tag) => ({
-      params: {
-        slug: generateSlug(tag),
-      },
-    })
-  );
-}
-const tag = Object.keys(tags).find((tag) => generateSlug(tag) === slug);
-console.log({ slug, tag });
+const allRecipes = await getAllRecipes();
+const tags = getUniqueTags(allRecipes);
+const currentCategory = tags.find((tag) => generateSlug(tag) === slug);
+const recipes = getAllRecipesByTag(allRecipes, slug);
 ---
 
-<BaseLayout>
-  <h1>All posts about: {tag}</h1>
-  {
-    allRecipesWithTags.map((recipe) => (
-      <article>
-        <h2>{recipe.data.title}</h2>
-      </article>
-    ))
-  }
-</BaseLayout>
+<RecipesByTypePageLayout title={currentCategory} description="test">
+  <RecipeGrid recipes={recipes} />
+</RecipesByTypePageLayout>

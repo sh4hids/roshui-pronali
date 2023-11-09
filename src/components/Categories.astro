@@ -1,40 +1,23 @@
 ---
-export interface Props {
-  categories: Record<string, number>;
+import { type ItemWithCount } from '@/data/recipes';
+import SectionHeader from './SectionHeader.astro';
+import CategoryCard from './CategoryCard.astro';
+import SeeAllLink from './SeeAllLink.astro';
+
+interface Props {
+  categories: ItemWithCount[];
+  limit?: number;
 }
 
-import CategoryCard from './CategoryCard.astro';
-import { Link } from './Link';
-
-const { categories } = Astro.props as Props;
-const sortedCategories = Object.fromEntries(
-  Object.entries(categories).sort((a, b) => b[1] - a[1])
-);
+const { categories: allCategories, limit } = Astro.props;
+const categories = limit ? allCategories.slice(0, limit) : [...allCategories];
 ---
 
-<section class="px-6 mb-16">
-  <h2
-    class="text-center text-2xl font-normal mb-4 sm:mb-6 lg:mb-8 text-chilli-600"
-  >
-    খাবারের ধরনসমূহ
-  </h2>
-  <div class="grid grid-cols-3 lg:grid-cols-6 gap-6">
-    {
-      Object.keys(sortedCategories)
-        .slice(0, 6)
-        .map((category) => <CategoryCard categoryName={category} />)
-    }
-    {
-      Object.keys(sortedCategories)
-        .slice(0, 2)
-        .map((category) => <CategoryCard categoryName={category} />)
-    }
-  </div>
-  <!-- { -->
-  <!--   Object.keys(sortedCategories).length > 6 && ( -->
-  <div class="text-center my-6">
-    <Link to="/categories" type="button">খাবারের সবগুলো ধরন দেখুন</Link>
-  </div>
-  <!--   ) -->
-  <!-- } -->
-</section>
+<div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+  {categories.map((category) => <CategoryCard category={category} />)}
+</div>
+{
+  limit && allCategories.length > limit && (
+    <SeeAllLink title="সবগুলো দেখুন" link="/categories" />
+  )
+}

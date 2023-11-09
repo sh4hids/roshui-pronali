@@ -1,54 +1,60 @@
 ---
-import { HiOutlineClock, HiOutlineUsers } from 'react-icons/hi2/index';
-import type { RecipeType } from '../content/config';
+import { HiOutlineClock, HiOutlineFire } from 'react-icons/hi2/index';
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { convertToBanglaNumber } from '@/utils';
+
+import coverImage from '@/assets/images/post-cover-image.png';
+import { getFormattedDurationFromMinutes } from '@/utils/getDurationFromMinutes';
 
 interface Props {
-  recipe: RecipeType;
+  recipe: CollectionEntry<'recipes'>;
 }
 
-import { generateSlug } from '../utils';
-
-const image =
-  'https://images.pexels.com/photos/718742/pexels-photo-718742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2';
 const { recipe } = Astro.props;
 ---
 
 <article
   class="rounded-3xl bg-pablo-50 overflow-hidden drop-shadow hover:drop-shadow-lg ease-in-out duration-300"
 >
-  <a href={`/recipes/${generateSlug(recipe.title)}`}>
+  <a class="flex flex-col h-full" href={`/recipes/${recipe.slug}`}>
     <div class="p-6" aria-hidden="true">
-      <img
-        src={recipe.metaInfo.image || image}
+      <Image
+        src={recipe.data.metaInfo.coverImage?.src ?? coverImage}
         alt="food"
-        class="h-44 w-full rounded-lg object-cover"
+        class="h-50 w-full rounded-lg object-cover border border-pablo-700/10"
+        loading="eager"
       />
     </div>
-    <div class="pb-4 px-6">
+    <div class="flex flex-col flex-1 justify-between pb-4 px-6">
       <h2
-        class="font-normal text-center text-pablo-700 text-2xl border-b pb-6 leading-8 mb-6"
+        class="font-normal text-center text-pablo-700 text-2xl pb-6 sm:leading-12 leading-10"
       >
-        {recipe.title}
+        {recipe.data.title}
       </h2>
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-2 pt-6 border-t">
         <div>
           <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
-          <h3 class="font-normal text-base">
-            <!-- <span class=""> -->
+          <h3 class="font-normal text-base" title="প্রস্তুতির সময়">
             <HiOutlineClock
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-            <!-- </span> -->
-            ১ ঘ. ২৫ মি.
+            <span
+              >{
+                getFormattedDurationFromMinutes(recipe.data.time.preparation)
+              }</span
+            >
           </h3>
         </div>
         <div class="text-right">
           <!-- <h3 class="font-light text-lg">খেতে পারবে</h3> -->
-          <h3 class="font-normal text-base">
-            <HiOutlineUsers
+          <h3 class="font-normal text-base" title="রান্নার সময়">
+            <HiOutlineFire
               className="inline-block relative -top-0.5 w-6 h-6 mr-2"
             />
-            ৪ জন
+            <span
+              >{getFormattedDurationFromMinutes(recipe.data.time.cooking)}</span
+            >
           </h3>
         </div>
       </div>
