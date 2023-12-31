@@ -19,6 +19,7 @@
     "@astrojs/tailwind": "^5.0.2",
     "@tailwindcss/typography": "^0.5.10",
     "astro": "^3.4.3",
+    "bangla-calendar": "^7.0.0",
     "date-fns": "^2.30.0",
     "react-icons": "^4.11.0",
     "tailwindcss": "^3.3.5"
