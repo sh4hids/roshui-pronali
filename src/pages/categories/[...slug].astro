@@ -4,6 +4,7 @@ import {
   getAllRecipes,
   getAllRecipesByCategory,
   getUniqueCategories,
+  getUniqueCategoriesWithCount,
 } from '@/data';
 import { generateSlug } from '@/utils';
 import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
@@ -28,12 +29,18 @@ if (!slug) {
 }
 
 const allRecipes = await getAllRecipes();
+const categoriesWithCount = getUniqueCategoriesWithCount(allRecipes);
 const categories = getUniqueCategories(allRecipes);
 const currentCategory =
   categories.find((category) => generateSlug(category) === slug) || '';
 const recipes = getAllRecipesByCategory(allRecipes, slug);
 ---
 
-<RecipesByTypePageLayout title={currentCategory} description="test">
+<RecipesByTypePageLayout
+  title={currentCategory}
+  description="test"
+  categories={categoriesWithCount}
+  totalRecipes={allRecipes.length}
+>
   <RecipeGrid recipes={recipes} />
 </RecipesByTypePageLayout>
