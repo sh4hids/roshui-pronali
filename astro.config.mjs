@@ -3,15 +3,18 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import { remarkModifiedTime } from './src/utils/remarkModifiedTime.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://roshui-pronali.netlify.app/',
+  site: 'https://roshuipronali.shahid.pro/',
   integrations: [
     tailwind({
       applyBaseStyles: false,
     }),
-    mdx(),
+    mdx({
+      rehypePlugins: [remarkModifiedTime],
+    }),
     react(),
     sitemap(),
   ],

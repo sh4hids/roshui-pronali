@@ -14,9 +14,17 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, remarkPluginFrontmatter } = await entry.render();
 ---
 
-<RecipeLayout recipe={entry}>
+<RecipeLayout
+  recipe={{
+    ...entry,
+    data: {
+      ...entry.data,
+      updatedAt: remarkPluginFrontmatter.lastModified,
+    },
+  }}
+>
   <Content />
 </RecipeLayout>

@@ -3,6 +3,7 @@ import Container from '@/components/Container.astro';
 import BaseLayout from './BaseLayout.astro';
 import { type ItemWithCount } from '@/data';
 import { convertToBanglaNumber, generateSlug } from '@/utils';
+import CategoryList from '@/components/CategoryList.astro';
 
 interface Props {
   title: string;
@@ -23,62 +24,25 @@ const {
 
 <BaseLayout meta={{ title, description }}>
   <Container>
-    <h2
-      class="text-center text-2xl font-normal pb-4 pt-6 sm:pb-6 lg:pb-8 text-chilli-600"
-    >
-      {title}
-    </h2>
-
-    <div class="grid sm:grid-cols-12">
-      <div class="hidden sm:block sm:col-start-1 sm:col-span-3">
-        <div class="pb-6">
-          <h2
-            class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 pb-3"
-          >
-            রান্নার ধরন
-          </h2>
-          <ul>
-            <li class="pb-2">
-              <a href="/recipes">
-                সকল ধরন ({convertToBanglaNumber(totalRecipes)} টি)
-              </a>
-            </li>
-            {
-              categories.map(([title, count]) => (
-                <li class="pb-2">
-                  <a href={`/categories/${generateSlug(title)}`}>
-                    {title} ({convertToBanglaNumber(count)} টি)
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-        <div>
-          <h2
-            class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 pb-3"
-          >
-            রান্নার বিষয়
-          </h2>
-          <ul>
-            <li class="pb-2">
-              <a href="/recipes">
-                সকল ধরন ({convertToBanglaNumber(totalRecipes)} টি)
-              </a>
-            </li>
-            {
-              tags.map(([title, count]) => (
-                <li class="pb-2">
-                  <a href={`/tags/${generateSlug(title)}`}>
-                    {title} ({convertToBanglaNumber(count)} টি)
-                  </a>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
+    <div class="grid sm:grid-cols-12 gap-6">
+      <div
+        class="hidden sm:block sm:col-start-1 sm:col-span-3 sm:sticky top-[136px] self-start max-h-[calc(100vh-160px)] overflow-y-auto"
+      >
+        <span class="block pb-6">
+          <CategoryList
+            items={categories}
+            totalRecipes={totalRecipes}
+            type="category"
+          />
+        </span>
+        <CategoryList
+          items={tags}
+          totalRecipes={totalRecipes}
+          type="tag"
+          limit={5}
+        />
       </div>
-      <div class="sm:col-start-4 sm:col-end-13">
+      <div class="sm:col-start-4 sm:col-end-13 pt-6">
         <slot />
       </div>
     </div>
