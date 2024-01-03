@@ -29,6 +29,7 @@ const recipeCollection = defineCollection({
             .optional(),
         })
         .strict(),
+      originalSource: z.string().url().optional(),
     }),
 });
 

@@ -22,7 +22,7 @@ const { Content, remarkPluginFrontmatter } = await entry.render();
     ...entry,
     data: {
       ...entry.data,
-      updatedAt: remarkPluginFrontmatter.lastModified,
+      updatedAt: remarkPluginFrontmatter.lastModified || entry.data.updatedAt,
     },
   }}
 >
