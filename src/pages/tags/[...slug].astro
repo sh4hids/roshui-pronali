@@ -1,7 +1,7 @@
 ---
 import RecipeGrid from '@/components/RecipeGrid.astro';
 import { getAllRecipes, getAllRecipesByTag, getUniqueTags } from '@/data';
-import { generateSlug } from '@/utils';
+import { convertToBanglaNumber, generateSlug } from '@/utils';
 import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 
 export const prerender = true;
@@ -25,10 +25,12 @@ if (!slug) {
 
 const allRecipes = await getAllRecipes();
 const tags = getUniqueTags(allRecipes);
-const currentCategory = tags.find((tag) => generateSlug(tag) === slug);
+const currentTag = tags.find((tag) => generateSlug(tag) === slug);
 const recipes = getAllRecipesByTag(allRecipes, slug);
 ---
 
-<RecipesByTypePageLayout title={currentCategory} description="test">
+<RecipesByTypePageLayout title={currentTag} 
+  description={`'${currentTag}' বিষয়ক মোট ${convertToBanglaNumber(recipes.length)} টি রেসিপি`}
+>
   <RecipeGrid recipes={recipes} />
 </RecipesByTypePageLayout>

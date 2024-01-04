@@ -1,6 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
-
 import Head from '../components/Head.astro';
 import ThemeProvider from '../components/ThemeProvider.astro';
 import Header from '../components/Header.astro';
@@ -12,7 +10,7 @@ interface Props {
 }
 
 const {
-  meta: { title, description = siteConfig.description, ogImage, articleDate },
+  meta: { title, description = siteConfig.description, ogImage, createdAt, updatedAt },
 } = Astro.props;
 ---
 
@@ -22,7 +20,8 @@ const {
       title={title}
       description={description}
       ogImage={ogImage}
-      articleDate={articleDate}
+      createdAt={createdAt}
+      updatedAt={updatedAt}
     />
     <!-- <ViewTransitions /> -->
   </head>
