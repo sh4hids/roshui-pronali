@@ -7,6 +7,7 @@ import {
   getUniqueTagsWithCount,
 } from '@/data';
 import AllRecipesPageLayout from '@/layouts/AllRecipesPageLayout.astro';
+import { convertToBanglaNumber } from '@/utils';
 
 const recipes = await getAllRecipes();
 const sortedRecipes = sortRecipeByDate(recipes);
@@ -20,7 +21,7 @@ const meta = {
 
 <AllRecipesPageLayout
   title={meta.title}
-  description="test"
+  description={`মোট ${convertToBanglaNumber(recipes.length)} টি রেসিপি`}
   categories={categories}
   tags={tags}
   totalRecipes={recipes.length}
