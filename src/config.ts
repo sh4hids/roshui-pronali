@@ -14,7 +14,8 @@ export type SiteMeta = {
   title: string;
   description?: string;
   ogImage?: string | undefined;
-  articleDate?: string | undefined;
+  createdAt?: string | undefined;
+  updatedAt?: string | undefined;
 };
 
 export const siteConfig: SiteConfig = {

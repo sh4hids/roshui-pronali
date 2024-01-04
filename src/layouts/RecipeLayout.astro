@@ -34,7 +34,7 @@ const lastModifiedDate = {
 };
 ---
 
-<BaseLayout meta={{ title, description: metaInfo.description }}>
+<BaseLayout meta={{ title, description: metaInfo.description, createdAt: new Date(recipe.data.createdAt).toJSON(), updatedAt: new Date(recipe.data.updatedAt).toJSON() }}>
   <article class="container mx-auto px-6 pt-6 pb-16" data-pagefind-body>
     <div class="grid grid-cols-12 sm:gap-6 items-center">
       <div
