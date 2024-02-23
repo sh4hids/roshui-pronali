@@ -11,13 +11,13 @@ const [title, count] = category;
 ---
 
 <article
-  class="rounded-3xl bg-pablo-50 overflow-hidden drop-shadow hover:drop-shadow-lg ease-in-out duration-300"
+  class="overflow-hidden rounded-3xl bg-pablo-50 drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
 >
   <a class="flex flex-col p-6" href={`/categories/${generateSlug(title)}`}>
-    <h3 class="font-normal text-center text-pablo-700 text-xl pb-6 leading-8">
+    <h3 class="pb-6 text-center text-xl font-normal leading-8 text-pablo-700">
       {title}
     </h3>
-    <p class="text-center border-t pt-6">
+    <p class="border-t pt-6 text-center">
       {convertToBanglaNumber(count)}
       {' টি রেসিপি'}
     </p>
