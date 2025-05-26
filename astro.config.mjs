@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import partytown from '@astrojs/partytown';
 import { remarkModifiedTime } from './src/utils/remarkModifiedTime.mjs';
 
 // https://astro.build/config
@@ -17,5 +18,6 @@ export default defineConfig({
     }),
     react(),
     sitemap(),
+    partytown(),
   ],
 });
