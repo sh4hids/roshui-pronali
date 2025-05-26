@@ -25,11 +25,11 @@ const {
     />
     <!-- <ViewTransitions /> -->
   </head>
-  <body class="font-sans text-base bg-pablo-200 text-pablo-700 font-light">
+  <body class="font-sans text-base bg-pablo-200 text-pablo-700 font-light min-h-screen flex flex-col">
     <ThemeProvider />
     <!-- <SkipLink /> -->
     <Header />
-    <main id="main">
+    <main id="main" class="flex-grow">
       <slot />
     </main>
     <Footer />
