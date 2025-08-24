@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import { remarkModifiedTime } from '@/lib/remarkModifiedTime.mjs';
+import { remarkModifiedTime } from './src/lib/remarkModifiedTime.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,4 +22,3 @@ export default defineConfig({
         sitemap(),
     ],
 });
-
