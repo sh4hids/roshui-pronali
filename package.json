@@ -18,6 +18,8 @@
         "@astrojs/mdx": "^4.3.4",
         "@astrojs/react": "^4.3.0",
         "@astrojs/sitemap": "^3.5.1",
+        "@phosphor-icons/react": "^2.1.10",
+        "@radix-ui/react-slot": "^1.2.4",
         "@tailwindcss/vite": "^4.1.12",
         "@types/react": "^19.1.11",
         "@types/react-dom": "^19.1.7",

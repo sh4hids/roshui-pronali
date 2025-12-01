@@ -27,6 +27,7 @@
     --color-pablo-800: oklch(0.2735 0.0177 107.51);
     --color-pablo-900: oklch(0.2236 0.0149 107.54);
     --color-pablo-950: oklch(0.16 0.0149 107.54);
+    --font-sans: 'Li Ador Noirrit', sans-serif;
 }
 
 :root {
