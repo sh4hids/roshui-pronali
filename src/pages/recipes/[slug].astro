@@ -1,0 +1,32 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import RecipeLayout from '@/layouts/RecipeLayout.astro';
+import { getAllRecipes } from '@/data';
+import { render } from 'astro:content';
+
+export const getStaticPaths = (async () => {
+    const blogEntries = await getAllRecipes();
+    return blogEntries.map((entry) => ({
+        params: { slug: entry.data.slug },
+        props: { entry },
+    }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(entry);
+---
+
+<RecipeLayout
+    recipe={{
+        ...entry,
+        data: {
+            ...entry.data,
+            updatedAt:
+                remarkPluginFrontmatter.lastModified || entry.data.updatedAt,
+        },
+    }}
+>
+    <Content />
+</RecipeLayout>

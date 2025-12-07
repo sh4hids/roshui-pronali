@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Moon, Sun } from 'lucide-react';
+import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
 
@@ -23,7 +23,7 @@ export default function ModeToggle() {
 
     return (
         <Button
-            variant="outline"
+            variant="ghost"
             size="icon"
             onClick={() => {
                 if (theme === 'theme-light' || theme === 'system') {

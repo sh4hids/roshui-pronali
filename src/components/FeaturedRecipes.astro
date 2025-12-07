@@ -1,0 +1,18 @@
+---
+import { type CollectionEntry } from 'astro:content';
+
+import Container from '@/components/Container.astro';
+import RecipeGrid from '@/components/RecipeGrid.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+
+interface Props {
+    recipes: Array<CollectionEntry<'recipes'>>;
+}
+
+const { recipes } = Astro.props;
+---
+
+<Container>
+    <SectionHeader>জনপ্রিয় রেসিপি</SectionHeader>
+    <RecipeGrid recipes={recipes} limit={6} />
+</Container>

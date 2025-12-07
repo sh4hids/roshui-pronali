@@ -1,0 +1,18 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout meta={{ title }}>
+    <article class="mx-auto max-w-prose px-6 pt-6 pb-16">
+        <h2 class="text-chilli-600 pb-4 text-2xl font-normal sm:pb-6 lg:pb-8">
+            {title}
+        </h2>
+        <slot />
+    </article>
+</BaseLayout>

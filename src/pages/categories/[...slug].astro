@@ -1,0 +1,42 @@
+---
+import RecipeGrid from '@/components/RecipeGrid.astro';
+import {
+    getAllRecipes,
+    getAllRecipesByCategory,
+    getUniqueCategories,
+} from '@/data';
+import { convertToBanglaNumber, generateSlug } from '@/lib/utils';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+    const allRecipes = await getAllRecipes();
+    const categories = getUniqueCategories(allRecipes);
+
+    return categories.map((category) => ({
+        params: {
+            slug: generateSlug(category),
+        },
+    }));
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+    return Astro.redirect('/404');
+}
+
+const allRecipes = await getAllRecipes();
+const categories = getUniqueCategories(allRecipes);
+const currentCategory =
+    categories.find((category) => generateSlug(category) === slug) || '';
+const recipes = getAllRecipesByCategory(allRecipes, slug);
+---
+
+<RecipesByTypePageLayout
+    title={currentCategory}
+    description={`'${currentCategory}' বিষয়ক মোট ${convertToBanglaNumber(recipes.length)} টি রেসিপি`}
+>
+    <RecipeGrid recipes={recipes} />
+</RecipesByTypePageLayout>

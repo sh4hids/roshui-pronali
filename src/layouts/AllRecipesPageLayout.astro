@@ -1,0 +1,49 @@
+---
+import Container from '@/components/Container.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { type ItemWithCount } from '@/data';
+import CategoryList from '@/components/CategoryList.astro';
+
+interface Props {
+    title: string;
+    description: string;
+    totalRecipes: number;
+    categories: ItemWithCount[];
+    tags: ItemWithCount[];
+}
+
+const {
+    title,
+    description,
+    totalRecipes = 0,
+    categories = [],
+    tags = [],
+} = Astro.props;
+---
+
+<BaseLayout meta={{ title, description }}>
+    <Container>
+        <div class="grid gap-6 sm:grid-cols-12">
+            <div
+                class="top-[136px] hidden max-h-[calc(100vh-160px)] self-start overflow-y-auto sm:sticky sm:col-span-3 sm:col-start-1 sm:block"
+            >
+                <span class="block pb-6">
+                    <CategoryList
+                        items={categories}
+                        totalRecipes={totalRecipes}
+                        type="category"
+                    />
+                </span>
+                <CategoryList
+                    items={tags}
+                    totalRecipes={totalRecipes}
+                    type="tag"
+                    limit={5}
+                />
+            </div>
+            <div class="pt-6 sm:col-start-4 sm:col-end-13">
+                <slot />
+            </div>
+        </div>
+    </Container>
+</BaseLayout>

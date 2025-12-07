@@ -1,0 +1,22 @@
+---
+import CategoryCard from '@/components/CategoryCard.astro';
+import SeeAllLink from '@/components/SeeAllLink.astro';
+import { type ItemWithCount } from '@/data/recipes';
+
+interface Props {
+    categories: ItemWithCount[];
+    limit?: number;
+}
+
+const { categories: allCategories, limit } = Astro.props;
+const categories = limit ? allCategories.slice(0, limit) : [...allCategories];
+---
+
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+    {categories.map((category) => <CategoryCard category={category} />)}
+</div>
+{
+    limit && allCategories.length > limit && (
+        <SeeAllLink title="সবগল দখন" link="/categories" />
+    )
+}

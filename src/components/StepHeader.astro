@@ -1,0 +1,23 @@
+---
+import { convertToBanglaNumber } from '@/lib/utils';
+interface Props {
+    stepNumber?: number;
+    isFinalStep?: boolean;
+}
+
+const { stepNumber, isFinalStep } = Astro.props;
+---
+
+<h3
+    class="text-chilli-600 after:border-chilli-600/10 relative w-full overflow-hidden text-lg font-normal after:absolute after:top-1/2 after:inline-block after:w-full after:border-t sm:text-lg"
+>
+    <span class="pr-4"
+        >{
+            isFinalStep
+                ? 'সর্বশেষ ধাপ'
+                : stepNumber
+                  ? `ধাপ ${convertToBanglaNumber(stepNumber)}`
+                  : ''
+        }</span
+    >
+</h3>

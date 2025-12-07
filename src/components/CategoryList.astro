@@ -1,0 +1,69 @@
+---
+import type { ItemWithCount } from '@/data';
+import { convertToBanglaNumber, generateSlug } from '@/lib/utils';
+
+interface Props {
+    type: 'category' | 'tag';
+    limit?: number;
+    items: ItemWithCount[];
+    totalRecipes: number;
+    activeItem?: string;
+}
+
+const { type, limit = 0, items, totalRecipes = 0, activeItem } = Astro.props;
+let formattedItems = items?.sort((itemA, itemB) =>
+    itemA[0].localeCompare(itemB[0])
+);
+
+if (limit) {
+    formattedItems = formattedItems.slice(0, limit);
+}
+---
+
+<div>
+    <h2
+        class="text-chilli-600 relative w-full overflow-hidden pb-3 text-lg font-normal sm:text-lg"
+    >
+        {type === 'tag' ? 'রনর বষয়' : 'রনর ধরন'}
+    </h2>
+    <ul>
+        <li class={`pb-2 ${activeItem ? '' : 'font-normal'}`}>
+            <a
+                href={activeItem
+                    ? type === 'category'
+                        ? '/categories'
+                        : '/tags'
+                    : '/recipes'}
+            >
+                সকল ধরন ({convertToBanglaNumber(totalRecipes)} ট)
+            </a>
+        </li>
+        {
+            formattedItems.map(([title, count]) => (
+                <li class={`pb-2 ${activeItem === title ? 'font-normal' : ''}`}>
+                    <a
+                        href={`/${type === 'tag' ? 'tags' : 'categories'}/${generateSlug(
+                            title
+                        )}`}
+                    >
+                        {title} ({convertToBanglaNumber(count)} ট)
+                    </a>
+                </li>
+            ))
+        }
+        {
+            limit && items?.length > limit ? (
+                <li class={``}>
+                    <a
+                        href={`/${type === 'tag' ? 'tags' : 'categories'}`}
+                        class="underline"
+                    >
+                        সবগল {type === 'tag' ? 'বষয়' : 'ধরন'} দখন
+                    </a>
+                </li>
+            ) : (
+                ''
+            )
+        }
+    </ul>
+</div>

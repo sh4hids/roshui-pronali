@@ -1,11 +1,43 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import HeroSection from '@/components/HeroSection.astro';
+import Notice from '@/components/Notice.astro';
+import FeaturedRecipes from '@/components/FeaturedRecipes.astro';
+import {
+    getAllRecipes,
+    getUniqueCategoriesWithCount,
+    getUniqueTagsWithCount,
+    sortRecipeByDate,
+} from '@/data';
+import Categories from '@/components/Categories.astro';
+import Tags from '@/components/Tags.astro';
+import Container from '@/components/Container.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const recipes = await getAllRecipes();
+const sortedRecipes = sortRecipeByDate(recipes);
+const categories = getUniqueCategoriesWithCount(recipes);
+const tags = getUniqueTagsWithCount(recipes);
 ---
 
 <BaseLayout meta={{ title: 'নীড়পাতা' }}>
-    <Welcome />
+    <HeroSection />
+    <FeaturedRecipes recipes={sortedRecipes} />
+    <Container>
+        <SectionHeader>রান্নার ধরন</SectionHeader>
+        <Categories categories={categories} limit={6} />
+    </Container>
+    <Container>
+        <SectionHeader>রান্নার বিষয়</SectionHeader>
+        <Tags tags={tags} limit={6} />
+    </Container>
+    <Container>
+        <Notice variant="notice">
+            আপনার রেসিপি শেয়ার করতে চান?
+            <a
+                class="text-chilli-600 hover:text-chilli-700 font-normal underline decoration-2 underline-offset-4 duration-300 ease-in-out"
+                href="/contribution-guide">এখানে বিস্তারিত দেখুন</a
+            >
+        </Notice>
+    </Container>
 </BaseLayout>

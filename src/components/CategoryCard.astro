@@ -1,0 +1,27 @@
+---
+import { type ItemWithCount } from '@/data/recipes';
+import { convertToBanglaNumber, generateSlug } from '@/lib/utils';
+
+interface Props {
+    category: ItemWithCount;
+}
+
+const { category } = Astro.props;
+const [title, count] = category;
+---
+
+<article
+    class="bg-pablo-50 dark:bg-pablo-900 overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
+>
+    <a class="flex flex-col p-6" href={`/categories/${generateSlug(title)}`}>
+        <h3
+            class="text-pablo-700 dark:text-pablo-200 pb-6 text-center text-xl leading-8 font-normal"
+        >
+            {title}
+        </h3>
+        <p class="border-t pt-6 text-center">
+            {convertToBanglaNumber(count)}
+            {' টি রেসিপি'}
+        </p>
+    </a>
+</article>

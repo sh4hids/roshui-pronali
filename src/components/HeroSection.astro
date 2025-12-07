@@ -1,0 +1,27 @@
+---
+import HeroImage from './HeroImage.astro';
+import HeroSearch from './HeroSearch.astro';
+---
+
+<div class="container mx-auto">
+    <div class="my-16 grid grid-cols-12 gap-6 px-6">
+        <div class="col-span-12 grid content-center items-center md:col-span-5">
+            <span
+                class="pb-6 text-lg leading-9 font-normal sm:text-xl sm:leading-10"
+            >
+                ঘরে বসেই বাংলা, চাইনিজ, মোঘলাই, ইন্ডিয়ান, থাইসহ বিভিন্ন ধরনের
+                অথেন্টিক রেসিপি ট্রাই করতে চান?
+            </span>
+            <h1
+                class="text-chilli-600 pb-2 text-2xl leading-10 font-normal sm:text-4xl sm:leading-12 sm:font-bold"
+            >
+                দেশী-বিদেশী অসংখ্য খাবারের রেসিপি খুঁজুন বাংলায়
+            </h1>
+            <HeroSearch />
+        </div>
+
+        <div class="hidden md:col-span-5 md:col-start-8 md:block">
+            <HeroImage />
+        </div>
+    </div>
+</div>
