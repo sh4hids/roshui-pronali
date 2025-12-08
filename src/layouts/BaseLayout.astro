@@ -64,10 +64,10 @@ if (shouldIndex) mainDataAttributes['data-pagefind-body'] = '';
         />
         <!-- <ViewTransitions /> -->
     </head>
-    <body class="flex min-h-screen flex-col font-sans text-base font-light">
+    <body class="font-sans text-base font-light">
         <!-- <SkipLink /> -->
         <Header />
-        <main id="main" class="flex-grow" {...mainDataAttributes}>
+        <main id="main" class="" {...mainDataAttributes}>
             <slot />
         </main>
         <Footer />

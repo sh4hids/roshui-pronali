@@ -1,0 +1,277 @@
+---
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
+import '@pagefind/default-ui/css/ui.css';
+---
+
+<site-search id="search">
+  <button
+    data-open-modal
+    disabled
+    class="flex items-center justify-center transition-all outline-none"
+  >
+    <MagnifyingGlassIcon className="w-6 h-6" />
+    <span class="sr-only">Search</span>
+  </button>
+  <dialog
+    aria-label="search"
+    class="relative m-auto h-[72vh] max-h-full w-[84vw] max-w-full border border-pablo-700/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl rounded-3xl"
+  >
+    <button
+      data-close-modal
+      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
+    >
+      Esc
+    </button>
+
+    <div class="dialog-frame flex flex-col gap-4">
+      {
+        import.meta.env.DEV ? (
+          <div class="mx-auto text-center">
+            <p>
+              Search is only available in production builds. <br />
+              Try building and previewing the site to test it out locally.
+            </p>
+          </div>
+        ) : (
+          <div class="search-container">
+            <div id="recipe__search" />
+          </div>
+        )
+      }
+    </div>
+  </dialog>
+</site-search>
+
+<script>
+  class SiteSearch extends HTMLElement {
+    constructor() {
+      super();
+      const openBtn = this.querySelector<HTMLButtonElement>(
+        'button[data-open-modal]'
+      )!;
+      const closeBtn = this.querySelector<HTMLButtonElement>(
+        'button[data-close-modal]'
+      )!;
+      const dialog = this.querySelector('dialog')!;
+      const dialogFrame = this.querySelector('.dialog-frame')!;
+
+      const onWindowClick = (event: MouseEvent) => {
+        // check if it's a link
+        const isLink = 'href' in (event.target || {});
+        // make sure the click is either a link or outside of the dialog
+        if (
+          isLink ||
+          (document.body.contains(event.target as Node) &&
+            !dialogFrame.contains(event.target as Node))
+        )
+          closeModal();
+      };
+
+      const openModal = (event?: MouseEvent) => {
+        dialog.showModal();
+        this.querySelector('input')?.focus();
+        event?.stopPropagation();
+        window.addEventListener('click', onWindowClick);
+      };
+
+      const closeModal = () => {
+        if (dialog.open) {
+          dialog.close();
+          window.removeEventListener('click', onWindowClick);
+        }
+      };
+
+      openBtn.addEventListener('click', openModal);
+      openBtn.disabled = false;
+      closeBtn.addEventListener('click', closeModal);
+
+      // Listen for `/` keyboard shortcut
+      window.addEventListener('keydown', (e) => {
+        if (e.key === '/' && !dialog.open) {
+          openModal();
+          e.preventDefault();
+        }
+      });
+
+      function createUI() {
+        if (import.meta.env.DEV) return;
+
+        const onIdle =
+          window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+
+        onIdle(async () => {
+          const { PagefindUI } = await import('@pagefind/default-ui');
+          new PagefindUI({
+            element: '#recipe__search',
+            baseUrl: import.meta.env.BASE_URL,
+            bundlePath:
+              import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
+            showImages: false,
+            showSubResults: true,
+            translations: {
+              placeholder: 'রেসিপি খুঁজুন...',
+              zero_results: `'[SEARCH_TERM]' এর জন্য কোন রেসিপি পাওয়া যায়নি`,
+              load_more: 'আরও রেসিপি দেখুন',
+              many_results: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+              one_result: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+            },
+          });
+        });
+      }
+
+      if (document.readyState !== 'loading') {
+        createUI();
+      } else {
+        window.addEventListener('DOMContentLoaded', () => {
+          createUI();
+        });
+      }
+
+      // close modal and clear input on view-transtion
+      document.addEventListener('astro:after-swap', () => {
+        // clear the search field
+        (
+          document.querySelector(
+            '.pagefind-ui__search-clear'
+          ) as HTMLButtonElement
+        )?.click();
+        // close the modal & remove event listener on body
+        closeModal();
+      });
+    }
+  }
+
+  customElements.define('site-search', SiteSearch);
+</script>
+
+<style is:global>
+  #recipe__search .pagefind-ui__form::before,
+  #mobile-recipe__search .pagefind-ui__form::before,
+  #hero-recipe__search .pagefind-ui__form::before {
+    width: theme('width.6');
+    height: theme('height.6');
+  }
+
+  #recipe__search .pagefind-ui__search-input,
+  #mobile-recipe__search .pagefind-ui__search-input,
+  #hero-recipe__search .pagefind-ui__search-input {
+    border: none;
+    outline: none;
+    border-radius: theme('borderRadius.3xl');
+    border-bottom: 1px solid var(--color-chilli-100);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    text-align: left;
+    padding-right: 6.5rem !important;
+    font-weight: normal;
+  }
+
+  #recipe__search .pagefind-ui__search-clear,
+  #mobile-recipe__search .pagefind-ui__search-clear,
+  #hero-recipe__search .pagefind-ui__search-clear {
+    width: 40px;
+    padding: 0;
+    background-color: transparent;
+    overflow: hidden;
+    right: 64px;
+  }
+
+  #recipe__search .pagefind-ui__search-clear:focus,
+  #mobile-recipe__search .pagefind-ui__search-clear:focus,
+  #hero-recipe__search .pagefind-ui__search-clear:focus {
+    outline: 1px solid var(--color-chilli-700);
+  }
+
+  #recipe__search .pagefind-ui__search-clear::before,
+  #mobile-recipe__search .pagefind-ui__search-clear::before,
+  #hero-recipe__search .pagefind-ui__search-clear::before {
+    content: '';
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'%3E%3C/path%3E%3C/svg%3E")
+      center / 60% no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' %3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 18L18 6M6 6l12 12'%3E%3C/path%3E%3C/svg%3E")
+      center / 60% no-repeat;
+    background-color: var(--color-chilli-600);
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #recipe__search .pagefind-ui__results-area,
+  #mobile-recipe__search .pagefind-ui__results-area,
+  #hero-recipe__search .pagefind-ui__results-area {
+    padding: theme('padding.6');
+    padding-top: 0;
+  }
+
+  #recipe__search .pagefind-ui__result,
+  #mobile-recipe__search .pagefind-ui__result,
+  #hero-recipe__search .pagefind-ui__result {
+    border: 0;
+    padding: 0;
+    padding-bottom: theme('padding.2');
+  }
+
+  #recipe__search .pagefind-ui__result-link,
+  #mobile-recipe__search .pagefind-ui__result-link,
+  #hero-recipe__search .pagefind-ui__result-link {
+    font-weight: normal;
+    color: var(--color-chilli-600);
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
+
+  #recipe__search .pagefind-ui__result-link:hover,
+  #mobile-recipe__search .pagefind-ui__result-link:hover,
+  #hero-recipe__search .pagefind-ui__result-link:hover {
+    color: var(--color-chilli-700);
+  }
+
+  #recipe__search .pagefind-ui__message,
+  #mobile-recipe__search .pagefind-ui__message,
+  #hero-recipe__search .pagefind-ui__message {
+    padding: 0;
+    padding-bottom: theme('padding.2');
+    font-weight: normal;
+    height: auto;
+  }
+
+  #recipe__search mark,
+  #mobile-recipe__search mark,
+  #hero-recipe__search mark {
+    color: var(--color-pablo-700);
+    background-color: transparent;
+    font-weight: 600;
+  }
+
+  #recipe__search .pagefind-ui__button,
+  #mobile-recipe__search .pagefind-ui__button,
+  #hero-recipe__search .pagefind-ui__button {
+    font-weight: normal;
+    background: var(--color-pablo-100);
+    color: var(--color-chilli-600);
+    border: none;
+    --tw-drop-shadow: drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))
+      drop-shadow(0 1px 1px rgb(0 0 0 / 0.06));
+    filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast)
+      var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert)
+      var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+  }
+
+  #recipe__search .pagefind-ui__result-excerpt,
+  #mobile-recipe__search .pagefind-ui__result-excerpt,
+  #hero-recipe__search .pagefind-ui__result-excerpt {
+    text-align: left;
+  }
+
+  #recipe__search,
+  #mobile-recipe__search,
+  #hero-recipe__search {
+    --pagefind-ui-font: theme('fontFamily.sans');
+    --pagefind-ui-primary: var(--color-chilli-600);
+    --pagefind-ui-text: var(--color-pablo-700);
+    --pagefind-ui-background: var(--color-pablo-50);
+    --pagefind-ui-border: var(--color-chilli-400);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-scale: 1;
+  }
+</style>

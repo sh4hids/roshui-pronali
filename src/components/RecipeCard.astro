@@ -5,6 +5,7 @@ import { Image } from 'astro:assets';
 import { getFormattedDurationFromMinutes } from '@/lib/utils';
 
 import coverImage from '@/assets/images/post-cover-image.png';
+import coverImageDark from '@/assets/images/post-cover-image-dark.png';
 
 interface Props {
     recipe: CollectionEntry<'recipes'>;
@@ -21,7 +22,13 @@ const { recipe } = Astro.props;
             <Image
                 src={recipe.data.metaInfo.coverImage?.src ?? coverImage}
                 alt="food"
-                class="border-pablo-700/10 h-50 w-full rounded-lg border object-cover dark:invert"
+                class="border-pablo-700/10 h-50 w-full rounded-lg border object-cover dark:hidden"
+                loading="eager"
+            />
+            <Image
+                src={recipe.data.metaInfo.coverImage?.src ?? coverImageDark}
+                alt="food"
+                class="border-pablo-200/10 h-50 w-full rounded-lg border object-cover hidden dark:block"
                 loading="eager"
             />
         </div>

@@ -1,22 +1,24 @@
 ---
-import { HamburgerIcon } from '@phosphor-icons/react';
+import { ListIcon } from '@phosphor-icons/react';
 import Search from './MobileSearch.astro';
 
 import { isActivePath } from '@/lib/utils';
+import ModeToggle from './ModeToggle';
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
 
 <mobile-menu id="mobile-menu" class="flex h-full items-center gap-x-4">
     <Search />
+    <ModeToggle client:load />
     <button data-open-menu class="outline-none">
-        <HamburgerIcon className="text-chilli-600 h-7 w-7" />
+        <ListIcon className="text-chilli-600 h-7 w-7" />
         <span class="sr-only">Menu</span>
     </button>
     <dialog
         data-mobile-menu
         aria-label="mobile-menu"
-        class="border-pablo-700/10 bg-pablo-50 relative h-[72vh] max-h-full w-[84vw] max-w-full rounded-3xl border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem]"
+        class="border-pablo-700/10 w-full bg-pablo-50 dark:bg-pablo-900  max-h-full h-full max-w-full text-foreground border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
     >
         <button
             data-close-menu

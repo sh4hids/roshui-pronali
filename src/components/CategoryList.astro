@@ -1,69 +1,69 @@
 ---
-import type { ItemWithCount } from '@/data';
 import { convertToBanglaNumber, generateSlug } from '@/lib/utils';
+import type { ItemWithCount } from '@/data';
 
 interface Props {
-    type: 'category' | 'tag';
-    limit?: number;
-    items: ItemWithCount[];
-    totalRecipes: number;
-    activeItem?: string;
+  type: 'category' | 'tag';
+  limit?: number;
+  items: ItemWithCount[];
+  totalRecipes: number;
+  activeItem?: string;
 }
 
 const { type, limit = 0, items, totalRecipes = 0, activeItem } = Astro.props;
 let formattedItems = items?.sort((itemA, itemB) =>
-    itemA[0].localeCompare(itemB[0])
+  itemA[0].localeCompare(itemB[0])
 );
 
 if (limit) {
-    formattedItems = formattedItems.slice(0, limit);
+  formattedItems = formattedItems.slice(0, limit);
 }
 ---
 
 <div>
-    <h2
-        class="text-chilli-600 relative w-full overflow-hidden pb-3 text-lg font-normal sm:text-lg"
-    >
-        {type === 'tag' ? 'রনর বষয়' : 'রনর ধরন'}
-    </h2>
-    <ul>
-        <li class={`pb-2 ${activeItem ? '' : 'font-normal'}`}>
-            <a
-                href={activeItem
-                    ? type === 'category'
-                        ? '/categories'
-                        : '/tags'
-                    : '/recipes'}
-            >
-                সকল ধরন ({convertToBanglaNumber(totalRecipes)} ট)
-            </a>
+  <h2
+    class="relative overflow-hidden w-full font-normal sm:text-lg text-lg text-chilli-600 pb-3"
+  >
+    {type === 'tag' ? 'রান্নার বিষয়' : 'রান্নার ধরন'}
+  </h2>
+  <ul>
+    <li class={`pb-2 ${activeItem ? '' : 'font-normal'}`}>
+      <a
+        href={activeItem
+          ? type === 'category'
+            ? '/categories'
+            : '/tags'
+          : '/recipes'}
+      >
+        সকল ধরন ({convertToBanglaNumber(totalRecipes)} টি)
+      </a>
+    </li>
+    {
+      formattedItems.map(([title, count]) => (
+        <li class={`pb-2 ${activeItem === title ? 'font-normal' : ''}`}>
+          <a
+            href={`/${type === 'tag' ? 'tags' : 'categories'}/${generateSlug(
+              title
+            )}`}
+          >
+            {title} ({convertToBanglaNumber(count)} টি)
+          </a>
         </li>
-        {
-            formattedItems.map(([title, count]) => (
-                <li class={`pb-2 ${activeItem === title ? 'font-normal' : ''}`}>
-                    <a
-                        href={`/${type === 'tag' ? 'tags' : 'categories'}/${generateSlug(
-                            title
-                        )}`}
-                    >
-                        {title} ({convertToBanglaNumber(count)} ট)
-                    </a>
-                </li>
-            ))
-        }
-        {
-            limit && items?.length > limit ? (
-                <li class={``}>
-                    <a
-                        href={`/${type === 'tag' ? 'tags' : 'categories'}`}
-                        class="underline"
-                    >
-                        সবগল {type === 'tag' ? 'বষয়' : 'ধরন'} দখন
-                    </a>
-                </li>
-            ) : (
-                ''
-            )
-        }
-    </ul>
+      ))
+    }
+    {
+      limit && items?.length > limit ? (
+        <li class={``}>
+          <a
+            href={`/${type === 'tag' ? 'tags' : 'categories'}`}
+            class="underline"
+          >
+            সবগুলো {type === 'tag' ? 'বিষয়' : 'ধরন'} দেখুন
+          </a>
+        </li>
+      ) : (
+        ''
+      )
+    }
+  </ul>
 </div>
