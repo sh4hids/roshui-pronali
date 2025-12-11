@@ -28,7 +28,7 @@ const { recipe } = Astro.props;
             <Image
                 src={recipe.data.metaInfo.coverImage?.src ?? coverImageDark}
                 alt="food"
-                class="border-pablo-200/10 h-50 w-full rounded-lg border object-cover hidden dark:block"
+                class="border-pablo-200/10 hidden h-50 w-full rounded-lg border object-cover dark:block"
                 loading="eager"
             />
         </div>

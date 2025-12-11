@@ -4,142 +4,145 @@ import '@pagefind/default-ui/css/ui.css';
 ---
 
 <mobile-site-search id="search" class="flex h-full items-center gap-x-4">
-  <button
-    data-open-mobile-modal
-    disabled
-    class="flex items-center justify-center transition-all outline-none"
-  >
-    <MagnifyingGlassIcon className="w-6 h-6" />
-    <span class="sr-only">Search</span>
-  </button>
-  <dialog
-    aria-label="search"
-    class="border-pablo-700/10 w-full bg-pablo-50 dark:bg-pablo-900  max-h-full h-full max-w-full text-foreground border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
-  >
     <button
-      data-close-mobile-modal
-      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
+        data-open-mobile-modal
+        disabled
+        class="flex items-center justify-center transition-all outline-none"
     >
-      Esc
+        <MagnifyingGlassIcon className="h-6 w-6" />
+        <span class="sr-only">Search</span>
     </button>
+    <dialog
+        aria-label="search"
+        class="border-pablo-700/10 bg-pablo-50 dark:bg-pablo-900 text-foreground h-full max-h-full w-full max-w-full border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
+    >
+        <button
+            data-close-mobile-modal
+            class="bg-pablo-50 border-pablo-700/10 text-pablo-700 absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
+        >
+            Esc
+        </button>
 
-    <div class="dialog-frame flex flex-col gap-4">
-      {
-        import.meta.env.DEV ? (
-          <div class="mx-auto text-center">
-            <p>
-              Search is only available in production builds. <br />
-              Try building and previewing the site to test it out locally.
-            </p>
-          </div>
-        ) : (
-          <div class="search-container">
-            <div id="mobile-recipe__search" />
-          </div>
-        )
-      }
-    </div>
-  </dialog>
+        <div class="dialog-frame flex flex-col gap-4">
+            {
+                import.meta.env.DEV ? (
+                    <div class="mx-auto text-center">
+                        <p>
+                            Search is only available in production builds.{' '}
+                            <br />
+                            Try building and previewing the site to test it out
+                            locally.
+                        </p>
+                    </div>
+                ) : (
+                    <div class="search-container">
+                        <div id="mobile-recipe__search" />
+                    </div>
+                )
+            }
+        </div>
+    </dialog>
 </mobile-site-search>
 
 <script>
-  class MobileSiteSearch extends HTMLElement {
-    constructor() {
-      super();
-      const openBtn = this.querySelector<HTMLButtonElement>(
-        'button[data-open-mobile-modal]'
-      )!;
-      const closeBtn = this.querySelector<HTMLButtonElement>(
-        'button[data-close-mobile-modal]'
-      )!;
-      const dialog = this.querySelector('dialog')!;
-      const dialogFrame = this.querySelector('.dialog-frame')!;
+    class MobileSiteSearch extends HTMLElement {
+        constructor() {
+            super();
+            const openBtn = this.querySelector<HTMLButtonElement>(
+                'button[data-open-mobile-modal]'
+            )!;
+            const closeBtn = this.querySelector<HTMLButtonElement>(
+                'button[data-close-mobile-modal]'
+            )!;
+            const dialog = this.querySelector('dialog')!;
+            const dialogFrame = this.querySelector('.dialog-frame')!;
 
-      const onWindowClick = (event: MouseEvent) => {
-        // check if it's a link
-        const isLink = 'href' in (event.target || {});
-        // make sure the click is either a link or outside of the dialog
-        if (
-          isLink ||
-          (document.body.contains(event.target as Node) &&
-            !dialogFrame.contains(event.target as Node))
-        )
-          closeModal();
-      };
+            const onWindowClick = (event: MouseEvent) => {
+                // check if it's a link
+                const isLink = 'href' in (event.target || {});
+                // make sure the click is either a link or outside of the dialog
+                if (
+                    isLink ||
+                    (document.body.contains(event.target as Node) &&
+                        !dialogFrame.contains(event.target as Node))
+                )
+                    closeModal();
+            };
 
-      const openModal = (event?: MouseEvent) => {
-        dialog.showModal();
-        this.querySelector('input')?.focus();
-        event?.stopPropagation();
-        window.addEventListener('click', onWindowClick);
-      };
+            const openModal = (event?: MouseEvent) => {
+                dialog.showModal();
+                this.querySelector('input')?.focus();
+                event?.stopPropagation();
+                window.addEventListener('click', onWindowClick);
+            };
 
-      const closeModal = () => {
-        if (dialog.open) {
-          dialog.close();
-          window.removeEventListener('click', onWindowClick);
+            const closeModal = () => {
+                if (dialog.open) {
+                    dialog.close();
+                    window.removeEventListener('click', onWindowClick);
+                }
+            };
+
+            openBtn.addEventListener('click', openModal);
+            openBtn.disabled = false;
+            closeBtn.addEventListener('click', closeModal);
+
+            // Listen for `/` keyboard shortcut
+            window.addEventListener('keydown', (e) => {
+                if (e.key === '/' && !dialog.open) {
+                    openModal();
+                    e.preventDefault();
+                }
+            });
+
+            function createUI() {
+                if (import.meta.env.DEV) return;
+
+                const onIdle =
+                    window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+
+                onIdle(async () => {
+                    const { PagefindUI } = await import('@pagefind/default-ui');
+                    new PagefindUI({
+                        element: '#mobile-recipe__search',
+                        baseUrl: import.meta.env.BASE_URL,
+                        bundlePath:
+                            import.meta.env.BASE_URL.replace(/\/$/, '') +
+                            '/pagefind/',
+                        showImages: false,
+                        showSubResults: true,
+                        translations: {
+                            placeholder: 'রেসিপি খুঁজুন...',
+                            zero_results: `'[SEARCH_TERM]' এর জন্য কোন রেসিপি পাওয়া যায়নি`,
+                            load_more: 'আরও রেসিপি দেখুন',
+                            many_results: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+                            one_result: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+                        },
+                    });
+                });
+            }
+
+            if (document.readyState !== 'loading') {
+                createUI();
+            } else {
+                window.addEventListener('DOMContentLoaded', () => {
+                    createUI();
+                });
+            }
+
+            // close modal and clear input on view-transtion
+            document.addEventListener('astro:after-swap', () => {
+                // clear the search field
+                (
+                    document.querySelector(
+                        '.pagefind-ui__search-clear'
+                    ) as HTMLButtonElement
+                )?.click();
+                // close the modal & remove event listener on body
+                closeModal();
+            });
         }
-      };
-
-      openBtn.addEventListener('click', openModal);
-      openBtn.disabled = false;
-      closeBtn.addEventListener('click', closeModal);
-
-      // Listen for `/` keyboard shortcut
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !dialog.open) {
-          openModal();
-          e.preventDefault();
-        }
-      });
-
-      function createUI() {
-        if (import.meta.env.DEV) return;
-
-        const onIdle =
-          window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-
-        onIdle(async () => {
-          const { PagefindUI } = await import('@pagefind/default-ui');
-          new PagefindUI({
-            element: '#mobile-recipe__search',
-            baseUrl: import.meta.env.BASE_URL,
-            bundlePath:
-              import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
-            showImages: false,
-            showSubResults: true,
-            translations: {
-              placeholder: 'রেসিপি খুঁজুন...',
-              zero_results: `'[SEARCH_TERM]' এর জন্য কোন রেসিপি পাওয়া যায়নি`,
-              load_more: 'আরও রেসিপি দেখুন',
-              many_results: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
-              one_result: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
-            },
-          });
-        });
-      }
-
-      if (document.readyState !== 'loading') {
-        createUI();
-      } else {
-        window.addEventListener('DOMContentLoaded', () => {
-          createUI();
-        });
-      }
-
-      // close modal and clear input on view-transtion
-      document.addEventListener('astro:after-swap', () => {
-        // clear the search field
-        (
-          document.querySelector(
-            '.pagefind-ui__search-clear'
-          ) as HTMLButtonElement
-        )?.click();
-        // close the modal & remove event listener on body
-        closeModal();
-      });
     }
-  }
 
-  customElements.define('mobile-site-search', MobileSiteSearch);
+    customElements.define('mobile-site-search', MobileSiteSearch);
 </script>

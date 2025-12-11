@@ -63,3 +63,7 @@ export const getFormattedDurationFromMinutes = (minutes: number) => {
 
     return formattedDuration;
 };
+
+export function rootInDarkMode() {
+    return document.documentElement.classList.contains('dark');
+}
