@@ -1,4 +1,4 @@
 export default {
-    '*.+(js)': ['eslint'],
-    '*.+(js|json)': ['prettier --write'],
+    '*.+(js|jsx|ts|tsx|astro)': ['eslint'],
+    '*.+(js|jsx|json|ts|tsx|astro)': ['prettier --write'],
 };

@@ -15,7 +15,7 @@ const { recipe } = Astro.props;
 ---
 
 <article
-    class="bg-pablo-50 dark:bg-pablo-900 overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
+    class="bg-card text-card-foreground overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
 >
     <a class="flex h-full flex-col" href={`/recipes/${recipe.data.slug}`}>
         <div class="p-6" aria-hidden="true">
@@ -34,7 +34,7 @@ const { recipe } = Astro.props;
         </div>
         <div class="flex flex-1 flex-col justify-between px-6 pb-4">
             <h2
-                class="text-pablo-700 dark:text-pablo-200 pb-6 text-center text-2xl leading-10 font-normal sm:leading-12"
+                class="pb-6 text-center text-2xl leading-10 font-normal sm:leading-12"
             >
                 {recipe.data.title}
             </h2>

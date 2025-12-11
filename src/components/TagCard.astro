@@ -12,12 +12,10 @@ const [title, count] = tag;
 ---
 
 <article
-    class="bg-pablo-50 dark:bg-pablo-900 overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
+    class="bg-card text-card-foreground overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
 >
     <a class="flex flex-col p-6" href={`/tags/${generateSlug(title)}`}>
-        <h3
-            class="text-pablo-700 dark:text-pablo-200 text-center text-xl leading-8 font-normal"
-        >
+        <h3 class="text-center text-xl leading-8 font-normal">
             <HashIcon className="text-chilli-600 inline" />
             <span class="relative top-1">
                 {title}
