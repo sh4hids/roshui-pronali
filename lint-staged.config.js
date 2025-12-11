@@ -1,4 +1,4 @@
 export default {
-    '*.+(js|jsx|ts|tsx|astro)': ['eslint'],
+    '*': ['pnpm run validate --'],
     '*.+(js|jsx|json|ts|tsx|astro)': ['prettier --write'],
 };
