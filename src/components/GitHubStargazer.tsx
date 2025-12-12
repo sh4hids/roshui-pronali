@@ -42,7 +42,7 @@ function GitHubStargazer({ repository }: { repository: string }) {
             <span className="min-w-5 text-center">
                 {stars < 1
                     ? '∞'
-                    : Intl.NumberFormat('en', {
+                    : Intl.NumberFormat('bn', {
                           notation: 'compact',
                           maximumFractionDigits: 1,
                       }).format(stars)}

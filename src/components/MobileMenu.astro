@@ -1,16 +1,16 @@
 ---
 import { ListIcon } from '@phosphor-icons/react';
-import Search from './MobileSearch.astro';
+import Search from './Search.astro';
 
 import { isActivePath } from '@/lib/utils';
-import ModeToggle from './ModeToggle';
+import ThemeToggle from '@/components/ThemeToggle.astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---
 
 <mobile-menu id="mobile-menu" class="flex h-full items-center gap-x-4">
-    <Search />
-    <ModeToggle client:load />
+    <Search searchId="mobile" />
+    <ThemeToggle />
     <button data-open-menu class="outline-none">
         <ListIcon className="text-chilli-600 h-7 w-7" />
         <span class="sr-only">Menu</span>
@@ -18,11 +18,11 @@ const currentPath = new URL(Astro.request.url).pathname;
     <dialog
         data-mobile-menu
         aria-label="mobile-menu"
-        class="border-pablo-700/10 bg-pablo-50 dark:bg-pablo-900 text-foreground h-full max-h-full w-full max-w-full border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
+        class="border-pablo-700/10 bg-background text-foreground h-full max-h-full w-full max-w-full border shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
     >
         <button
             data-close-menu
-            class="bg-pablo-50 border-pablo-700/10 text-pablo-700 absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
+            class="bg-card border-pablo-700/10 text-card-foreground absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
         >
             Esc
         </button>

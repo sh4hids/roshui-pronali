@@ -28,7 +28,7 @@ const { recipe } = Astro.props;
             <Image
                 src={recipe.data.metaInfo.coverImage?.src ?? coverImageDark}
                 alt="food"
-                class="border-pablo-200/10 hidden h-50 w-full rounded-lg border object-cover dark:block"
+                class="border-primary/10 hidden h-50 w-full rounded-lg border object-cover dark:block"
                 loading="eager"
             />
         </div>
@@ -38,9 +38,9 @@ const { recipe } = Astro.props;
             >
                 {recipe.data.title}
             </h2>
-            <div class="grid grid-cols-2 border-t pt-6">
+            <div class="border-primary/10 grid grid-cols-2 border-t pt-6">
                 <div
-                    class="border-chilli-600/10 flex flex-col items-center justify-center border-r"
+                    class="border-primary/10 flex flex-col items-center justify-center border-r"
                 >
                     <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
                     <ClockIcon className="h-8 w-8" />

@@ -1,32 +1,51 @@
 ---
 import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import '@pagefind/default-ui/css/ui.css';
+
+interface Props {
+    searchId: 'header' | 'hero' | 'mobile';
+}
+
+const { searchId } = Astro.props;
 ---
 
-<site-search id="search">
-    <button
-        data-open-modal
-        disabled
-        class="flex items-center justify-center transition-all outline-none"
-    >
-        <MagnifyingGlassIcon className="h-6 w-6" />
-        <span class="sr-only">Search</span>
-    </button>
+<site-search id="search" data-searchid={searchId}>
+    {
+        searchId === 'hero' ? (
+            <button
+                data-open-modal
+                disabled
+                class="bg-card text-card-foreground/60 mt-6 flex w-full cursor-pointer items-center overflow-hidden rounded-3xl px-4 py-4 drop-shadow outline-none sm:w-[300px]"
+            >
+                <MagnifyingGlassIcon className="inline-block h-8 w-8" />
+                <p class="pl-2">খুঁজুন...</p>
+            </button>
+        ) : (
+            <button
+                data-open-modal
+                disabled
+                class="flex items-center justify-center transition-all outline-none"
+            >
+                <MagnifyingGlassIcon className="h-6 w-6" />
+                <span class="sr-only">Search</span>
+            </button>
+        )
+    }
     <dialog
         aria-label="search"
-        class="border-pablo-700/10 bg-pablo-50 relative m-auto h-[72vh] max-h-full w-[84vw] max-w-full rounded-3xl border shadow-md backdrop:backdrop-blur sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
+        class="border-foreground/50 bg-background text-foreground relative m-auto h-[72vh] max-h-full w-[84vw] max-w-full rounded-3xl border shadow-md backdrop:backdrop-blur sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
     >
         <button
             data-close-modal
-            class="bg-pablo-50 border-pablo-700/10 text-pablo-700 absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
+            class="bg-card border-pablo-700/10 text-card-foreground absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
         >
             Esc
         </button>
 
-        <div class="dialog-frame flex flex-col gap-4">
+        <div class="dialog-frame flex h-full flex-col gap-4">
             {
                 import.meta.env.DEV ? (
-                    <div class="mx-auto text-center">
+                    <div class="m-auto p-6 text-center">
                         <p>
                             Search is only available in production builds.{' '}
                             <br />
@@ -36,7 +55,7 @@ import '@pagefind/default-ui/css/ui.css';
                     </div>
                 ) : (
                     <div class="search-container">
-                        <div id="recipe__search" />
+                        <div id={`${searchId}-recipe__search`} />
                     </div>
                 )
             }
@@ -48,6 +67,8 @@ import '@pagefind/default-ui/css/ui.css';
     class SiteSearch extends HTMLElement {
         constructor() {
             super();
+            const searchId = this.dataset.searchid ?? '';
+
             const openBtn = this.querySelector<HTMLButtonElement>(
                 'button[data-open-modal]'
             )!;
@@ -104,7 +125,7 @@ import '@pagefind/default-ui/css/ui.css';
                 onIdle(async () => {
                     const { PagefindUI } = await import('@pagefind/default-ui');
                     new PagefindUI({
-                        element: '#recipe__search',
+                        element: `#${searchId}-recipe__search`,
                         baseUrl: import.meta.env.BASE_URL,
                         bundlePath:
                             import.meta.env.BASE_URL.replace(/\/$/, '') +
@@ -148,20 +169,20 @@ import '@pagefind/default-ui/css/ui.css';
 </script>
 
 <style is:global>
-    #recipe__search .pagefind-ui__form::before,
+    #header-recipe__search .pagefind-ui__form::before,
     #mobile-recipe__search .pagefind-ui__form::before,
     #hero-recipe__search .pagefind-ui__form::before {
         width: theme('width.6');
         height: theme('height.6');
     }
 
-    #recipe__search .pagefind-ui__search-input,
+    #header-recipe__search .pagefind-ui__search-input,
     #mobile-recipe__search .pagefind-ui__search-input,
     #hero-recipe__search .pagefind-ui__search-input {
         border: none;
         outline: none;
         border-radius: theme('borderRadius.3xl');
-        border-bottom: 1px solid var(--color-chilli-100);
+        border-bottom: 1px solid --alpha(var(--foreground) / 60%);
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
         text-align: left;
@@ -169,7 +190,14 @@ import '@pagefind/default-ui/css/ui.css';
         font-weight: normal;
     }
 
-    #recipe__search .pagefind-ui__search-clear,
+    #header-recipe__search .pagefind-ui__search-input::placeholder,
+    #mobile-recipe__search .pagefind-ui__search-input::placeholder,
+    #hero-recipe__search .pagefind-ui__search-input::placeholder {
+        color: --alpha(var(--foreground) / 60%);
+        opacity: 1;
+    }
+
+    #header-recipe__search .pagefind-ui__search-clear,
     #mobile-recipe__search .pagefind-ui__search-clear,
     #hero-recipe__search .pagefind-ui__search-clear {
         width: 40px;
@@ -179,13 +207,13 @@ import '@pagefind/default-ui/css/ui.css';
         right: 64px;
     }
 
-    #recipe__search .pagefind-ui__search-clear:focus,
+    #header-recipe__search .pagefind-ui__search-clear:focus,
     #mobile-recipe__search .pagefind-ui__search-clear:focus,
     #hero-recipe__search .pagefind-ui__search-clear:focus {
         outline: 1px solid var(--color-chilli-700);
     }
 
-    #recipe__search .pagefind-ui__search-clear::before,
+    #header-recipe__search .pagefind-ui__search-clear::before,
     #mobile-recipe__search .pagefind-ui__search-clear::before,
     #hero-recipe__search .pagefind-ui__search-clear::before {
         content: '';
@@ -199,14 +227,14 @@ import '@pagefind/default-ui/css/ui.css';
         height: 100%;
     }
 
-    #recipe__search .pagefind-ui__results-area,
+    #header-recipe__search .pagefind-ui__results-area,
     #mobile-recipe__search .pagefind-ui__results-area,
     #hero-recipe__search .pagefind-ui__results-area {
         padding: theme('padding.6');
         padding-top: 0;
     }
 
-    #recipe__search .pagefind-ui__result,
+    #header-recipe__search .pagefind-ui__result,
     #mobile-recipe__search .pagefind-ui__result,
     #hero-recipe__search .pagefind-ui__result {
         border: 0;
@@ -214,22 +242,22 @@ import '@pagefind/default-ui/css/ui.css';
         padding-bottom: theme('padding.2');
     }
 
-    #recipe__search .pagefind-ui__result-link,
+    #header-recipe__search .pagefind-ui__result-link,
     #mobile-recipe__search .pagefind-ui__result-link,
     #hero-recipe__search .pagefind-ui__result-link {
         font-weight: normal;
-        color: var(--color-chilli-600);
+        color: var(--primary);
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 0.3s;
     }
 
-    #recipe__search .pagefind-ui__result-link:hover,
+    #header-recipe__search .pagefind-ui__result-link:hover,
     #mobile-recipe__search .pagefind-ui__result-link:hover,
     #hero-recipe__search .pagefind-ui__result-link:hover {
-        color: var(--color-chilli-700);
+        font-weight: bold;
     }
 
-    #recipe__search .pagefind-ui__message,
+    #header-recipe__search .pagefind-ui__message,
     #mobile-recipe__search .pagefind-ui__message,
     #hero-recipe__search .pagefind-ui__message {
         padding: 0;
@@ -238,15 +266,15 @@ import '@pagefind/default-ui/css/ui.css';
         height: auto;
     }
 
-    #recipe__search mark,
+    #header-recipe__search mark,
     #mobile-recipe__search mark,
     #hero-recipe__search mark {
-        color: var(--color-pablo-700);
+        color: var(--foreground);
         background-color: transparent;
         font-weight: 600;
     }
 
-    #recipe__search .pagefind-ui__button,
+    #header-recipe__search .pagefind-ui__button,
     #mobile-recipe__search .pagefind-ui__button,
     #hero-recipe__search .pagefind-ui__button {
         font-weight: normal;
@@ -260,20 +288,20 @@ import '@pagefind/default-ui/css/ui.css';
             var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
     }
 
-    #recipe__search .pagefind-ui__result-excerpt,
+    #header-recipe__search .pagefind-ui__result-excerpt,
     #mobile-recipe__search .pagefind-ui__result-excerpt,
     #hero-recipe__search .pagefind-ui__result-excerpt {
         text-align: left;
     }
 
-    #recipe__search,
+    #header-recipe__search,
     #mobile-recipe__search,
     #hero-recipe__search {
         --pagefind-ui-font: theme('fontFamily.sans');
-        --pagefind-ui-primary: var(--color-chilli-600);
-        --pagefind-ui-text: var(--color-pablo-700);
-        --pagefind-ui-background: var(--color-pablo-50);
-        --pagefind-ui-border: var(--color-chilli-400);
+        --pagefind-ui-primary: var(--primary);
+        --pagefind-ui-text: var(--foreground);
+        --pagefind-ui-background: var(--background);
+        --pagefind-ui-border: var(--primary);
         --pagefind-ui-border-width: 1px;
         --pagefind-ui-scale: 1;
     }
