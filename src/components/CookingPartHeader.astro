@@ -1,13 +1,13 @@
 ---
 interface Props {
-  title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
 ---
 
 <p
-  class="relative overflow-hidden w-full font-normal sm:text-xl text-lg text-chilli-600 pb-2 mb-6 before:absolute before:left-0 before:bottom-0 before:h-[5px] before:w-16 before:bg-chilli-600 after:absolute after:left-0 after:bottom-0.5 after:h-[1px] after:w-11/12 after:max-w-xs after:bg-chilli-600/50"
+    class="text-chilli-600 before:bg-chilli-600 after:bg-chilli-600/50 relative mb-6 w-full overflow-hidden pb-2 text-lg font-normal before:absolute before:bottom-0 before:left-0 before:h-[5px] before:w-16 after:absolute after:bottom-0.5 after:left-0 after:h-[1px] after:w-11/12 after:max-w-xs sm:text-xl"
 >
-  {title}
+    {title}
 </p>

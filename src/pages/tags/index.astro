@@ -2,15 +2,18 @@
 import { getAllRecipes, getUniqueTagsWithCount } from '@/data';
 import Tags from '@/components/Tags.astro';
 import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
-import { convertToBanglaNumber } from '@/utils/convertToBanglaNumber';
+import { convertToBanglaNumber } from '@/lib/utils';
 
 const recipes = await getAllRecipes();
 const tags = getUniqueTagsWithCount(recipes);
 const meta = {
-  title: 'রান্নার বিষয়',
+    title: 'রান্নার বিষয়',
 };
 ---
 
-<RecipesByTypePageLayout title={meta.title} description={`মোট ${convertToBanglaNumber( tags.length)} বিষয়ের রেসিপি`}>
-  <Tags tags={tags} />
+<RecipesByTypePageLayout
+    title={meta.title}
+    description={`মোট ${convertToBanglaNumber(tags.length)} বিষয়ের রেসিপি`}
+>
+    <Tags tags={tags} />
 </RecipesByTypePageLayout>

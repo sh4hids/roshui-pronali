@@ -1,37 +1,50 @@
 ---
-import Head from '../components/Head.astro';
-import ThemeProvider from '../components/ThemeProvider.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { siteConfig, type SiteMeta } from '../config';
+import Head from '@/components/Head.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import ThemeProvider from '@/components/ThemeProvider.astro';
+import { siteConfig, type SiteMeta } from '@/config';
 
 interface Props {
-  meta: SiteMeta;
+    meta: SiteMeta;
+    shouldIndex?: boolean;
 }
 
 const {
-  meta: { title, description = siteConfig.description, ogImage, createdAt, updatedAt },
+    meta: {
+        title,
+        description = siteConfig.description,
+        ogImage,
+        createdAt,
+        updatedAt,
+    },
+    shouldIndex,
 } = Astro.props;
+
+// eslint-disable-next-line no-undef
+const mainDataAttributes: DOMStringMap = {};
+
+if (shouldIndex) mainDataAttributes['data-pagefind-body'] = '';
 ---
 
 <html lang={siteConfig.lang}>
-  <head>
-    <Head
-      title={title}
-      description={description}
-      ogImage={ogImage}
-      createdAt={createdAt}
-      updatedAt={updatedAt}
-    />
-    <!-- <ViewTransitions /> -->
-  </head>
-  <body class="font-sans text-base bg-pablo-200 text-pablo-700 font-light min-h-screen flex flex-col">
-    <ThemeProvider />
-    <!-- <SkipLink /> -->
-    <Header />
-    <main id="main" class="flex-grow">
-      <slot />
-    </main>
-    <Footer />
-  </body>
+    <head>
+        <Head
+            title={title}
+            description={description}
+            ogImage={ogImage}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+        />
+        <!-- <ViewTransitions /> -->
+    </head>
+    <body class="font-sans text-base font-light">
+        <ThemeProvider />
+        <!-- <SkipLink /> -->
+        <Header />
+        <main id="main" class="" {...mainDataAttributes}>
+            <slot />
+        </main>
+        <Footer />
+    </body>
 </html>

@@ -1,0 +1,240 @@
+---
+import FullPageLayout from '@/layouts/FullPageLayout.astro';
+---
+
+<FullPageLayout meta={{ title: 'মাইনকার চিপা!' }}>
+    <div
+        class="mx-auto flex h-[calc(100vh-80px)] w-screen max-w-3xl flex-col items-center justify-center px-4"
+    >
+        <p
+            class="bg-primary text-primary-foreground mb-4 rounded-md px-6 py-2 font-bold"
+        >
+            ৪০৪ | মাইনকার চিপা!
+        </p>
+        <h5 class="pb-6 text-center md:text-left">
+            আপনি বোধয় ভুল করে মাইনকার চিপায় চলে এসেছেন!
+        </h5>
+        <div class="compass_container">
+            <div class="outside_circle">
+                <div class="center"></div><div class="outside_filling">
+                    <div class="top_point"></div><div class="bottom_point">
+                    </div><div class="left_point"></div><div
+                        class="right_point"
+                    >
+                    </div>
+                </div><div class="inner_circle">
+                    <div class="inner_filling">
+                        <span>N</span><span>E</span><span>S</span><span>W</span
+                        ><div class="needle">
+                            <div class="top_needle">
+                                <div class="needle_inside"></div>
+                            </div><div class="bottom_needle"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h5 class="text-center md:text-left">
+            পৃথিবীতে ফিরে যেতে <a href="/" class="text-primary"
+                >এখানে ক্লিক করুন</a
+            >।
+        </h5>
+    </div>
+</FullPageLayout>
+
+<style>
+    .circle_filling,
+    .outside_circle .outside_filling,
+    .inner_circle .inner_filling {
+        border-radius: 50%;
+        position: absolute;
+        background: var(--color-zinc-600);
+        width: 95%;
+        padding-bottom: 95%;
+        top: 2.5%;
+        left: 2.5%;
+    }
+    .outside_filling {
+        position: relative;
+    }
+    .compass_container {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: 20px 0;
+    }
+    .outside_circle {
+        border-radius: 50%;
+        position: absolute;
+        background: var(--color-zinc-400);
+        width: 100%;
+        padding-bottom: 100%;
+        top: 0;
+        left: 0;
+    }
+    .inner_circle {
+        border-radius: 50%;
+        position: absolute;
+        background: var(--color-zinc-400);
+        color: var(--color-zinc-100);
+        width: 80%;
+        padding-bottom: 80%;
+        top: 10%;
+        left: 10%;
+    }
+    .inner_circle .inner_filling {
+        background: rgb(var(--theme-primary) / var(--tw-bg-opacity));
+    }
+    .top_point {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid var(--color-zinc-400);
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .bottom_point {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-bottom: 6px solid var(--color-zinc-400);
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+    }
+    .left_point {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-left: 6px solid var(--color-zinc-400);
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+    }
+    .right_point {
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid var(--color-zinc-400);
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+    }
+    .top_needle {
+        width: 0;
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 75px solid var(--color-zinc-800);
+        position: absolute;
+        left: 49px;
+        bottom: 57px;
+    }
+    .top_needle .needle_inside {
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 60px solid var(--color-red-500);
+        position: absolute;
+        bottom: 15px;
+        right: -5px;
+    }
+    .bottom_needle {
+        width: 0;
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        height: 0;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 75px solid var(--color-zinc-800);
+        position: absolute;
+        left: 49px;
+        top: 57px;
+    }
+    .needle {
+        width: 100%;
+        height: 100%;
+        -webkit-animation: search linear 2s infinite alternate;
+        animation: search linear 2s infinite alternate;
+        -webkit-transform-origin: center center;
+        transform-origin: center center;
+        position: absolute;
+    }
+    .inner_filling span {
+        font-weight: bold;
+        position: absolute;
+        font-size: 14px;
+        color: var(--color-zinc-100);
+    }
+    .inner_filling span:nth-child(1) {
+        top: 5px;
+        left: calc(50% - 5px);
+    }
+    .inner_filling span:nth-child(2) {
+        right: 8px;
+        top: calc(50% - 12px);
+    }
+    .inner_filling span:nth-child(3) {
+        bottom: -2px;
+        left: calc(50% - 5px);
+    }
+    .inner_filling span:nth-child(4) {
+        left: 5px;
+        top: calc(50% - 12px);
+    }
+    @-webkit-keyframes search {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        50% {
+            -webkit-transform: rotate(80deg);
+            transform: rotate(80deg);
+        }
+        100% {
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+    }
+    @keyframes search {
+        0% {
+            -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+        }
+        50% {
+            -webkit-transform: rotate(80deg);
+            transform: rotate(80deg);
+        }
+        100% {
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+    }
+    .error_404 {
+        text-align: center;
+    }
+    .error_404 h3 {
+        font-size: 16px;
+        display: inline-block;
+        background: var(--color-red-700);
+        padding: 4px 10px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+    .not_north {
+        position: relative;
+        top: 0px;
+        text-align: center;
+    }
+</style>

@@ -1,56 +1,70 @@
 ---
-import { HiOutlineClock, HiOutlineFire } from 'react-icons/hi2/index';
+import { ClockIcon, FireIcon } from '@phosphor-icons/react';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
-import { convertToBanglaNumber } from '@/utils';
+import { getFormattedDurationFromMinutes } from '@/lib/utils';
 
 import coverImage from '@/assets/images/post-cover-image.png';
-import { getFormattedDurationFromMinutes } from '@/utils/getDurationFromMinutes';
+import coverImageDark from '@/assets/images/post-cover-image-dark.png';
 
 interface Props {
-  recipe: CollectionEntry<'recipes'>;
+    recipe: CollectionEntry<'recipes'>;
 }
 
 const { recipe } = Astro.props;
 ---
 
 <article
-  class="rounded-3xl bg-pablo-50 overflow-hidden drop-shadow hover:drop-shadow-lg ease-in-out duration-300"
+    class="bg-card text-card-foreground overflow-hidden rounded-3xl drop-shadow duration-300 ease-in-out hover:drop-shadow-lg"
 >
-  <a class="flex flex-col h-full" href={`/recipes/${recipe.slug}`}>
-    <div class="p-6" aria-hidden="true">
-      <Image
-        src={recipe.data.metaInfo.coverImage?.src ?? coverImage}
-        alt="food"
-        class="h-50 w-full rounded-lg object-cover border border-pablo-700/10"
-        loading="eager"
-      />
-    </div>
-    <div class="flex flex-col flex-1 justify-between pb-4 px-6">
-      <h2
-        class="font-normal text-center text-pablo-700 text-2xl pb-6 sm:leading-12 leading-10"
-      >
-        {recipe.data.title}
-      </h2>
-      <div class="grid grid-cols-2 pt-6 border-t">
-        <div
-          class="flex justify-center items-center flex-col border-r border-chilli-600/10"
-        >
-          <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
-          <HiOutlineClock className="w-8 h-8" />
-          <p class="text-base font-normal pt-2">প্রস্তুতির সময়</p>
-          <p class="font-light text-sm pt-2">
-            {getFormattedDurationFromMinutes(recipe.data.time.preparation)}
-          </p>
+    <a class="flex h-full flex-col" href={`/recipes/${recipe.data.slug}`}>
+        <div class="p-6" aria-hidden="true">
+            <Image
+                src={recipe.data.metaInfo.coverImage?.src ?? coverImage}
+                alt="food"
+                class="border-pablo-700/10 h-50 w-full rounded-lg border object-cover dark:hidden"
+                loading="eager"
+            />
+            <Image
+                src={recipe.data.metaInfo.coverImage?.src ?? coverImageDark}
+                alt="food"
+                class="border-primary/10 hidden h-50 w-full rounded-lg border object-cover dark:block"
+                loading="eager"
+            />
         </div>
-        <div class="flex justify-center items-center flex-col">
-          <HiOutlineFire className="w-8 h-8" />
-          <p class="text-base font-normal pt-2">রান্নার সময়</p>
-          <p class="font-light text-sm pt-2">
-            {getFormattedDurationFromMinutes(recipe.data.time.cooking)}
-          </p>
+        <div class="flex flex-1 flex-col justify-between px-6 pb-4">
+            <h2
+                class="pb-6 text-center text-2xl leading-10 font-normal sm:leading-12"
+            >
+                {recipe.data.title}
+            </h2>
+            <div class="border-primary/10 grid grid-cols-2 border-t pt-6">
+                <div
+                    class="border-primary/10 flex flex-col items-center justify-center border-r"
+                >
+                    <!-- <h3 class="font-light text-lg">রান্নার সময়</h3> -->
+                    <ClockIcon className="h-8 w-8" />
+                    <p class="pt-2 text-base font-normal">প্রস্তুতির সময়</p>
+                    <p class="pt-2 text-sm font-light">
+                        {
+                            getFormattedDurationFromMinutes(
+                                recipe.data.time.preparation
+                            )
+                        }
+                    </p>
+                </div>
+                <div class="flex flex-col items-center justify-center">
+                    <FireIcon className="h-8 w-8" />
+                    <p class="pt-2 text-base font-normal">রান্নার সময়</p>
+                    <p class="pt-2 text-sm font-light">
+                        {
+                            getFormattedDurationFromMinutes(
+                                recipe.data.time.cooking
+                            )
+                        }
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </a>
+    </a>
 </article>

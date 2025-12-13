@@ -1,23 +1,28 @@
+// @ts-check
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
+import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
-import partytown from '@astrojs/partytown';
-import { remarkModifiedTime } from './src/utils/remarkModifiedTime.mjs';
+import umami from '@yeskunall/astro-umami';
+import { remarkModifiedTime } from './src/lib/remarkModifiedTime.mjs';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://roshuipronali.shahid.pro/',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    mdx({
-      rehypePlugins: [remarkModifiedTime],
-    }),
-    react(),
-    sitemap(),
-    partytown(),
-  ],
+    site: import.meta.env.DEV
+        ? 'http://localhost:4321/'
+        : 'https://roshuipronali.shahid.pro/',
+
+    vite: {
+        plugins: [tailwindcss()],
+    },
+
+    integrations: [
+        mdx({
+            rehypePlugins: [remarkModifiedTime],
+        }),
+        react(),
+        sitemap(),
+        umami({ id: 'cfadc54a-416c-46e6-b4d1-a94984f36525' }),
+    ],
 });

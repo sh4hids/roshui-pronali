@@ -4,19 +4,19 @@ import RecipeCard from './RecipeCard.astro';
 import SeeAllLink from './SeeAllLink.astro';
 
 interface Props {
-  recipes: Array<CollectionEntry<'recipes'>>;
-  limit?: number;
+    recipes: Array<CollectionEntry<'recipes'>>;
+    limit?: number;
 }
 
 const { recipes: allRecipes, limit } = Astro.props;
 const recipes = limit ? allRecipes.slice(0, limit) : [...allRecipes];
 ---
 
-<div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-  {recipes.map((recipe) => <RecipeCard recipe={recipe} />)}
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+    {recipes.map((recipe) => <RecipeCard recipe={recipe} />)}
 </div>
 {
-  limit && allRecipes.length > limit && (
-    <SeeAllLink title="সকল রেসিপি দেখুন" link="/recipes" />
-  )
+    limit && allRecipes.length > limit && (
+        <SeeAllLink title="সকল রেসিপি দেখুন" link="/recipes" />
+    )
 }

@@ -1,0 +1,46 @@
+---
+import Head from '@/components/Head.astro';
+import ThemeProvider from '@/components/ThemeProvider.astro';
+import { siteConfig, type SiteMeta } from '@/config';
+
+interface Props {
+    meta: SiteMeta;
+    shouldIndex?: boolean;
+}
+
+const {
+    meta: {
+        title,
+        description = siteConfig.description,
+        ogImage,
+        createdAt,
+        updatedAt,
+    },
+    shouldIndex,
+} = Astro.props;
+
+// eslint-disable-next-line no-undef
+const mainDataAttributes: DOMStringMap = {};
+
+if (shouldIndex) mainDataAttributes['data-pagefind-body'] = '';
+---
+
+<html lang={siteConfig.lang}>
+    <head>
+        <Head
+            title={title}
+            description={description}
+            ogImage={ogImage}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+        />
+        <!-- <ViewTransitions /> -->
+    </head>
+    <body class="font-sans text-base font-light">
+        <ThemeProvider />
+        <!-- <SkipLink /> -->
+        <main id="main" class="" {...mainDataAttributes}>
+            <slot />
+        </main>
+    </body>
+</html>

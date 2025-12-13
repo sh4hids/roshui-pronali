@@ -2,6 +2,12 @@
 import { Image } from 'astro:assets';
 
 import heroImage from '@/assets/images/hero-bg.svg';
+import heroImageDark from '@/assets/images/hero-bg-dark.svg';
 ---
 
-<Image src={heroImage} alt="hero image" class="h-[500px] w-auto" />
+<Image src={heroImage} alt="hero image" class="h-[500px] w-auto dark:hidden" />
+<Image
+    src={heroImageDark}
+    alt="hero image"
+    class="hidden h-[500px] w-auto dark:block"
+/>

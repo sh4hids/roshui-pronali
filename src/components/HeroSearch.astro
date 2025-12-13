@@ -1,146 +1,149 @@
 ---
-import { HiMagnifyingGlass } from 'react-icons/hi2/index';
+import { MagnifyingGlassIcon } from '@phosphor-icons/react';
 import '@pagefind/default-ui/css/ui.css';
 ---
 
 <hero-site-search id="hero-search">
-  <button
-    data-open-hero-modal
-    disabled
-    class="cursor-pointer py-4 bg-pablo-50 sm:w-[300px] w-full rounded-3xl flex items-center px-4 overflow-hidden mt-6 drop-shadow outline-none"
-  >
-    <HiMagnifyingGlass className="inline-block h-8 w-8 text-pablo-500 " />
-    <p class="pl-2 text-pablo-500">খুঁজুন...</p>
-  </button>
-  <dialog
-    data-hero-dialog
-    aria-label="hero-search"
-    class="relative h-[72vh] max-h-full w-[84vw] max-w-full border border-pablo-700/10 bg-pablo-50 shadow-md backdrop:backdrop-blur sm:mx-auto sm:mb-auto sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-[15rem] sm:w-5/6 sm:max-w-[48rem] rounded-3xl"
-  >
     <button
-      data-close-hero-modal
-      class="absolute z-10 top-4 right-4 ms-auto cursor-pointer uppercase rounded-xl py-0 px-4 bg-pablo-50 font-bold drop-shadow-sm border border-pablo-700/10 text-pablo-700 text-[8px] font-mono"
+        data-open-hero-modal
+        disabled
+        class="bg-pablo-50 mt-6 flex w-full cursor-pointer items-center overflow-hidden rounded-3xl px-4 py-4 drop-shadow outline-none sm:w-[300px]"
     >
-      Esc
+        <MagnifyingGlassIcon className="text-pablo-500 inline-block h-8 w-8" />
+        <p class="text-pablo-500 pl-2">খুঁজুন...</p>
     </button>
+    <dialog
+        data-hero-dialog
+        aria-label="hero-search"
+        class="border-pablo-700/10 bg-pablo-50 relative m-auto h-[72vh] max-h-full w-[84vw] max-w-full rounded-3xl border shadow-md backdrop:backdrop-blur sm:h-max sm:max-h-[calc(100%-8rem)] sm:min-h-60 sm:w-5/6 sm:max-w-3xl"
+    >
+        <button
+            data-close-hero-modal
+            class="bg-pablo-50 border-pablo-700/10 text-pablo-700 absolute top-4 right-4 z-10 ms-auto cursor-pointer rounded-xl border px-4 py-0 font-mono text-[8px] font-bold uppercase drop-shadow-sm"
+        >
+            Esc
+        </button>
 
-    <div class="hero-dialog-frame flex flex-col gap-4">
-      {
-        import.meta.env.DEV ? (
-          <div class="mx-auto text-center">
-            <p>
-              Search is only available in production builds. <br />
-              Try building and previewing the site to test it out locally.
-            </p>
-          </div>
-        ) : (
-          <div class="search-container">
-            <div id="hero-recipe__search" />
-          </div>
-        )
-      }
-    </div>
-  </dialog>
+        <div class="hero-dialog-frame flex flex-col gap-4">
+            {
+                import.meta.env.DEV ? (
+                    <div class="mx-auto text-center">
+                        <p>
+                            Search is only available in production builds.{' '}
+                            <br />
+                            Try building and previewing the site to test it out
+                            locally.
+                        </p>
+                    </div>
+                ) : (
+                    <div class="search-container">
+                        <div id="hero-recipe__search" />
+                    </div>
+                )
+            }
+        </div>
+    </dialog>
 </hero-site-search>
 
 <script>
-  class HeroSiteSearch extends HTMLElement {
-    constructor() {
-      super();
-      const openBtn = this.querySelector<HTMLButtonElement>(
-        'button[data-open-hero-modal]'
-      )!;
-      const closeBtn = this.querySelector<HTMLButtonElement>(
-        'button[data-close-hero-modal]'
-      )!;
-      const dialog = this.querySelector<HTMLDialogElement>(
-        'dialog[data-hero-dialog]'
-      )!;
-      const dialogFrame = this.querySelector('.hero-dialog-frame')!;
+    class HeroSiteSearch extends HTMLElement {
+        constructor() {
+            super();
+            const openBtn = this.querySelector<HTMLButtonElement>(
+                'button[data-open-hero-modal]'
+            )!;
+            const closeBtn = this.querySelector<HTMLButtonElement>(
+                'button[data-close-hero-modal]'
+            )!;
+            const dialog = this.querySelector<HTMLDialogElement>(
+                'dialog[data-hero-dialog]'
+            )!;
+            const dialogFrame = this.querySelector('.hero-dialog-frame')!;
 
-      const onWindowClick = (event: MouseEvent) => {
-        // check if it's a link
-        const isLink = 'href' in (event.target || {});
-        // make sure the click is either a link or outside of the dialog
-        if (
-          isLink ||
-          (document.body.contains(event.target as Node) &&
-            !dialogFrame.contains(event.target as Node))
-        )
-          closeModal();
-      };
+            const onWindowClick = (event: MouseEvent) => {
+                // check if it's a link
+                const isLink = 'href' in (event.target || {});
+                // make sure the click is either a link or outside of the dialog
+                if (
+                    isLink ||
+                    (document.body.contains(event.target as Node) &&
+                        !dialogFrame.contains(event.target as Node))
+                )
+                    closeModal();
+            };
 
-      const openModal = (event?: MouseEvent) => {
-        dialog.showModal();
-        this.querySelector('input')?.focus();
-        event?.stopPropagation();
-        window.addEventListener('click', onWindowClick);
-      };
+            const openModal = (event?: MouseEvent) => {
+                dialog.showModal();
+                this.querySelector('input')?.focus();
+                event?.stopPropagation();
+                window.addEventListener('click', onWindowClick);
+            };
 
-      const closeModal = () => {
-        if (dialog.open) {
-          dialog.close();
-          window.removeEventListener('click', onWindowClick);
+            const closeModal = () => {
+                if (dialog.open) {
+                    dialog.close();
+                    window.removeEventListener('click', onWindowClick);
+                }
+            };
+
+            openBtn.addEventListener('click', openModal);
+            openBtn.disabled = false;
+            closeBtn.addEventListener('click', closeModal);
+
+            // Listen for `/` keyboard shortcut
+            window.addEventListener('keydown', (e) => {
+                if (e.key === '/' && !dialog.open) {
+                    openModal();
+                    e.preventDefault();
+                }
+            });
+
+            function createUI() {
+                if (import.meta.env.DEV) return;
+                const onIdle =
+                    window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
+                onIdle(async () => {
+                    const { PagefindUI } = await import('@pagefind/default-ui');
+                    new PagefindUI({
+                        element: '#hero-recipe__search',
+                        baseUrl: import.meta.env.BASE_URL,
+                        bundlePath:
+                            import.meta.env.BASE_URL.replace(/\/$/, '') +
+                            '/pagefind/',
+                        showImages: false,
+                        showSubResults: true,
+                        translations: {
+                            placeholder: 'রেসিপি খুঁজুন...',
+                            zero_results: `'[SEARCH_TERM]' এর জন্য কোন রেসিপি পাওয়া যায়নি`,
+                            load_more: 'আরও রেসিপি দেখুন',
+                            many_results: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+                            one_result: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
+                        },
+                    });
+                });
+            }
+
+            if (document.readyState !== 'loading') {
+                createUI();
+            } else {
+                window.addEventListener('DOMContentLoaded', () => {
+                    createUI();
+                });
+            }
+
+            // close modal and clear input on view-transtion
+            document.addEventListener('astro:after-swap', () => {
+                // clear the search field
+                (
+                    document.querySelector(
+                        '.pagefind-ui__search-clear'
+                    ) as HTMLButtonElement
+                )?.click();
+                // close the modal & remove event listener on body
+                closeModal();
+            });
         }
-      };
-
-      openBtn.addEventListener('click', openModal);
-      openBtn.disabled = false;
-      closeBtn.addEventListener('click', closeModal);
-
-      // Listen for `/` keyboard shortcut
-      window.addEventListener('keydown', (e) => {
-        if (e.key === '/' && !dialog.open) {
-          openModal();
-          e.preventDefault();
-        }
-      });
-
-      function createUI() {
-        if (import.meta.env.DEV) return;
-        const onIdle =
-          window.requestIdleCallback || ((cb) => setTimeout(cb, 1));
-        onIdle(async () => {
-          const { PagefindUI } = await import('@pagefind/default-ui');
-          new PagefindUI({
-            element: '#hero-recipe__search',
-            baseUrl: import.meta.env.BASE_URL,
-            bundlePath:
-              import.meta.env.BASE_URL.replace(/\/$/, '') + '/pagefind/',
-            showImages: false,
-            showSubResults: true,
-            translations: {
-              placeholder: 'রেসিপি খুঁজুন...',
-              zero_results: `'[SEARCH_TERM]' এর জন্য কোন রেসিপি পাওয়া যায়নি`,
-              load_more: 'আরও রেসিপি দেখুন',
-              many_results: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
-              one_result: `'[SEARCH_TERM]' এর জন্য [COUNT] টি রেসিপি পাওয়া গেছে`,
-            },
-          });
-        });
-      }
-
-      if (document.readyState !== 'loading') {
-        createUI();
-      } else {
-        window.addEventListener('DOMContentLoaded', () => {
-          createUI();
-        });
-      }
-
-      // close modal and clear input on view-transtion
-      document.addEventListener('astro:after-swap', () => {
-        // clear the search field
-        (
-          document.querySelector(
-            '.pagefind-ui__search-clear'
-          ) as HTMLButtonElement
-        )?.click();
-        // close the modal & remove event listener on body
-        closeModal();
-      });
     }
-  }
 
-  customElements.define('hero-site-search', HeroSiteSearch);
+    customElements.define('hero-site-search', HeroSiteSearch);
 </script>

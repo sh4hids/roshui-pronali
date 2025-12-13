@@ -4,19 +4,19 @@ import TagCard from './TagCard.astro';
 import SeeAllLink from './SeeAllLink.astro';
 
 interface Props {
-  tags: ItemWithCount[];
-  limit?: number;
+    tags: ItemWithCount[];
+    limit?: number;
 }
 
 const { tags: allTags, limit } = Astro.props;
 const tags = limit ? allTags.slice(0, limit) : [...allTags];
 ---
 
-<div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-  {tags.map((tag) => <TagCard tag={tag} />)}
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+    {tags.map((tag) => <TagCard tag={tag} />)}
 </div>
 {
-  limit && allTags.length > limit && (
-    <SeeAllLink title="সবগুলো দেখুন" link="/tags" />
-  )
+    limit && allTags.length > limit && (
+        <SeeAllLink title="সবগুলো দেখুন" link="/tags" />
+    )
 }
