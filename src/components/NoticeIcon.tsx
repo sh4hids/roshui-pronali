@@ -1,34 +1,34 @@
 import {
-  HiBell,
-  HiInformationCircle,
-  HiExclamationTriangle,
-  HiLightBulb,
-} from 'react-icons/hi2/index';
+    BellIcon,
+    InfoIcon,
+    ExclamationMarkIcon,
+    LightbulbIcon,
+} from '@phosphor-icons/react';
 
 const baseStyles = 'w-10 h-10 text-pablo-50';
 
 const variants = {
-  info: 'info',
-  tips: 'tips',
-  warning: 'warning',
-  notice: 'notice',
+    info: 'info',
+    tips: 'tips',
+    warning: 'warning',
+    notice: 'notice',
 } as const;
 
 export type NoticeVariant = keyof typeof variants;
 
 interface Props {
-  variant?: NoticeVariant;
+    variant?: NoticeVariant;
 }
 
 export const NoticeIcon: React.FC<Props> = ({ variant = variants.info }) => {
-  switch (variant) {
-    case 'warning':
-      return <HiExclamationTriangle className={`${baseStyles}`} />;
-    case 'tips':
-      return <HiLightBulb className={`${baseStyles}`} />;
-    case 'notice':
-      return <HiBell className={`${baseStyles}`} />;
-    default:
-      return <HiInformationCircle className={`${baseStyles}`} />;
-  }
+    switch (variant) {
+        case 'warning':
+            return <ExclamationMarkIcon className={`${baseStyles}`} />;
+        case 'tips':
+            return <LightbulbIcon className={`${baseStyles}`} />;
+        case 'notice':
+            return <BellIcon className={`${baseStyles}`} />;
+        default:
+            return <InfoIcon className={`${baseStyles}`} />;
+    }
 };

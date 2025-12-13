@@ -2,13 +2,13 @@
 import { Link } from './Link';
 
 interface Props {
-  title: string;
-  link: string;
+    title: string;
+    link: string;
 }
 
 const { title, link } = Astro.props;
 ---
 
-<div class="text-center py-6">
-  <Link to={link} type="button">{title}</Link>
+<div class="mt-4 py-6 text-center">
+    <Link to={link} type="button">{title}</Link>
 </div>

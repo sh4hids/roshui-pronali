@@ -1,24 +1,24 @@
 ---
-import { type NoticeVariant, NoticeIcon } from './NoticeIcon';
+import { type NoticeVariant, NoticeIcon } from '@/components/NoticeIcon';
 
 export interface Props {
-  variant?: NoticeVariant;
+    variant?: NoticeVariant;
 }
 
 const { variant = 'info' } = Astro.props as Props;
 ---
 
 <div class="pt-9">
-  <div
-    class="relative bg-pablo-50 drop-shadow text-center py-12 px-6 rounded-3xl"
-  >
-    <span
-      class="p-4 bg-chilli-600 absolute rounded-full -top-9 left-1/2 -translate-x-9"
+    <div
+        class="bg-card text-card-foreground relative rounded-3xl px-6 py-12 text-center drop-shadow"
     >
-      <NoticeIcon variant={variant} />
-    </span>
-    <h3 class="text-2xl">
-      <slot />
-    </h3>
-  </div>
+        <span
+            class="bg-primary absolute -top-9 left-1/2 -translate-x-9 rounded-full p-4"
+        >
+            <NoticeIcon variant={variant} />
+        </span>
+        <h3 class="text-2xl">
+            <slot />
+        </h3>
+    </div>
 </div>

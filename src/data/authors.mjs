@@ -18,16 +18,16 @@
 
 /** @type {Array.<Author>} */
 export const authors = [
-  {
-    id: 'sh4hids',
-    fullName: 'Shahidul Islam Majumder',
-    email: 'hello@shahid.pro',
-    socialProfiles: {
-      github: 'sh4hids',
-      facebook: 'sh4hids',
-      instagram: 'sh4hids',
-      twitter: 'sh4hids',
-      website: 'https://shahid.pro',
+    {
+        id: 'sh4hids',
+        fullName: 'Shahidul Islam Majumder',
+        email: 'hello@shahid.pro',
+        socialProfiles: {
+            github: 'sh4hids',
+            facebook: 'sh4hids',
+            instagram: 'sh4hids',
+            twitter: 'sh4hids',
+            website: 'https://shahid.pro',
+        },
     },
-  },
 ];

@@ -1,12 +1,12 @@
-import fs from 'fs';
-import chalk from 'chalk';
-import inquirer from 'inquirer';
-import json2Yaml from 'json-to-pretty-yaml';
-import prettier from 'prettier';
-import { nanoid } from 'nanoid';
+import fs from "fs";
+import chalk from "chalk";
+import inquirer from "inquirer";
+import json2Yaml from "json-to-pretty-yaml";
+import prettier from "prettier";
+import { nanoid } from "nanoid";
 
-import { authors } from '../data/authors.mjs';
-import { categories } from '../data/categories.mjs';
+import { authors } from "../data/authors.mjs";
+import { categories } from "../data/categories.mjs";
 
 const log = console.log;
 const error = chalk.bold.red;
@@ -27,58 +27,59 @@ const authorIds = authors.map((author) => author.id);
       cooking,
     } = await inquirer.prompt([
       {
-        type: 'input',
-        name: 'title',
-        message: 'Title:',
+        type: "input",
+        name: "title",
+        message: "Title:",
       },
       {
-        type: 'input',
-        name: 'description',
-        message: 'Short description:',
+        type: "input",
+        name: "description",
+        message: "Short description:",
       },
       {
-        type: 'input',
-        name: 'serving',
-        message: 'Serving (in person):',
+        type: "input",
+        name: "serving",
+        message: "Serving (in person):",
       },
       {
-        type: 'input',
-        name: 'preparation',
-        message: 'Preparation time (in minutes):',
+        type: "input",
+        name: "preparation",
+        message: "Preparation time (in minutes):",
       },
       {
-        type: 'input',
-        name: 'cooking',
-        message: 'Cooking time (in minutes):',
+        type: "input",
+        name: "cooking",
+        message: "Cooking time (in minutes):",
       },
       {
-        type: 'input',
-        name: 'tags',
-        message: 'Tags (comma separated):',
+        type: "input",
+        name: "tags",
+        message: "Tags (comma separated):",
       },
       {
-        type: 'list',
-        name: 'category',
-        message: 'Category:',
+        type: "list",
+        name: "category",
+        message: "Category:",
         choices: categories,
       },
       {
-        type: 'list',
-        name: 'author',
-        message: 'Choose an author:',
+        type: "list",
+        name: "author",
+        message: "Choose an author:",
         choices: authorIds,
       },
     ]);
 
     const slug = `${title
       .trim()
-      .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-      .replace(/\s+/g, '-')
+      // eslint-disable-next-line no-useless-escape
+      .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, "")
+      .replace(/\s+/g, "-")
       .toLowerCase()}-${nanoid(10)}`;
 
     const createdAt = new Date().toISOString();
     const blogPostFolder = `./src/content/recipes`;
-    const tagList = tags.split(',').map((t) => t.trim());
+    const tagList = tags.split(",").map((t) => t.trim());
 
     if (!fs.existsSync(blogPostFolder)) {
       fs.mkdirSync(blogPostFolder, {
@@ -94,7 +95,7 @@ const authorIds = authors.map((author) => author.id);
       isPublished: false,
       isFeatured: false,
       ingredients: {
-        main: ['item 1', 'item 2'],
+        main: ["item 1", "item 2"],
       },
       serving: Number(serving),
       time: {
@@ -110,7 +111,7 @@ const authorIds = authors.map((author) => author.id);
     });
 
     const markdown = await prettier.format(`---\n${yaml}\n---\n`, {
-      parser: 'markdown',
+      parser: "markdown",
       singleQuote: true,
     });
 
