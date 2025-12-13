@@ -1,11 +1,15 @@
 ---
-import HeroImage from './HeroImage.astro';
-import Search from './Search.astro';
+import HeroImage from '@/components/HeroImage.astro';
+import Search from '@/components/Search.astro';
+import BanglaDate from './BanglaDate';
 ---
 
-<div class="container mx-auto">
+<div class="relative container mx-auto">
     <div class="my-16 grid grid-cols-12 gap-6 px-6">
         <div class="col-span-12 grid content-center items-center md:col-span-5">
+            <span class="pb-4">
+                <BanglaDate client:load />
+            </span>
             <span
                 class="pb-6 text-lg leading-9 font-normal sm:text-xl sm:leading-10"
             >
