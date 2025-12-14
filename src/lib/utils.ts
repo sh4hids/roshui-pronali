@@ -47,8 +47,7 @@ export const generateSlug = (text: string) =>
         .normalize('NFC')
         // eslint-disable-next-line no-useless-escape
         .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
-        .replace(/\s+/g, '-')
-        .toLowerCase();
+        .replace(/\s+/g, '-');
 
 export const getFormattedDurationFromMinutes = (minutes: number) => {
     const duration = intervalToDuration({ start: 0, end: minutes * 60 * 1000 });
