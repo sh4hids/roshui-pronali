@@ -44,6 +44,7 @@ export const convertToBanglaNumber = (n: number): string => {
 
 export const generateSlug = (text: string) =>
     text
+        .normalize('NFC')
         // eslint-disable-next-line no-useless-escape
         .replace(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi, '')
         .replace(/\s+/g, '-')
