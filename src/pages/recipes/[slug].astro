@@ -7,7 +7,7 @@ import { render } from 'astro:content';
 export const getStaticPaths = (async () => {
     const blogEntries = await getAllRecipes();
     return blogEntries.map((entry) => ({
-        params: { slug: entry.data.slug },
+        params: { slug: entry.id },
         props: { entry },
     }));
 }) satisfies GetStaticPaths;
