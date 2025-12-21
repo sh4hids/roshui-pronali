@@ -54,7 +54,7 @@ export const getFormattedDurationFromMinutes = (minutes: number) => {
     let formattedDuration = '';
 
     if (duration.hours && duration.hours > 0) {
-        formattedDuration += `${convertToBanglaNumber(duration.hours)} ঘ.`;
+        formattedDuration += `${convertToBanglaNumber(duration.hours)} ঘ. `;
     }
 
     if (duration.minutes && duration.minutes > 0) {
