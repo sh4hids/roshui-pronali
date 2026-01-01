@@ -1,18 +1,18 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import Categories from '@/components/Categories.astro';
+import Container from '@/components/Container.astro';
+import FeaturedRecipes from '@/components/FeaturedRecipes.astro';
 import HeroSection from '@/components/HeroSection.astro';
 import Notice from '@/components/Notice.astro';
-import FeaturedRecipes from '@/components/FeaturedRecipes.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Tags from '@/components/Tags.astro';
 import {
     getAllRecipes,
     getUniqueCategoriesWithCount,
     getUniqueTagsWithCount,
     sortRecipeByDate,
 } from '@/data';
-import Categories from '@/components/Categories.astro';
-import Tags from '@/components/Tags.astro';
-import Container from '@/components/Container.astro';
-import SectionHeader from '@/components/SectionHeader.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const recipes = await getAllRecipes();
 const sortedRecipes = sortRecipeByDate(recipes);
@@ -20,7 +20,9 @@ const featuredRecipes = sortedRecipes.filter(
     (recipe) => recipe.data.isFeatured
 );
 const categories = getUniqueCategoriesWithCount(recipes);
+const sortedCategories = categories.sort((a, b) => b[1] - a[1]);
 const tags = getUniqueTagsWithCount(recipes);
+const sortedTags = tags.sort((a, b) => b[1] - a[1]);
 ---
 
 <BaseLayout meta={{ title: 'নীড়পাতা' }}>
@@ -28,11 +30,11 @@ const tags = getUniqueTagsWithCount(recipes);
     <FeaturedRecipes recipes={featuredRecipes} />
     <Container>
         <SectionHeader>রান্নার ধরন</SectionHeader>
-        <Categories categories={categories} limit={5} />
+        <Categories categories={sortedCategories} limit={5} />
     </Container>
     <Container>
         <SectionHeader>রান্নার বিষয়</SectionHeader>
-        <Tags tags={tags} limit={6} />
+        <Tags tags={sortedTags} limit={6} />
     </Container>
     <Container>
         <Notice variant="notice">

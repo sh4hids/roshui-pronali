@@ -1,9 +1,10 @@
 ---
 import { ListIcon } from '@phosphor-icons/react';
-import Search from './Search.astro';
 
-import { isActivePath } from '@/lib/utils';
 import ThemeToggle from '@/components/ThemeToggle.astro';
+import { isActivePath } from '@/lib/utils';
+
+import Search from './Search.astro';
 
 const currentPath = new URL(Astro.request.url).pathname;
 ---

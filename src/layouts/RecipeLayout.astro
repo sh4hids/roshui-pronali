@@ -1,7 +1,4 @@
 ---
-import { format } from 'date-fns';
-import { bn } from 'date-fns/locale';
-import { getDate } from 'bangla-calendar';
 import {
     ClockIcon,
     FireIcon,
@@ -10,14 +7,19 @@ import {
     UsersIcon,
 } from '@phosphor-icons/react';
 import type { CollectionEntry } from 'astro:content';
-import BaseLayout from './BaseLayout.astro';
+import { getDate } from 'bangla-calendar';
+import { format } from 'date-fns';
+import { bn } from 'date-fns/locale';
+
+import HeroImage from '@/components/HeroImage.astro';
+import { Link } from '@/components/Link';
 import {
     convertToBanglaNumber,
     generateSlug,
     getFormattedDurationFromMinutes,
 } from '@/lib/utils';
-import HeroImage from '@/components/HeroImage.astro';
-import { Link } from '@/components/Link';
+
+import BaseLayout from './BaseLayout.astro';
 
 interface Props {
     recipe: CollectionEntry<'recipes'>;

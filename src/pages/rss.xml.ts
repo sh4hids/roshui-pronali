@@ -1,6 +1,7 @@
 import rss from '@astrojs/rss';
-import { getAllRecipes } from '@/data';
+
 import { siteConfig } from '@/config';
+import { getAllRecipes } from '@/data';
 export const GET = async () => {
     const recipes = await getAllRecipes();
 
