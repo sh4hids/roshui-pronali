@@ -1,5 +1,6 @@
-import { generateSlug } from '@/lib/utils';
 import { type CollectionEntry, getCollection } from 'astro:content';
+
+import { generateSlug } from '@/lib/utils';
 
 export type ItemWithCount = [string, number];
 

@@ -1,4 +1,4 @@
 export default {
-    '*': ['pnpm validate --'],
-    '*.+(js|jsx|json|ts|tsx|astro)': ['prettier --write'],
+    '**/*.{js,mjs,ts,tsx,astro}': ['eslint --fix'],
+    '**/*.{js,mjs,ts,tsx,astro,json,md,yml,yaml}': ['prettier --write'],
 };

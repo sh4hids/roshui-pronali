@@ -1,11 +1,11 @@
 ---
 import { ClockIcon, FireIcon } from '@phosphor-icons/react';
-import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
-import { getFormattedDurationFromMinutes } from '@/lib/utils';
+import type { CollectionEntry } from 'astro:content';
 
 import coverImage from '@/assets/images/post-cover-image.png';
 import coverImageDark from '@/assets/images/post-cover-image-dark.png';
+import { getFormattedDurationFromMinutes } from '@/lib/utils';
 
 interface Props {
     recipe: CollectionEntry<'recipes'>;

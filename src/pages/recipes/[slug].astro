@@ -1,8 +1,9 @@
 ---
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
-import RecipeLayout from '@/layouts/RecipeLayout.astro';
-import { getAllRecipes } from '@/data';
 import { render } from 'astro:content';
+
+import { getAllRecipes } from '@/data';
+import RecipeLayout from '@/layouts/RecipeLayout.astro';
 
 export const getStaticPaths = (async () => {
     const blogEntries = await getAllRecipes();

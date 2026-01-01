@@ -1,10 +1,11 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
-import tailwindcss from '@tailwindcss/vite';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 import umami from '@yeskunall/astro-umami';
+import { defineConfig } from 'astro/config';
+
 import { remarkModifiedTime } from './src/lib/remarkModifiedTime.mjs';
 
 // https://astro.build/config
