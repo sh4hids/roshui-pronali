@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { getDate } from 'bangla-calendar';
+import { useState } from 'react';
 
 export default function BanglaDate() {
     const [date] = useState(new Date());

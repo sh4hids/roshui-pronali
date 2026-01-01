@@ -1,7 +1,7 @@
 import {
     BellIcon,
-    InfoIcon,
     ExclamationMarkIcon,
+    InfoIcon,
     LightbulbIcon,
 } from '@phosphor-icons/react';
 

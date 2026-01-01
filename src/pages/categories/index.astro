@@ -1,8 +1,9 @@
 ---
-import { getAllRecipes, getUniqueCategoriesWithCount } from '../../data';
-import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 import Categories from '@/components/Categories.astro';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
 import { convertToBanglaNumber } from '@/lib/utils';
+
+import { getAllRecipes, getUniqueCategoriesWithCount } from '../../data';
 
 const recipes = await getAllRecipes();
 const categories = getUniqueCategoriesWithCount(recipes);

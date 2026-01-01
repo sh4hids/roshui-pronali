@@ -1,5 +1,6 @@
-import { categories } from '@/data';
 import { z } from 'astro:content';
+
+import { categories } from '@/data';
 
 export const recipeSchema = z.object({
     title: z.string(),

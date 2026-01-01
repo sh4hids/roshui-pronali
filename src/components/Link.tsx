@@ -1,7 +1,8 @@
 import type React from 'react';
+
 import {
-    type ButtonVariant,
     buttonBaseClasses,
+    type ButtonVariant,
     buttonVariants,
 } from './Button';
 

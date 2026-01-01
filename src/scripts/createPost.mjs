@@ -1,9 +1,9 @@
-import fs from 'fs';
 import chalk from 'chalk';
+import fs from 'fs';
 import inquirer from 'inquirer';
 import json2Yaml from 'json-to-pretty-yaml';
-import prettier from 'prettier';
 import { customAlphabet, urlAlphabet } from 'nanoid';
+import prettier from 'prettier';
 
 import { authors } from '../data/authors.mjs';
 import { categories } from '../data/categories.mjs';
