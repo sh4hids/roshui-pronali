@@ -16,13 +16,16 @@ import SectionHeader from '@/components/SectionHeader.astro';
 
 const recipes = await getAllRecipes();
 const sortedRecipes = sortRecipeByDate(recipes);
+const featuredRecipes = sortedRecipes.filter(
+    (recipe) => recipe.data.isFeatured
+);
 const categories = getUniqueCategoriesWithCount(recipes);
 const tags = getUniqueTagsWithCount(recipes);
 ---
 
 <BaseLayout meta={{ title: 'নীড়পাতা' }}>
     <HeroSection />
-    <FeaturedRecipes recipes={sortedRecipes} />
+    <FeaturedRecipes recipes={featuredRecipes} />
     <Container>
         <SectionHeader>রান্নার ধরন</SectionHeader>
         <Categories categories={categories} limit={5} />
