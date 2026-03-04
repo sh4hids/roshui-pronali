@@ -14,7 +14,7 @@
         "format": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
         "validate": "npm-run-all --parallel check:*",
         "prepare": "husky",
-        "add": "node ./src/scripts/createPost.mjs"
+        "add:recipe": "node ./src/scripts/addRecipe.mjs"
     },
     "dependencies": {
         "@astrojs/mdx": "^4.3.13",
@@ -42,6 +42,7 @@
     "devDependencies": {
         "@eslint/compat": "^1.4.1",
         "@eslint/js": "^9.39.3",
+        "@inquirer/prompts": "^8.3.0",
         "@pagefind/default-ui": "^1.4.0",
         "@tailwindcss/typography": "^0.5.19",
         "chalk": "^5.6.2",
@@ -51,7 +52,6 @@
         "eslint-plugin-simple-import-sort": "^12.1.1",
         "globals": "^16.5.0",
         "husky": "^9.1.7",
-        "inquirer": "^13.3.0",
         "json-to-pretty-yaml": "^1.2.2",
         "lint-staged": "^16.2.7",
         "nanoid": "^5.1.6",

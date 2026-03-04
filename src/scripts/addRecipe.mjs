@@ -1,6 +1,6 @@
+import { input, select } from '@inquirer/prompts';
 import chalk from 'chalk';
 import fs from 'fs';
-import inquirer from 'inquirer';
 import json2Yaml from 'json-to-pretty-yaml';
 import { customAlphabet, urlAlphabet } from 'nanoid';
 import prettier from 'prettier';
@@ -12,64 +12,73 @@ const nanoid = customAlphabet(urlAlphabet, 10);
 const log = console.log;
 const error = chalk.bold.red;
 const success = chalk.bold.green.inverse;
-const authorIds = authors.map((author) => author.id);
+const authorOptions = authors.map((author) => ({
+    name: `${author.fullName} (${author.id})`,
+    value: author.id,
+}));
 
 (async () => {
-    const args = process.argv;
-    if (args.length < 3) {
-        const {
-            title,
-            description,
-            tags,
-            author,
-            category,
-            serving,
-            preparation,
-            cooking,
-        } = await inquirer.prompt([
-            {
-                type: 'input',
-                name: 'title',
-                message: 'Title:',
+    try {
+        const title = await input({
+            message: 'Title:',
+            validate: (value) => {
+                if (!value) return 'Title is required';
+                return true;
             },
-            {
-                type: 'input',
-                name: 'description',
-                message: 'Short description:',
+        });
+
+        const description = await input({
+            message: 'Description:',
+            validate: (value) => {
+                if (!value) return 'Description is required';
+                return true;
             },
-            {
-                type: 'input',
-                name: 'serving',
-                message: 'Serving (in person):',
+        });
+
+        const serving = await input({
+            message: 'Serving (in person):',
+            validate: (value) => {
+                if (!value) return 'Serving is required';
+                return true;
             },
-            {
-                type: 'input',
-                name: 'preparation',
-                message: 'Preparation time (in minutes):',
+        });
+
+        const preparation = await input({
+            message: 'Preparation (in minutes):',
+            validate: (value) => {
+                if (!value) return 'Preparation time is required';
+                return true;
             },
-            {
-                type: 'input',
-                name: 'cooking',
-                message: 'Cooking time (in minutes):',
+        });
+
+        const cooking = await input({
+            message: 'Cooking time (in minutes):',
+            validate: (value) => {
+                if (!value) return 'Cooking time is required';
+                return true;
             },
-            {
-                type: 'input',
-                name: 'tags',
-                message: 'Tags (comma separated):',
+        });
+
+        const tags = await input({
+            message: 'Tags (comma separated):',
+            validate: (value) => {
+                if (!value) return 'At least one tag is required';
+                return true;
             },
-            {
-                type: 'list',
-                name: 'category',
-                message: 'Category:',
-                choices: categories,
-            },
-            {
-                type: 'list',
-                name: 'author',
-                message: 'Choose an author:',
-                choices: authorIds,
-            },
-        ]);
+        });
+
+        const category = await select({
+            message: 'Select a category:',
+            choices: categories.map((category) => ({
+                name: category,
+                value: category,
+            })),
+        });
+
+        const author = await select({
+            message: 'Select an author:',
+            choices: authorOptions,
+        });
 
         const slug = `${title
             .normalize('NFC')
@@ -120,11 +129,7 @@ const authorIds = authors.map((author) => author.id);
         fs.writeFileSync(`${blogPostFolder}/${slug}.mdx`, markdown);
 
         log(success(`Recipe ${title} was created successfully`));
-    } else {
-        log(
-            error(
-                "Please don't provide any arguments to the new post generator"
-            )
-        );
+    } catch (err) {
+        log(error('Something went wrong', err));
     }
 })();
