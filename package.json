@@ -14,7 +14,8 @@
         "format": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
         "validate": "npm-run-all --parallel check:*",
         "prepare": "husky",
-        "add:recipe": "node ./src/scripts/addRecipe.mjs"
+        "add:recipe": "node ./src/scripts/addRecipe.mjs",
+        "add:spice": "node ./src/scripts/addSpiceMix.mjs"
     },
     "dependencies": {
         "@astrojs/mdx": "^4.3.13",

@@ -6,7 +6,6 @@ import { customAlphabet, urlAlphabet } from 'nanoid';
 import prettier from 'prettier';
 
 import { authors } from '../data/authors.mjs';
-import { categories } from '../data/categories.mjs';
 
 const nanoid = customAlphabet(urlAlphabet, 10);
 const log = console.log;
@@ -35,14 +34,6 @@ const authorOptions = authors.map((author) => ({
             },
         });
 
-        const serving = await input({
-            message: 'Serving (in person):',
-            validate: (value) => {
-                if (!value) return 'Serving is required';
-                return true;
-            },
-        });
-
         const preparation = await input({
             message: 'Preparation (in minutes):',
             validate: (value) => {
@@ -53,10 +44,6 @@ const authorOptions = authors.map((author) => ({
 
         const cooking = await input({
             message: 'Cooking time (in minutes):',
-            validate: (value) => {
-                if (!value) return 'Cooking time is required';
-                return true;
-            },
         });
 
         const tags = await input({
@@ -65,14 +52,6 @@ const authorOptions = authors.map((author) => ({
                 if (!value) return 'At least one tag is required';
                 return true;
             },
-        });
-
-        const category = await select({
-            message: 'Select a category:',
-            choices: categories.map((category) => ({
-                name: category,
-                value: category,
-            })),
         });
 
         const author = await select({
@@ -89,7 +68,7 @@ const authorOptions = authors.map((author) => ({
             .toLowerCase()}-${nanoid()}`;
 
         const createdAt = new Date().toISOString();
-        const blogPostFolder = `./src/content/recipes`;
+        const blogPostFolder = `./src/content/spice-mixes`;
         const tagList = tags.split(',').map((t) => t.trim());
 
         if (!fs.existsSync(blogPostFolder)) {
@@ -101,14 +80,11 @@ const authorOptions = authors.map((author) => ({
         const yaml = json2Yaml.stringify({
             title: title.trim(),
             author,
-            category,
             tags: tagList,
             isPublished: false,
-            isFeatured: false,
             ingredients: {
                 main: ['item 1', 'item 2'],
             },
-            serving: Number(serving),
             time: {
                 preparation: Number(preparation),
                 cooking: Number(cooking),
@@ -129,7 +105,7 @@ const authorOptions = authors.map((author) => ({
 
         fs.writeFileSync(`${blogPostFolder}/${slug}.mdx`, markdown);
 
-        log(success(`Recipe ${title} was created successfully`));
+        log(success(`Spice mix ${title} post was created successfully`));
     } catch (err) {
         log(error('Something went wrong', err));
     }

@@ -1,0 +1,17 @@
+---
+import Container from '@/components/Container.astro';
+import { getAllSpiceMixes } from '@/data';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const spiceMixes = await getAllSpiceMixes();
+
+console.log(spiceMixes);
+---
+
+<BaseLayout
+    meta={{
+        title: 'মসলা',
+    }}
+>
+    <Container> test </Container>
+</BaseLayout>

@@ -1,0 +1,140 @@
+---
+import { ClockIcon, FireIcon } from '@phosphor-icons/react';
+import type { CollectionEntry } from 'astro:content';
+import { getDate } from 'bangla-calendar';
+import { format } from 'date-fns';
+import { bn } from 'date-fns/locale';
+
+import HeroImage from '@/components/SpiceMixHeroImage.astro';
+import {
+    convertToBanglaNumber,
+    getFormattedDurationFromMinutes,
+} from '@/lib/utils';
+
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+    recipe: CollectionEntry<'spiceMixes'>;
+}
+
+const { recipe } = Astro.props;
+const {
+    data: { title, metaInfo },
+} = recipe;
+
+const lastModifiedDate = {
+    day: format(new Date(recipe.data.updatedAt), 'dd'),
+    month: format(new Date(recipe.data.updatedAt), 'MMMM', {
+        locale: bn,
+    }),
+    year: format(new Date(recipe.data.updatedAt), 'yyyy'),
+};
+---
+
+<BaseLayout
+    meta={{
+        title,
+        description: metaInfo.description,
+        createdAt: new Date(recipe.data.createdAt).toJSON(),
+        updatedAt: new Date(recipe.data.updatedAt).toJSON(),
+    }}
+>
+    <article class="container mx-auto px-6 pt-6 pb-16" data-pagefind-body>
+        <div class="grid grid-cols-12 items-center sm:gap-6">
+            <div
+                class="felx col-start-1 col-end-13 h-auto w-full items-center justify-items-center overflow-hidden rounded-3xl md:col-span-6 md:h-[512px]"
+            >
+                <HeroImage />
+            </div>
+            <div
+                class="col-start-1 col-end-13 pt-4 sm:pt-0 md:col-span-7 md:col-start-7"
+            >
+                <h1 class="text-2xl font-normal sm:text-3xl">{title}</h1>
+                <p class="pt-4 pb-6 text-base">
+                    {recipe.data.metaInfo.description}
+                </p>
+                <div
+                    class="border-chilli-600/10 grid grid-cols-2 border-y py-6 md:gap-6"
+                >
+                    <div
+                        class="border-chilli-600/10 flex flex-col items-center justify-center border-r"
+                    >
+                        <ClockIcon className="h-8 w-8" />
+                        <p class="pt-2 text-base font-normal">প্রস্তুতির সময়</p>
+                        <p class="pt-2 text-sm font-light">
+                            {
+                                getFormattedDurationFromMinutes(
+                                    recipe.data.time.preparation
+                                )
+                            }
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <FireIcon className="h-8 w-8" />
+                        <p class="pt-2 text-base font-normal">রান্নার সময়</p>
+                        <p class="pt-2 text-sm font-light">
+                            {
+                                recipe.data.time.cooking
+                                    ? getFormattedDurationFromMinutes(
+                                          recipe.data.time.cooking
+                                      )
+                                    : '-'
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-6 pt-6">
+            <div class="col-start-1 col-end-13">
+                <h2 class="text-xl font-normal sm:text-2xl">উপকরণ</h2>
+                {
+                    Object.entries(recipe.data.ingredients).map(
+                        ([key, valule]) => (
+                            <section class="pt-6">
+                                {key !== 'main' && (
+                                    <h3 class="text-lg font-normal sm:text-xl">
+                                        {key}
+                                    </h3>
+                                )}
+                                <table class="border-chilli-600/10 w-full min-w-full table-auto border-collapse border text-left">
+                                    <thead>
+                                        <tr class="*:border-chilli-600/10 bg-accent-foreground/3 *:border-b *:p-4">
+                                            <th>মসলার নাম</th>
+                                            <th>পরিমাণ</th>
+                                        </tr>
+                                    </thead>
+                                    {valule.map((item) => (
+                                        <tr class="border-chilli-600/10 hover:bg-accent-foreground/2 *:border-chilli-600/10 border *:border-b *:p-4">
+                                            <td>{item.split(':')[0]}</td>
+                                            <td>{item.split(':')[1]}</td>
+                                        </tr>
+                                    ))}
+                                </table>
+                            </section>
+                        )
+                    )
+                }
+
+                <section
+                    class="prose dark:text-foreground prose-p:text-base max-w-none pt-6"
+                >
+                    <slot />
+                </section>
+                <p class="text-foreground/60 pt-8 text-xs font-normal">
+                    <span class="font-light">সর্বশেষ আপডেট:</span>
+                    {'  '}
+                    <span>
+                        {
+                            `${getDate(new Date(recipe.data.updatedAt), {
+                                format: 'dd MMMM yyyy',
+                            })} | ${convertToBanglaNumber(Number(lastModifiedDate.day))} ${
+                                lastModifiedDate.month
+                            } ${convertToBanglaNumber(Number(lastModifiedDate.year))}`
+                        }
+                    </span>
+                </p>
+            </div>
+        </div>
+    </article>
+</BaseLayout>

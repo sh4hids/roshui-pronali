@@ -4,8 +4,6 @@ import { categories } from '@/data';
 
 export const recipeSchema = z.object({
     title: z.string(),
-    createdAt: z.string().transform((str) => new Date(str)),
-    updatedAt: z.string().transform((str) => new Date(str)),
     category: z.enum(categories),
     tags: z.array(z.string()).optional(),
     isPublished: z.boolean().default(false),
@@ -18,4 +16,6 @@ export const recipeSchema = z.object({
     }),
     originalSource: z.string().url().optional(),
     slug: z.string(),
+    createdAt: z.string().transform((str) => new Date(str)),
+    updatedAt: z.string().transform((str) => new Date(str)),
 });
