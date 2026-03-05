@@ -1,18 +1,13 @@
 import { z } from 'astro:content';
 
-import { categories } from '@/data';
-
-export const recipeSchema = z.object({
+export const spiceMixSchema = z.object({
     title: z.string(),
-    category: z.enum(categories),
     tags: z.array(z.string()).optional(),
     isPublished: z.boolean().default(false),
-    isFeatured: z.boolean().default(false),
     ingredients: z.record(z.string(), z.array(z.string())),
-    serving: z.number(),
     time: z.object({
         preparation: z.number(),
-        cooking: z.number(),
+        cooking: z.number().optional(),
     }),
     originalSource: z.string().url().optional(),
     slug: z.string(),
