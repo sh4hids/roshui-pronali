@@ -1,0 +1,33 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+import { render } from 'astro:content';
+
+import { getAllSpiceMixes } from '@/data';
+import SpiceMixLayout from '@/layouts/SpiceMixLayout.astro';
+
+export const getStaticPaths = (async () => {
+    const blogEntries = await getAllSpiceMixes();
+    return blogEntries.map((entry) => ({
+        params: { slug: entry.data.slug },
+        props: { entry },
+    }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render(entry);
+---
+
+<SpiceMixLayout
+    recipe={{
+        ...entry,
+        data: {
+            ...entry.data,
+            updatedAt:
+                remarkPluginFrontmatter.lastModified || entry.data.updatedAt,
+        },
+    }}
+>
+    <Content />
+</SpiceMixLayout>

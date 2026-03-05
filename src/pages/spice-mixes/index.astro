@@ -1,0 +1,26 @@
+---
+import Container from '@/components/Container.astro';
+import { getAllSpiceMixes } from '@/data';
+import RecipesByTypePageLayout from '@/layouts/RecipesByTypePageLayout.astro';
+
+const spiceMixes = await getAllSpiceMixes();
+---
+
+<RecipesByTypePageLayout title="মসলা মিক্স" description="">
+    <Container>
+        <ul class="list-disc">
+            {
+                spiceMixes.map((spiceMix) => (
+                    <li>
+                        <a
+                            href={`/spice-mixes/${spiceMix.data.slug}`}
+                            class="text-chilli-600"
+                        >
+                            {spiceMix.data.title}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </Container>
+</RecipesByTypePageLayout>
