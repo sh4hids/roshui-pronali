@@ -36,6 +36,7 @@ const sortedTags = tags.sort((a, b) => b[1] - a[1]);
         <SectionHeader>রান্নার বিষয়</SectionHeader>
         <Tags tags={sortedTags} limit={6} />
     </Container>
+    <FeaturedRecipes recipes={sortedRecipes} title="সকল রেসিপি" />
     <Container>
         <Notice variant="notice">
             আপনার রেসিপি শেয়ার করতে চান?
