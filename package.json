@@ -18,8 +18,8 @@
         "add:spice": "node ./src/scripts/addSpiceMix.mjs"
     },
     "dependencies": {
-        "@astrojs/mdx": "^4.3.14",
-        "@astrojs/react": "^4.4.2",
+        "@astrojs/mdx": "^5.0.3",
+        "@astrojs/react": "^5.0.3",
         "@astrojs/rss": "^4.0.18",
         "@astrojs/sitemap": "^3.7.2",
         "@phosphor-icons/react": "^2.1.10",
@@ -28,7 +28,7 @@
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
         "@yeskunall/astro-umami": "0.0.7",
-        "astro": "^5.18.1",
+        "astro": "^6.1.5",
         "bangla-calendar": "^7.0.0",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
