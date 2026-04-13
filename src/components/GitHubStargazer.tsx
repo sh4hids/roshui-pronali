@@ -27,6 +27,13 @@ function GitHubStargazer({ repository }: { repository: string }) {
                                 [today]: stars,
                             })
                         );
+                    })
+                    .catch((err) => {
+                        console.warn(
+                            'Failed to fetch star count:',
+                            err?.message
+                        );
+                        setStars(0);
                     });
             }
         }
